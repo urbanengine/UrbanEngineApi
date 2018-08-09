@@ -34,9 +34,6 @@ namespace urban_engine_api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddAutofac();
-
-            RegisterControllers(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,22 +55,8 @@ namespace urban_engine_api
         // Use this method to register things directly with Autofac
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            RegisterManagers(builder);
-        }
-
-        #endregion
-
-        #region Private Methods
-
-        private void RegisterControllers(IServiceCollection services)
-        {
-            services.AddTransient<IUserManager, UserManager>();
-        }
-
-        private void RegisterManagers(ContainerBuilder builder)
-        {
-            builder.RegisterType<IUserManager>().As<UserManager>();
-            builder.RegisterType<IDbRepository>().As<DbRepository>();
+            builder.RegisterModule<ManagersModule>();
+            builder.RegisterModule<RepositoryModule>();
         }
 
         #endregion
