@@ -4,8 +4,8 @@ using UrbanEngine.Infrastructure.Managers;
 
 public class ManagersModule : Module
 {
-  protected override void Load(ContainerBuilder builder)
-  {
-    builder.RegisterType<UserManager>().As<IUserManager>();
-  }
+    protected override void Load(ContainerBuilder builder)
+    {
+        builder.RegisterType<UserManager>().As<IUserManager>();
+    }
 }
