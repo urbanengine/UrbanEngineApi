@@ -5,16 +5,29 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using UrbanEngine.Core.Interfaces;
+using UrbanEngine.Infrastructure.Managers;
+using UrbanEngine.Infrastructure.Repository;
 
 namespace urban_engine_api {
     public class Startup
     {
+        #region Properties
+
+        public IConfiguration Configuration { get; }
+
+        #endregion
+
+        #region Constructor
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        #endregion
+
+        #region Public Methods
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -39,10 +52,13 @@ namespace urban_engine_api {
             app.UseMvc();
         }
 
-        // Use this method to register things directly with AutoFac
+        // Use this method to register things directly with Autofac
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            
+            builder.RegisterModule<ManagersModule>();
+            builder.RegisterModule<RepositoryModule>();
         }
+
+        #endregion
     }
 }
