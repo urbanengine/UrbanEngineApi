@@ -25,7 +25,7 @@ namespace UrbanEngine.Infrastructure.Managers
 
         #region Public Methods
 
-        public User GetUser(long id)
+        public User GetUserById(long id)
         {
             if (id <= 0)
                 throw new ArgumentException("id must be greater than 0");
@@ -36,6 +36,21 @@ namespace UrbanEngine.Infrastructure.Managers
         public IEnumerable<User> ListUsers()
         {
             return _repository.List<User>();
+        }
+
+        public void AddUser(User user)
+        {
+            _repository.Create(user, true);
+        }
+
+        public void UpdateUser(User user)
+        {
+            _repository.Update(user, true);
+        }
+
+        public void DeleteUser(long id)
+        {
+            _repository.Delete<User>(id, true);
         }
 
         #endregion
