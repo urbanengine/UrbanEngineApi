@@ -5,12 +5,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using UrbanEngine.Core.Interfaces;
-using UrbanEngine.Infrastructure.Managers;
-using UrbanEngine.Infrastructure.Repository;
 
-namespace urban_engine_api
-{
+namespace urban_engine_api {
     public class Startup
     {
         #region Properties
@@ -34,6 +30,7 @@ namespace urban_engine_api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddAutofac();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,7 +46,13 @@ namespace urban_engine_api
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
+            app.UseMvc(routes => 
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}"
+                );
+            });
         }
 
         // Use this method to register things directly with Autofac

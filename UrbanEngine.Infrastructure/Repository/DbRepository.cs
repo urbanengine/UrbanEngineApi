@@ -8,7 +8,7 @@ namespace UrbanEngine.Infrastructure.Repository
     {
         #region Constructor
 
-        internal DbRepository(DbContext dbContext)
+        public DbRepository(DbContext dbContext)
             : base(dbContext) { }
 
         #endregion

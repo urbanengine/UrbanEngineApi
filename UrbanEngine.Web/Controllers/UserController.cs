@@ -5,7 +5,7 @@ using UrbanEngine.Core.Interfaces;
 
 namespace urban_engine_api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("user")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -24,43 +24,29 @@ namespace urban_engine_api.Controllers
 
         #endregion
 
-        // GET api/values
+        // GET user/
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/values/5
-        [HttpGet("user/{id}")]
-        public ActionResult<string> Get(long id)
-        {
-            return "value";
-        }
-
-        [HttpGet("user")]
-        public ActionResult<User> Get(string firstName, string lastName)
-        {
-            return new User()
-            {
+        public ActionResult<User> Get(string firstName, string lastName) {
+            return new User() {
                 FirstName = firstName,
                 LastName = lastName
             };
         }
 
-        // POST api/values
+        // GET user/5
+        [HttpGet("/{id}")]
+        public ActionResult<string> Get(long id)
+        {
+            return "value";
+        }
+
+        // POST user/values
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
+        // DELETE user/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
