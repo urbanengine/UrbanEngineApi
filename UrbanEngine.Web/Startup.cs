@@ -5,8 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace urban_engine_api {
-    public class Startup
-    {
+    public class Startup {
         #region Properties
 
         public IConfiguration Configuration { get; }
@@ -15,8 +14,7 @@ namespace urban_engine_api {
 
         #region Constructor
 
-        public Startup(IConfiguration configuration)
-        {
+        public Startup( IConfiguration configuration ) {
             Configuration = configuration;
         }
 
@@ -25,31 +23,20 @@ namespace urban_engine_api {
         #region Public Methods
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+        public void ConfigureServices( IServiceCollection services ) {
+            services.AddMvc().SetCompatibilityVersion( CompatibilityVersion.Version_2_1 );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
+        public void Configure( IApplicationBuilder app, IHostingEnvironment env ) {
+            if( env.IsDevelopment() ) {
                 app.UseDeveloperExceptionPage();
-            }
-            else
-            {
+            } else {
                 app.UseHsts();
-            }
+            }  
 
-            app.UseHttpsRedirection();
-            app.UseMvc(routes => 
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}"
-                );
-            });
+            app.UseHttpsRedirection(); 
+            app.UseMvc(); 
         }
 
         #endregion
