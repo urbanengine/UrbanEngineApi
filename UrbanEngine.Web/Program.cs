@@ -1,5 +1,4 @@
-﻿using Autofac.Extensions.DependencyInjection;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
 namespace urban_engine_api {
@@ -11,8 +10,7 @@ namespace urban_engine_api {
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .ConfigureServices(services => services.AddAutofac())
+            WebHost.CreateDefaultBuilder(args) 
                 .UseStartup<Startup>();
     }
 }

@@ -5,11 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Configuration\ManagersModule.cs" />
+    <Compile Remove="Configuration\RepositoryModule.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Configuration\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
