@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using UrbanEngine.Infrastructure.Context;
 
 namespace UrbanEngine.Infrastructure.Repository
 {
@@ -8,7 +9,7 @@ namespace UrbanEngine.Infrastructure.Repository
     {
         #region Constructor
 
-        public DbRepository(DbContext dbContext)
+        public DbRepository(ApplicationDbContext dbContext)
             : base(dbContext) { }
 
         #endregion
