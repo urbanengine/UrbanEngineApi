@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <ApplicationInsightsResourceId>/subscriptions/9d130cb8-bf99-477c-9c22-e366eba26f22/resourcegroups/UrbanEngine.Web/providers/microsoft.insights/components/UrbanEngine.Web</ApplicationInsightsResourceId>
+    <ApplicationInsightsAnnotationResourceId>/subscriptions/9d130cb8-bf99-477c-9c22-e366eba26f22/resourceGroups/UrbanEngine.Web/providers/microsoft.insights/components/UrbanEngine.Web</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -10,6 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights" Version="2.7.2" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.2" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.1" />
@@ -21,6 +24,10 @@
   <ItemGroup>
     <ProjectReference Include="..\UrbanEngine.Core\UrbanEngine.Core.csproj" />
     <ProjectReference Include="..\UrbanEngine.Infrastructure\UrbanEngine.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
   </ItemGroup>
 
 </Project>
