@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc; 
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using UrbanEngine.Core;
 using UrbanEngine.Core.Interfaces;
 
@@ -6,23 +7,27 @@ namespace urban_engine_api.Controllers {
     [Route( "user" )]
     [ApiController]
     public class UserController : Controller {
-        #region Fields
+        #region Injected Members
 
-        private IUserManager _manager = null;
+        private readonly IUserManager _manager;
+        private readonly ILogger _logger;
 
         #endregion
 
         #region Constructor
 
-        public UserController( IUserManager manager ) {
+        public UserController( IUserManager manager, ILogger<UserController> logger ) {
             _manager = manager;
+            _logger = logger;
         }
 
         #endregion
 
         // GET user/
         [HttpGet]
-        public ActionResult<User> Get( string firstName, string lastName ) {
+        public ActionResult<User> Get( string firstName, string lastName ) { 
+            _logger.LogInformation( "GetUser - {firstName} {lastName}", firstName, lastName );
+
             return new User() {
                 FirstName = firstName,
                 LastName = lastName
