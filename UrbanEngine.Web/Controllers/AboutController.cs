@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 
 namespace UrbanEngine.Web.Controllers {
-    [Route( "api/[controller]" )]
+    [Route( "[controller]" )]
     [ApiController]
     public class AboutController : ControllerBase {
          
