@@ -49,6 +49,10 @@ namespace urban_engine_api {
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure( IApplicationBuilder app, IHostingEnvironment env ) {
+            // to disable AppInsights Telemetry uncomment next two lines 
+            // var configuration = app.ApplicationServices.GetService<Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration>();
+            // configuration.DisableTelemetry = true;
+
             if( env.IsDevelopment() ) {
                 app.UseDeveloperExceptionPage();
             } else {
