@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>D:\projects\github\urban-engine\urban-engine-api\UrbanEngine.Core\UrbanEngine.Core.xml</DocumentationFile>
+  </PropertyGroup>
+
 </Project>
