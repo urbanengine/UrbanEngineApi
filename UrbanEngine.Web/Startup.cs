@@ -8,6 +8,8 @@ using UrbanEngine.Infrastructure.Managers;
 using UrbanEngine.Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 using UrbanEngine.Infrastructure.Context;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace urban_engine_api {
     public class Startup {
@@ -29,7 +31,14 @@ namespace urban_engine_api {
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices( IServiceCollection services ) {
-            services.AddMvc().SetCompatibilityVersion( CompatibilityVersion.Version_2_1 );
+            services.AddMvc()
+                .SetCompatibilityVersion( CompatibilityVersion.Version_2_1 )
+                .AddJsonOptions( options => {
+                    // ignore self referencing loops
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                    // force camel case of JSON 
+                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                } );
 
             #region Dependency Injection 
 
