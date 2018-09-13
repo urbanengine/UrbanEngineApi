@@ -6,6 +6,7 @@ namespace UrbanEngine.Web.Controllers {
     /// <summary>
     /// identifies information about the service
     /// </summary>
+    [ApiVersionNeutral]
     [Route( "[controller]" )]
     [ApiController]
     public class AboutController : ControllerBase {
@@ -32,7 +33,8 @@ namespace UrbanEngine.Web.Controllers {
             var info = new {
                 Service = new {
                     Name = GetShortName(),
-                    Version = GetAssemblyVersion()
+                    Version = GetAssemblyVersion(),
+                    ApiVersion = ApiVersion.Default.ToString()
                 }
             };
 
