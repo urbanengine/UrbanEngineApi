@@ -329,3 +329,5 @@ ASALocalRun/
 .mfractor/
 .vscode/launch.json
 .vscode/tasks.json
+/UrbanEngine.Web/UrbanEngine.Web.xml
+/UrbanEngine.Core/UrbanEngine.Core.xml
