@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>D:\projects\github\urban-engine\urban-engine-api\UrbanEngine.Web\UrbanEngine.Web.xml</DocumentationFile>
+    <DocumentationFile>$(SolutionDir)\UrbanEngine.Web\UrbanEngine.Web.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
