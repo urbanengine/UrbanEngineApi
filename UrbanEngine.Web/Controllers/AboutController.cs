@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace UrbanEngine.Web.Controllers {
+    /// <summary>
+    /// identifies information about the service
+    /// </summary>
     [Route( "[controller]" )]
     [ApiController]
     public class AboutController : ControllerBase {
@@ -12,10 +15,18 @@ namespace UrbanEngine.Web.Controllers {
 
         #endregion
 
+        /// <summary>
+        /// constructor 
+        /// </summary>
+        /// <param name="logger"></param>
         public AboutController( ILogger<AboutController> logger ) {
             _logger = logger;
         }
 
+        /// <summary>
+        /// retrieve version of the service 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult GetVersion() {  
             var info = new {
