@@ -7,7 +7,8 @@ namespace urban_engine_api.Controllers {
     /// <summary>
     /// manages user account in the system
     /// </summary>
-    [Route( "user" )]
+    [ApiVersion( "1.0" )]
+    [Route( "v{version:apiVersion}/[controller]" )] 
     [ApiController]
     public class UserController : Controller {
         #region Injected Members
@@ -54,7 +55,7 @@ namespace urban_engine_api.Controllers {
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet( "/{id}" )]
+        [HttpGet( "{id}" )]
         public ActionResult<string> Get( long id ) {
             return "value";
         }
@@ -65,7 +66,7 @@ namespace urban_engine_api.Controllers {
         /// </summary>
         /// <param name="value"></param>
         [HttpPost]
-        public void Post( [FromBody] string value ) {
+        public void Post( [FromBody] User value ) {
         }
 
         // DELETE user/5
@@ -74,7 +75,7 @@ namespace urban_engine_api.Controllers {
         /// </summary>
         /// <param name="id"></param>
         [HttpDelete( "{id}" )]
-        public void Delete( int id ) {
+        public void Delete( long id ) {
         }
     }
 }
