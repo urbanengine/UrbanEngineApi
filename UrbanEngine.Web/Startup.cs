@@ -18,7 +18,8 @@
     using UrbanEngine.Infrastructure.Managers;
     using UrbanEngine.Infrastructure.Repository;
     using UrbanEngine.Infrastructure.Context;
-      
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+
     public class Startup {
         #region Properties
 
@@ -47,6 +48,22 @@
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 } );
 
+            #region Authentication
+
+            string domain = $"https://{Configuration["Auth0:Domain"]}/";
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = domain;
+                options.Audience = Configuration["Auth0:ApiIdentifier"];
+            });
+
+            #endregion
 
             #region Versioning
 
@@ -140,8 +157,14 @@
 
             #endregion
 
+            #region Authentication
+
+            app.UseAuthentication();
+
+            #endregion
+
             app.UseHttpsRedirection(); 
-            app.UseMvc(); 
+            app.UseMvc();
         }
 
         static string XmlCommentsFilePath {

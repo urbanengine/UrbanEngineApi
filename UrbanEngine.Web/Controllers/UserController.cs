@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using UrbanEngine.Core;
 using UrbanEngine.Core.Interfaces;
@@ -75,6 +76,7 @@ namespace urban_engine_api.Controllers {
         /// </summary>
         /// <param name="id"></param>
         [HttpDelete( "{id}" )]
+        [Authorize]
         public void Delete( long id ) {
         }
     }
