@@ -99,11 +99,13 @@
 
             #region Dependency Injection 
 
-            // context   
-            services.AddDbContext<ApplicationDbContext>( options =>
-                options.UseInMemoryDatabase( "InMemoryDb" ) // TODO, switch over to actual db implementation 
-            );
+            var connectionString = Configuration.GetConnectionString( "UrbanEngineDbContext" );
 
+            // context   
+            services.AddEntityFrameworkNpgsql().AddDbContext<ApplicationDbContext>( 
+                options => options.UseNpgsql( connectionString ) // options.UseInMemoryDatabase( "InMemoryDb" )
+            );
+  
             // repository  
             services.AddScoped<IDbRepository, DbRepository>(); 
 
