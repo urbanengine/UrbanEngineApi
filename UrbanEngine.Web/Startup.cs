@@ -18,7 +18,8 @@
     using UrbanEngine.Infrastructure.Managers;
     using UrbanEngine.Infrastructure.Repository;
     using UrbanEngine.Infrastructure.Context;
-      
+    using Microsoft.Extensions.Logging;
+
     public class Startup {
         #region Properties
 
@@ -103,7 +104,7 @@
 
             // context   
             services.AddEntityFrameworkNpgsql().AddDbContext<ApplicationDbContext>( 
-                options => options.UseNpgsql( connectionString ) // options.UseInMemoryDatabase( "InMemoryDb" )
+                options => options.UseNpgsql( connectionString ) 
             );
   
             // repository  
