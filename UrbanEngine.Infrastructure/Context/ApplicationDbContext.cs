@@ -31,26 +31,39 @@ namespace UrbanEngine.Infrastructure.Context {
             // let base take care of any initial items 
             base.OnModelCreating( modelBuilder );
 
-            // configure each entity 
-            ConfigureEntities( modelBuilder ); 
+            // use identity columns
+            // make all keys and other properties which have .ValueGeneratedOnAdd() 
+            // have Identity by default.
+            modelBuilder.ForNpgsqlUseIdentityColumns();
 
             // apply any custom conventions 
             // TODO 
+             
+            // configure each entity 
+            ConfigureEntities( modelBuilder );
 
+            // seed data 
+            SeedData( modelBuilder ); 
         }
+
+        #region Configure Entities 
 
         protected virtual void ConfigureEntities( ModelBuilder modelBuilder ) {
             #region Conventions (Notes) 
 
             // By convention, a property named Id or <type name>Id will be configured as the key of an entity.
+            // If you want to exclude a property from the model use .Ignore 
 
             #endregion
 
             #region Privilege
 
             modelBuilder.Entity<Privilege>( options => {
+                // use identity 
+                options.Property( p => p.Id ).ValueGeneratedOnAdd(); 
+
                 // set property values 
-                options.Property( p => p.Name ).HasMaxLength( 50 );
+                options.Property( p => p.Name ).HasMaxLength( 50 ).IsRequired();
             } );
 
             #endregion
@@ -58,18 +71,48 @@ namespace UrbanEngine.Infrastructure.Context {
             #region Role
 
             modelBuilder.Entity<Role>( options => {
+                // use identity 
+                options.Property( r => r.Id ).ValueGeneratedOnAdd();
+
                 // set property values 
-                options.Property( r => r.Name ).HasMaxLength( 50 );
+                options.Property( r => r.Name ).HasMaxLength( 50 ).IsRequired(); 
+            } );
 
-                // map to role 
+            #endregion
 
+            #region RolePrivilege (Join Table)
+
+            modelBuilder.Entity<RolePrivilege>( options => {
+                // join table key 
+                options.HasKey( rp => new { rp.RoleId, rp.PrivilegeId } );
+
+                // map to role
+                options
+                 .HasOne( rp => rp.Role )
+                 .WithMany( r => r.RolePrivileges )
+                 .HasForeignKey( rp => rp.RoleId );
+
+                // map to privilege
+                options
+                 .HasOne( rp => rp.Privilege )
+                 .WithMany( p => p.RolePrivileges )
+                 .HasForeignKey( rp => rp.PrivilegeId );
             } );
 
             #endregion
 
             #region User
 
-            modelBuilder.Entity<User>( options => {   
+            modelBuilder.Entity<User>( options => {
+                // use identity 
+                options.Property( u => u.Id ).ValueGeneratedOnAdd();
+
+                // set property values
+                options.Property( u => u.AuthZeroId ).HasMaxLength( 50 );
+                options.Property( u => u.Bio ).HasMaxLength( 4000 );
+                options.Property( u => u.CountryOrRegion ).HasMaxLength( 50 );
+                options.Property( u => u.PostalCode ).HasMaxLength( 20 ); 
+
                 // map to company relationship 
                 options
                  .HasOne( u => u.Company )
@@ -79,7 +122,20 @@ namespace UrbanEngine.Infrastructure.Context {
 
             #endregion
 
-            #region UserRole 
+            #region Tag 
+
+            modelBuilder.Entity<Tag>( options => {
+                // use identity 
+                options.Property( t => t.Id ).ValueGeneratedOnAdd();
+
+                // set property values 
+                options.Property( p => p.Name ).HasMaxLength( 100 ).IsRequired();
+                options.Property( p => p.Type ).HasMaxLength( 50 ).IsRequired(); 
+            } );
+
+            #endregion
+
+            #region UserRole (Join Table)
 
             modelBuilder.Entity<UserRole>( options => {
                 // join table key 
@@ -88,36 +144,59 @@ namespace UrbanEngine.Infrastructure.Context {
                 // map to user 
                 options
                  .HasOne( ur => ur.User )
-                 .WithMany( u => u.Roles )
+                 .WithMany( u => u.UserRoles )
                  .HasForeignKey( ur => ur.UserId );
 
                 // map to role 
                 options
                  .HasOne( ur => ur.Role )
-                 .WithMany( r => r.Users )
+                 .WithMany( r => r.UserRoles )
                  .HasForeignKey( ur => ur.RoleId );  
             } );
 
             #endregion
 
-            #region TaggedUser 
+            #region TaggedUser (Join Table)
+
+            modelBuilder.Entity<TaggedUser>( options => {
+                // join table key 
+                options.HasKey( tu => new { tu.UserId, tu.TagId } );
+
+                // map to user
+                options
+                 .HasOne( tu => tu.User )
+                 .WithMany( u => u.UserTags )
+                 .HasForeignKey( tu => tu.UserId );
+
+                // map to tag
+                options
+                 .HasOne( tu => tu.Tag )
+                 .WithMany( t => t.TaggedUsers )
+                 .HasForeignKey( tu => tu.TagId ); 
+            } );
 
             #endregion
 
             #region Company 
 
             modelBuilder.Entity<Company>( options => {
+                // use identity 
+                options.Property( c => c.Id ).ValueGeneratedOnAdd();
+
                 // set property values 
-                options.Property( c => c.Name ).HasMaxLength( 200 );
+                options.Property( c => c.Name ).HasMaxLength( 200 ).IsRequired();
             } );
 
             #endregion
 
             #region Venue 
 
-            modelBuilder.Entity<Venue>( options => {
+            modelBuilder.Entity<Venue>( options => { 
+                // use identity 
+                options.Property( v => v.Id ).ValueGeneratedOnAdd();
+
                 // set property values 
-                options.Property( v => v.Name ).HasMaxLength( 200 );
+                options.Property( v => v.Name ).HasMaxLength( 200 ).IsRequired();
             } );
 
             #endregion
@@ -125,22 +204,32 @@ namespace UrbanEngine.Infrastructure.Context {
             #region Event 
             
             modelBuilder.Entity<Event>( options => {
+                // use identity 
+                options.Property( e => e.Id ).ValueGeneratedOnAdd();
+
                 // set property values 
-                options.Property( e => e.Name ).HasMaxLength( 200 );
+                options.Property( e => e.Name ).HasMaxLength( 200 ).IsRequired();
+                options.Property( e => e.Description ).HasMaxLength( 2000 );
 
-            } );
-
-            #endregion
-
-            #region Tag 
-
-            modelBuilder.Entity<Tag>( options => {
-                // set property values 
-                options.Property( p => p.Name ).HasMaxLength( 100 );
+                // map to event
+                options
+                 .HasOne( e => e.Venue )
+                 .WithMany( v => v.Events )
+                 .HasForeignKey( e => e.VenueId ); 
             } );
 
             #endregion
         }
+
+        #endregion
+
+        #region SeedData 
+
+        protected void SeedData( ModelBuilder modelBuilder ) {
+
+        }
+
+        #endregion
 
         #endregion
     }

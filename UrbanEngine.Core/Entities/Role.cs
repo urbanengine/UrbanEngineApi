@@ -5,6 +5,8 @@ namespace UrbanEngine.Core.Entities {
     /// identifies a role a user may have in the system 
     /// </summary>
     public class Role {
+        #region Properties 
+
         /// <summary>
         /// uniquely identifies a role 
         /// </summary>
@@ -15,14 +17,20 @@ namespace UrbanEngine.Core.Entities {
         /// </summary>
         public string Name { get; set; }
 
+        #endregion
+
+        #region Navigation Properties 
+
         /// <summary>
         /// any privileges assigned to the role 
         /// </summary>
-        public IEnumerable<Privilege> Privileges { get; set; }
+        public virtual ICollection<RolePrivilege> RolePrivileges { get; set; }
 
         /// <summary>
         /// any users assigned to the role 
         /// </summary>
-        public IEnumerable<UserRole> Users { get; set; }
+        public virtual ICollection<UserRole> UserRoles { get; set; }
+
+        #endregion
     }
 }

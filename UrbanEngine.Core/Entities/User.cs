@@ -5,6 +5,8 @@ namespace UrbanEngine.Core.Entities {
     /// a user that interacts with the system
     /// </summary>
     public class User {
+        #region Properties 
+
         /// <summary>
         /// uniquely identifies a user
         /// </summary>
@@ -35,19 +37,25 @@ namespace UrbanEngine.Core.Entities {
         /// </summary>
         public string PostalCode { get; set; }
 
+        #endregion
+
+        #region Navigation Properties 
+
         /// <summary>
         /// details about the company a user works for or is associated with 
         /// </summary>
-        public Company Company { get; set; }
+        public virtual Company Company { get; set; }
 
         /// <summary>
         /// roles assigned to the user 
         /// </summary>
-        public IEnumerable<UserRole> Roles { get; set; }
+        public virtual ICollection<UserRole> UserRoles { get; set; }
 
         /// <summary>
         /// tags assigned to the user 
         /// </summary>
-        public IEnumerable<TaggedUser> Tags { get; set; }
+        public virtual ICollection<TaggedUser> UserTags { get; set; }
+
+        #endregion
     }
 }

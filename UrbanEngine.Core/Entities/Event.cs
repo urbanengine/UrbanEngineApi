@@ -5,6 +5,8 @@ namespace UrbanEngine.Core.Entities {
     /// an event that is taking place 
     /// </summary>
     public class Event {
+        #region Properties 
+
         /// <summary>
         /// uniquely identifies the event
         /// </summary>
@@ -35,9 +37,15 @@ namespace UrbanEngine.Core.Entities {
         /// </summary>
         public long VenueId { get; set; }
 
+        #endregion
+
+        #region Navigation Properties 
+
         /// <summary>
         /// details about the venue where the vent is held
         /// </summary>
-        public Venue Venue { get; set; }
+        public virtual Venue Venue { get; set; }
+
+        #endregion
     }
 }

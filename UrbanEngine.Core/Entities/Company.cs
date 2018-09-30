@@ -5,6 +5,8 @@ namespace UrbanEngine.Core.Entities {
     /// identifies information about a company 
     /// </summary>
     public class Company {
+        #region Properties 
+
         /// <summary>
         /// uniquely identifies a company 
         /// </summary>
@@ -15,9 +17,15 @@ namespace UrbanEngine.Core.Entities {
         /// </summary>
         public string Name { get; set; }
 
+        #endregion
+
+        #region Navigation Properties 
+
         /// <summary>
         /// users associated with the company 
         /// </summary>
-        public IEnumerable<User> Users { get; set; }
+        public virtual ICollection<User> Users { get; set; }
+
+        #endregion
     }
 }

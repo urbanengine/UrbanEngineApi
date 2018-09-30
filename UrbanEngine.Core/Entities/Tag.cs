@@ -5,6 +5,8 @@ namespace UrbanEngine.Core.Entities {
     /// identifies a tag in the system 
     /// </summary>
     public class Tag {
+        #region Properties 
+
         /// <summary>
         /// uniquely identifies a tag 
         /// </summary>
@@ -20,9 +22,15 @@ namespace UrbanEngine.Core.Entities {
         /// </summary>
         public string Type { get; set; }
 
+        #endregion
+
+        #region Navigation Properties 
+
         /// <summary>
         /// users with this tag 
         /// </summary>
-        public IEnumerable<TaggedUser> TaggedUsers { get; set; }
+        public virtual ICollection<TaggedUser> TaggedUsers { get; set; }
+
+        #endregion
     }
 }
