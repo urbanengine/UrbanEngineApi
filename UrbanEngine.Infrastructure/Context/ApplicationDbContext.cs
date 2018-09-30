@@ -4,7 +4,10 @@ using Microsoft.Extensions.Options;
 using UrbanEngine.Core.Entities;
 
 namespace UrbanEngine.Infrastructure.Context {
-    public class ApplicationDbContext  : DbContext {
+    // TODO: review article below and setup creation of migrations 
+    // https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dbcontext-creation
+
+    public class ApplicationDbContext : DbContext {
         #region Constructors
 
         private readonly IDbContextSettings _settings;
@@ -22,6 +25,9 @@ namespace UrbanEngine.Infrastructure.Context {
         #region Initialization Methods
 
         protected override void OnConfiguring( DbContextOptionsBuilder optionsBuilder ) {
+            // let base take care of initial items 
+            base.OnConfiguring( optionsBuilder );
+
             // if not previously configured 
             if( !optionsBuilder.IsConfigured ) {
                 // enable npgsql 
@@ -31,7 +37,7 @@ namespace UrbanEngine.Infrastructure.Context {
 
                 // enable logging 
                 optionsBuilder.UseLoggerFactory( _loggerFactory );
-            }
+            } 
         }
 
         protected override void OnModelCreating( ModelBuilder modelBuilder ) {
