@@ -251,7 +251,10 @@ namespace UrbanEngine.Infrastructure.Context {
             #region Role
 
             modelBuilder.Entity<Role>().HasData(
-                new Role { Name = "" } );
+                new Role { Name = "Site Administrator" },
+                new Role { Name = "Events Manager" },
+                new Role { Name = "CoWorking Night Workshop Organizer" },
+                new Role { Name = "Member" } );
 
             #endregion
 
