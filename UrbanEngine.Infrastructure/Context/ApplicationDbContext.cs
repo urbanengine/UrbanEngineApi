@@ -1,35 +1,47 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using UrbanEngine.Core.Entities;
 
 namespace UrbanEngine.Infrastructure.Context {
     public class ApplicationDbContext  : DbContext {
         #region Constructors
 
+        private readonly IDbContextSettings _settings;
+
         private readonly ILoggerFactory _loggerFactory;
         
-        public ApplicationDbContext( DbContextOptions<ApplicationDbContext> options, ILoggerFactory loggerFactory ) 
+        public ApplicationDbContext( DbContextOptions<ApplicationDbContext> options, IOptions<DbContextSettings> settings, ILoggerFactory loggerFactory ) 
             : base( options ) { 
             _loggerFactory = loggerFactory;
+            _settings = settings?.Value;
         }
 
         #endregion
-
-        #region Static/Builder Methods 
-
-        #endregion
-
+         
         #region Initialization Methods
 
         protected override void OnConfiguring( DbContextOptionsBuilder optionsBuilder ) {
-            // enable logging 
-            optionsBuilder
-                .UseLoggerFactory( _loggerFactory );
+            // if not previously configured 
+            if( !optionsBuilder.IsConfigured ) {
+                // enable npgsql 
+                if( !string.IsNullOrEmpty( _settings?.ConnectionString ) ) {
+                    optionsBuilder.UseNpgsql( _settings?.ConnectionString );
+                }
+
+                // enable logging 
+                optionsBuilder.UseLoggerFactory( _loggerFactory );
+            }
         }
 
         protected override void OnModelCreating( ModelBuilder modelBuilder ) {
             // let base take care of any initial items 
             base.OnModelCreating( modelBuilder );
+
+            // apply which schema to use 
+            if( !string.IsNullOrEmpty( _settings?.SchemaName ) ) {
+                modelBuilder.HasDefaultSchema( _settings.SchemaName );
+            }
 
             // use identity columns
             // make all keys and other properties which have .ValueGeneratedOnAdd() 
@@ -226,6 +238,22 @@ namespace UrbanEngine.Infrastructure.Context {
         #region SeedData 
 
         protected void SeedData( ModelBuilder modelBuilder ) {
+             
+            // TODO: define all privileges that should be in seed data 
+            #region Privilege 
+
+            modelBuilder.Entity<Privilege>().HasData(
+                new Privilege { Name = "login" } );
+
+            #endregion
+
+            // TODO: define all roles that should be in seed data 
+            #region Role
+
+            modelBuilder.Entity<Role>().HasData(
+                new Role { Name = "" } );
+
+            #endregion
 
         }
 

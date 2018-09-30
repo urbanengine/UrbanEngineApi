@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UrbanEngine.Core.Entities;
 
 namespace UrbanEngine.Core.Interfaces
 {

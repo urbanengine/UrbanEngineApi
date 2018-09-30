@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using UrbanEngine.Core;
+using UrbanEngine.Core.Entities;
 using UrbanEngine.Core.Interfaces;
 
 namespace urban_engine_api.Controllers {
@@ -43,9 +44,8 @@ namespace urban_engine_api.Controllers {
         public ActionResult<User> Get( string firstName, string lastName ) { 
             _logger.LogInformation( "GetUser - {firstName} {lastName}", firstName, lastName );
 
-            return new User() {
-                FirstName = firstName,
-                LastName = lastName
+            return new User() { 
+                
             };
         }
 

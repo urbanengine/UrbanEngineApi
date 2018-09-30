@@ -97,15 +97,20 @@
             } );
 
             #endregion
+             
+            #region Configuration Bindings 
 
+            services.AddOptions();
+            services.Configure<DbContextSettings>( Configuration.GetSection( "UrbanEngineDbContext" ) );
+
+            #endregion
+             
             #region Dependency Injection 
 
-            var connectionString = Configuration.GetConnectionString( "UrbanEngineDbContext" );
+            //var connectionString = Configuration.GetConnectionString( "UrbanEngineDbContext" );
 
             // context   
-            services.AddEntityFrameworkNpgsql().AddDbContext<ApplicationDbContext>( 
-                options => options.UseNpgsql( connectionString ) 
-            );
+            services.AddEntityFrameworkNpgsql().AddDbContext<ApplicationDbContext>();
   
             // repository  
             services.AddScoped<IDbRepository, DbRepository>(); 
