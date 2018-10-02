@@ -110,7 +110,7 @@
             //var connectionString = Configuration.GetConnectionString( "UrbanEngineDbContext" );
 
             // context   
-            services.AddEntityFrameworkNpgsql().AddDbContext<ApplicationDbContext>();
+            services.AddEntityFrameworkNpgsql().AddDbContext<UrbanEngineContext>();
   
             // repository  
             services.AddScoped<IDbRepository, DbRepository>(); 

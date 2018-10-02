@@ -7,14 +7,14 @@ namespace UrbanEngine.Infrastructure.Context {
     // TODO: review article below and setup creation of migrations 
     // https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dbcontext-creation
 
-    public class ApplicationDbContext : DbContext {
+    public class UrbanEngineContext : DbContext {
         #region Constructors
 
         private readonly IDbContextSettings _settings;
 
         private readonly ILoggerFactory _loggerFactory;
         
-        public ApplicationDbContext( DbContextOptions<ApplicationDbContext> options, IOptions<DbContextSettings> settings, ILoggerFactory loggerFactory ) 
+        public UrbanEngineContext( DbContextOptions<UrbanEngineContext> options, IOptions<DbContextSettings> settings, ILoggerFactory loggerFactory ) 
             : base( options ) { 
             _loggerFactory = loggerFactory;
             _settings = settings?.Value;
