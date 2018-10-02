@@ -14,6 +14,9 @@ namespace UrbanEngine.Infrastructure.Context {
 
         private readonly ILoggerFactory _loggerFactory;
         
+        public UrbanEngineContext( DbContextOptions<UrbanEngineContext> options )
+            : base( options ) { }
+
         public UrbanEngineContext( DbContextOptions<UrbanEngineContext> options, IOptions<DbContextSettings> settings, ILoggerFactory loggerFactory ) 
             : base( options ) { 
             _loggerFactory = loggerFactory;
@@ -28,16 +31,16 @@ namespace UrbanEngine.Infrastructure.Context {
             // let base take care of initial items 
             base.OnConfiguring( optionsBuilder );
 
-            // if not previously configured 
-            if( !optionsBuilder.IsConfigured ) {
-                // enable npgsql 
-                if( !string.IsNullOrEmpty( _settings?.ConnectionString ) ) {
-                    optionsBuilder.UseNpgsql( _settings?.ConnectionString );
-                }
+            //// if not previously configured 
+            //if( !optionsBuilder.IsConfigured ) {
+            //    // enable npgsql 
+            //    if( !string.IsNullOrEmpty( _settings?.ConnectionString ) ) {
+            //        optionsBuilder.UseNpgsql( _settings?.ConnectionString );
+            //    }
+            //}
 
-                // enable logging 
-                optionsBuilder.UseLoggerFactory( _loggerFactory );
-            } 
+            // enable logging 
+            optionsBuilder.UseLoggerFactory( _loggerFactory );          
         }
 
         protected override void OnModelCreating( ModelBuilder modelBuilder ) {
@@ -249,7 +252,7 @@ namespace UrbanEngine.Infrastructure.Context {
             #region Privilege 
 
             modelBuilder.Entity<Privilege>().HasData(
-                new Privilege { Name = "login" } );
+                new Privilege { Id = 1, Name = "login" } );
 
             #endregion
 
@@ -257,10 +260,10 @@ namespace UrbanEngine.Infrastructure.Context {
             #region Role
 
             modelBuilder.Entity<Role>().HasData(
-                new Role { Name = "Site Administrator" },
-                new Role { Name = "Events Manager" },
-                new Role { Name = "CoWorking Night Workshop Organizer" },
-                new Role { Name = "Member" } );
+                new Role { Id = 1, Name = "Site Administrator" },
+                new Role { Id = 2, Name = "Events Manager" },
+                new Role { Id = 3, Name = "CoWorking Night Workshop Organizer" },
+                new Role { Id = 4, Name = "Member" } );
 
             #endregion
 
