@@ -18,7 +18,9 @@
     using UrbanEngine.Infrastructure.Managers;
     using UrbanEngine.Infrastructure.Repository;
     using UrbanEngine.Infrastructure.Context;
-      
+    using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Options;
+
     public class Startup {
         #region Properties
 
@@ -96,14 +98,25 @@
             } );
 
             #endregion
+             
+            #region Configuration Bindings 
+
+            services.AddOptions();
+            services.Configure<DbContextSettings>( Configuration.GetSection( "UrbanEngineDbContext" ) );
+
+            #endregion
 
             #region Dependency Injection 
 
+            var migrationsName = typeof( UrbanEngineContext ).Assembly.GetName().Name;
+            var contextSettings = new DbContextSettings();
+            Configuration.GetSection( "UrbanEngineDbContext" ).Bind( contextSettings );
+             
             // context   
-            services.AddDbContext<ApplicationDbContext>( options =>
-                options.UseInMemoryDatabase( "InMemoryDb" ) // TODO, switch over to actual db implementation 
-            );
-
+            services.AddEntityFrameworkNpgsql().AddDbContext<UrbanEngineContext>( options => {
+                options.UseNpgsql( contextSettings?.ConnectionString, x => x.MigrationsAssembly( migrationsName ) ); 
+            } );
+              
             // repository  
             services.AddScoped<IDbRepository, DbRepository>(); 
 
@@ -139,7 +152,7 @@
             } );
 
             #endregion
-
+             
             app.UseHttpsRedirection(); 
             app.UseMvc(); 
         }

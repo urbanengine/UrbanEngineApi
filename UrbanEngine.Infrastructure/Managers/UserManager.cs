@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UrbanEngine.Core;
+using UrbanEngine.Core.Entities;
 using UrbanEngine.Core.Interfaces;
 using UrbanEngine.Infrastructure.Repository;
 

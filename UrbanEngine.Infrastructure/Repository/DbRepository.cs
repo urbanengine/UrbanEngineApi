@@ -9,7 +9,7 @@ namespace UrbanEngine.Infrastructure.Repository
     {
         #region Constructor
 
-        public DbRepository(ApplicationDbContext dbContext)
+        public DbRepository(UrbanEngineContext dbContext)
             : base(dbContext) { }
 
         #endregion
