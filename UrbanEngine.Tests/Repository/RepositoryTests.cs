@@ -1,16 +1,26 @@
 ﻿namespace UrbanEngine.Tests.Repository {
     using Microsoft.EntityFrameworkCore; 
-    using UrbanEngine.Infrastructure.Repository;
-    using UrbanEngine.Tests.Fixtures;
-    using UrbanEngine.Tests.TestData;
+    using Infrastructure.Repository; 
+    using TestData;
     using Xunit;
 
-    public class RepositoryTests : IClassFixture<InMemoryRepositoryFixture> {
+    public class RepositoryTests {
  
         readonly IRepository _repository;
 
-        public RepositoryTests( InMemoryRepositoryFixture fixture ) { 
-            _repository = fixture.Repository;
+        public RepositoryTests() {
+            _repository = GetInMemoryRepository();
+        }
+
+        private IRepository GetInMemoryRepository() { 
+            var builder = new DbContextOptionsBuilder<TestDbContext>();
+            builder.UseInMemoryDatabase( "InMemoryDatabase" );
+
+            TestDbContext dbContext = new TestDbContext( builder.Options );
+            dbContext.Database.EnsureDeleted();
+            dbContext.Database.EnsureCreated();
+
+            return new Repository( dbContext ); 
         }
 
         [Fact]
