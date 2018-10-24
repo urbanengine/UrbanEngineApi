@@ -3,6 +3,7 @@
     using Infrastructure.Repository; 
     using TestData;
     using Xunit;
+    using System.Linq;
 
     public class RepositoryTests {
  
@@ -32,6 +33,19 @@
             Assert.Equal( expectedId, result?.Id ?? 0 );
         }
 
+        [Fact]
+        public async void Should_GetList() {
+            // find any records that contain letter e
+            var result = await _repository.ListAsync<FooEntity>( p => p.Value.Contains( "e" ) );
+            Assert.True( result.Count() > 1 );
+        }
+
+        [Fact]
+        public void Should_Find_Set() {
+            var dbSet = _repository.Set<FooEntity>();
+            Assert.NotNull( dbSet );
+        }
+         
         [Fact]
         public async void Should_Create_NewRecord() {
             var newEntity = new FooEntity { Id = 6, Value = "consectetur" };
