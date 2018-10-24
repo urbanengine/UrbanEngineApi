@@ -53,16 +53,7 @@
         /// <returns></returns>
         IQueryable<TEntity> Get<TEntity>( Expression<Func<TEntity, bool>> predicate = null )
             where TEntity : class;
-
-        /// <summary>
-        /// retreive entity using specified sql 
-        /// </summary>
-        /// <typeparam name="TEntity"></typeparam>
-        /// <param name="sql"></param>
-        /// <param name="parameters"></param>
-        /// <returns></returns>
-        IQueryable<TEntity> FromSql<TEntity>( string sql, params object[] parameters ) where TEntity : class;
-
+        
         /// <summary>
         /// create new instance of entity 
         /// </summary>

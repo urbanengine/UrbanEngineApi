@@ -41,11 +41,7 @@
         public IQueryable<TEntity> Get<TEntity>( Expression<Func<TEntity, bool>> predicate = null ) where TEntity : class {
             return predicate != null ? Set<TEntity>().Where( predicate ) : Set<TEntity>();
         }
-
-        public IQueryable<TEntity> FromSql<TEntity>( string sql, params object[] parameters ) where TEntity : class {
-            return Set<TEntity>().FromSql( sql, parameters );
-        }
-
+         
         public async Task<int> CreateAsync<TEntity>( params TEntity[] entities ) where TEntity : class {
             // add all 
             _dbContext.AddRange( entities );
