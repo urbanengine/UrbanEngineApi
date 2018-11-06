@@ -34,6 +34,22 @@
         }
 
         [Fact]
+        public async void Should_GetById() {
+            long id = 2;
+
+            var result = await _repository.GetByIdAsync<FooEntity>( id );
+            Assert.Equal( id, result?.Id );
+        }
+
+        [Fact]
+        public async void Should_Find_ByKey() {
+            long id = 1;
+
+            var result = await _repository.FindAsync<FooEntity>( id );
+            Assert.Equal( id, result?.Id ); 
+        }
+
+        [Fact]
         public async void Should_GetList() {
             // find any records that contain letter e
             var result = await _repository.ListAsync<FooEntity>( p => p.Value.Contains( "e" ) );

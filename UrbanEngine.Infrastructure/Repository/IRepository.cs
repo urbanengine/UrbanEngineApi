@@ -53,7 +53,26 @@
         /// <returns></returns>
         IQueryable<TEntity> Get<TEntity>( Expression<Func<TEntity, bool>> predicate = null )
             where TEntity : class;
-        
+
+        /// <summary>
+        /// find a specified item by id
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <remarks>conveinence method for <see cref="FindAsync{TEntity}(object[])"/></remarks>
+        Task<TEntity> GetByIdAsync<TEntity>( long id )
+            where TEntity : class;
+
+        /// <summary>
+        /// find a specified item by key values 
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="keyValues"></param>
+        /// <returns></returns>
+        Task<TEntity> FindAsync<TEntity>( params object[] keyValues ) 
+            where TEntity : class;
+
         /// <summary>
         /// create new instance of entity 
         /// </summary>

@@ -38,6 +38,15 @@
             return result;
         }
 
+        public async Task<TEntity> GetByIdAsync<TEntity>( long id ) where TEntity : class {
+            return await FindAsync<TEntity>( id ); 
+        }
+
+        public async Task<TEntity> FindAsync<TEntity>( params object[] keyValues ) where TEntity : class {
+            var result = await _dbContext.FindAsync<TEntity>( keyValues );
+            return result;
+        }
+
         public IQueryable<TEntity> Get<TEntity>( Expression<Func<TEntity, bool>> predicate = null ) where TEntity : class {
             return predicate != null ? Set<TEntity>().Where( predicate ) : Set<TEntity>();
         }
