@@ -17,17 +17,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{8252AE10-D396-4450-B31A-68EE773D2160}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Core\Application\Application.csproj", "{1E89CBC9-50DD-4E1D-810B-F960E06DA06B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Core\Application\Application.csproj", "{1E89CBC9-50DD-4E1D-810B-F960E06DA06B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence", "Infrastructure\Persistence\Persistence.csproj", "{04FB89F4-B119-40A4-9850-7315B3BFD5C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistence", "Infrastructure\Persistence\Persistence.csproj", "{04FB89F4-B119-40A4-9850-7315B3BFD5C4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F3CEE4E2-66FE-4EAC-A501-97460EE751B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence.Tests", "Tests\Persistence.Tests\Persistence.Tests.csproj", "{78D61355-BBA3-4526-ADC1-9F2CC9682D31}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistence.Tests", "Tests\Persistence.Tests\Persistence.Tests.csproj", "{78D61355-BBA3-4526-ADC1-9F2CC9682D31}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Tests", "Tests\Application.Tests\Application.Tests.csproj", "{858D1F45-F612-473E-BBD9-4B7EA5296C73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.Tests", "Tests\Application.Tests\Application.Tests.csproj", "{858D1F45-F612-473E-BBD9-4B7EA5296C73}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Core\Common\Common.csproj", "{F2475457-239E-442D-9F44-4194B5669E91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Core\Common\Common.csproj", "{F2475457-239E-442D-9F44-4194B5669E91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrbanEngineApi", "Web\UrbanEngineApi\UrbanEngineApi.csproj", "{30DFB8DD-4312-4705-9689-8D478C824978}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +73,10 @@ Global
 		{F2475457-239E-442D-9F44-4194B5669E91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2475457-239E-442D-9F44-4194B5669E91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2475457-239E-442D-9F44-4194B5669E91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30DFB8DD-4312-4705-9689-8D478C824978}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30DFB8DD-4312-4705-9689-8D478C824978}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30DFB8DD-4312-4705-9689-8D478C824978}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30DFB8DD-4312-4705-9689-8D478C824978}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,6 +87,7 @@ Global
 		{78D61355-BBA3-4526-ADC1-9F2CC9682D31} = {F3CEE4E2-66FE-4EAC-A501-97460EE751B2}
 		{858D1F45-F612-473E-BBD9-4B7EA5296C73} = {F3CEE4E2-66FE-4EAC-A501-97460EE751B2}
 		{F2475457-239E-442D-9F44-4194B5669E91} = {0A3F2788-CBC0-4D0F-917B-30BCD6AECE1C}
+		{30DFB8DD-4312-4705-9689-8D478C824978} = {8252AE10-D396-4450-B31A-68EE773D2160}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {22462567-607B-446A-A371-6454A18F401F}
