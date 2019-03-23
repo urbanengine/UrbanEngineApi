@@ -34,7 +34,7 @@ namespace UrbanEngine.Core.Application.Schedules
             throw new System.NotImplementedException();
         }
         
-        public Task<IEnumerable<ScheduledEventModel>> ListScheduledEventsAsync(DateTimeRange dateTimeRange)
+        public Task<IEnumerable<ScheduledEventModel>> ListScheduledEventsAsync(EventsFilterModel filter)
         {
             throw new System.NotImplementedException();
         }
@@ -49,7 +49,17 @@ namespace UrbanEngine.Core.Application.Schedules
             throw new System.NotImplementedException();
         }
 
-        public Task<ScheduledEventModel> DeleteSessionAsync(long sessionId, string reason)
+        public Task<ScheduledEventModel> DeleteSessionAsync(long eventId, long sessionId, string reason)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        Task<bool> IScheduleService.DeleteEventAsync(long eventId, string reason)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        Task<bool> IScheduleService.DeleteEventSessionAsync(long eventId, long sessionId, string reason)
         {
             throw new System.NotImplementedException();
         }

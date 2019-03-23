@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using UrbanEngine.Core.Application.SharedKernel;
 
 namespace UrbanEngine.Core.Application.Schedules
 {
@@ -12,9 +11,9 @@ namespace UrbanEngine.Core.Application.Schedules
 
         Task<bool> DeleteEventAsync(long eventId, string reason);
 
-        Task<bool> DeleteSessionAsync(long sessionId, string reason);
+        Task<bool> DeleteEventSessionAsync(long eventId, long sessionId, string reason);
 
-        Task<IEnumerable<ScheduledEventModel>> ListScheduledEventsAsync(DateTimeRange dateTimeRange);
+        Task<IEnumerable<ScheduledEventModel>> ListScheduledEventsAsync(EventsFilterModel filter);
 
         Task<IEnumerable<ScheduledEventSessionModel>> ListEventSessionsAsync(long eventId);
     }
