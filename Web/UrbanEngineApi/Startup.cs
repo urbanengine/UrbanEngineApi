@@ -14,6 +14,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.Extensions.PlatformAbstractions;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using UrbanEngine.Core.Application.Entities.ScheduleAggregate;
 using UrbanEngine.Core.Application.Interfaces.Persistence.Data;
 using UrbanEngine.Core.Application.Schedules;
 using UrbanEngine.Core.Common.Results;
@@ -80,7 +81,7 @@ namespace UrbanEngine.Web.UrbanEngineApi
             #region Dependency Injection 
 
             // repositories  
-            services.AddScoped<IEventRepository, EventRepository>();
+            services.AddScoped<IAsyncRepository<Event>, EfRepository<Event>>();
 
             // services
             services.AddTransient<IScheduleService, ScheduleService>();

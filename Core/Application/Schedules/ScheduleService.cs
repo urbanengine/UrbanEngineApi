@@ -9,13 +9,13 @@ namespace UrbanEngine.Core.Application.Schedules
     {
         #region Local Fields
 
-        private readonly IEventRepository _eventRepository; 
+        private readonly IAsyncRepository<Event> _eventRepository; 
 
         #endregion
 
         #region Constructors
 
-        public ScheduleService(IEventRepository eventRepository)
+        public ScheduleService(IAsyncRepository<Event> eventRepository)
         {
             _eventRepository = eventRepository;
         }
