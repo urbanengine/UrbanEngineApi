@@ -1,20 +1,21 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using UrbanEngine.Core.Application.Entities.ScheduleAggregate;
 
 namespace UrbanEngine.Core.Application.Schedules
 {
     public interface IScheduleService
     {
-        Task<ScheduledEventModel> ScheduleEventAsync(EventDetailModel eventDetail);
+        Task<ScheduleResult<Event>> ScheduleEventAsync(Event eventDetail);
 
-        Task<ScheduledEventSessionModel> ScheduleEventSessionAsync(long eventId, SessionDetailModel sessionDetail);
+        Task<ScheduleResult<EventSession>> ScheduleEventSessionAsync(long eventId, EventSession sessionDetail);
 
         Task<bool> DeleteEventAsync(long eventId, string reason);
 
         Task<bool> DeleteEventSessionAsync(long eventId, long sessionId, string reason);
 
-        Task<IEnumerable<ScheduledEventModel>> ListScheduledEventsAsync(EventsFilterModel filter);
+        Task<IEnumerable<ScheduleResult<Event>>> ListScheduledEventsAsync(ScheduleFilter scheduleFilter);
 
-        Task<IEnumerable<ScheduledEventSessionModel>> ListEventSessionsAsync(long eventId);
+        Task<IEnumerable<ScheduleResult<EventSession>>> ListEventSessionsAsync(long eventId);
     }
 }

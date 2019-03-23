@@ -1,4 +1,4 @@
-﻿namespace UrbanEngine.Core.Application.Schedules
+﻿namespace UrbanEngine.Web.UrbanEngineApi.Schedules
 {
     public class ScheduledEventSessionModel
     {

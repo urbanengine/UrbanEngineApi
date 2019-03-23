@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.Tests", "Tests\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Core\Common\Common.csproj", "{F2475457-239E-442D-9F44-4194B5669E91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrbanEngineApi", "Web\UrbanEngineApi\UrbanEngineApi.csproj", "{30DFB8DD-4312-4705-9689-8D478C824978}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanEngineApi", "Web\UrbanEngineApi\UrbanEngineApi.csproj", "{30DFB8DD-4312-4705-9689-8D478C824978}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using UrbanEngine.Core.Application.Entities.ScheduleAggregate;
 using UrbanEngine.Core.Application.Interfaces.Persistence.Data;
-using UrbanEngine.Core.Application.SharedKernel;
 
 namespace UrbanEngine.Core.Application.Schedules
 {
@@ -9,13 +9,13 @@ namespace UrbanEngine.Core.Application.Schedules
     {
         #region Local Fields
 
-        private readonly IScheduledEventRepository _eventRepository; 
+        private readonly IEventRepository _eventRepository; 
 
         #endregion
 
         #region Constructors
 
-        public ScheduleService(IScheduledEventRepository eventRepository)
+        public ScheduleService(IEventRepository eventRepository)
         {
             _eventRepository = eventRepository;
         }
@@ -24,32 +24,32 @@ namespace UrbanEngine.Core.Application.Schedules
 
         #region Implementation of IScheduleService
 
-        public Task<ScheduledEventModel> ScheduleEventAsync(EventDetailModel eventDetail)
+        public Task<ScheduleResult<Event>> ScheduleEventAsync(Event eventDetail)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<ScheduledEventModel> DeleteEventAsync(long eventId, string reason)
+        public Task<bool> DeleteEventAsync(long eventId, string reason)
         {
             throw new System.NotImplementedException();
         }
         
-        public Task<IEnumerable<ScheduledEventModel>> ListScheduledEventsAsync(EventsFilterModel filter)
+        public Task<IEnumerable<ScheduleResult<Event>>> ListScheduledEventsAsync(ScheduleFilter filter)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<IEnumerable<ScheduledEventSessionModel>> ListEventSessionsAsync(long eventId)
+        public Task<IEnumerable<ScheduleResult<EventSession>>> ListEventSessionsAsync(long eventId)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<ScheduledEventSessionModel> ScheduleEventSessionAsync(long eventId, SessionDetailModel sessionDetail)
+        public Task<ScheduleResult<EventSession>> ScheduleEventSessionAsync(long eventId, EventSession sessionDetail)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<ScheduledEventModel> DeleteSessionAsync(long eventId, long sessionId, string reason)
+        public Task<bool> DeleteSessionAsync(long eventId, long sessionId, string reason)
         {
             throw new System.NotImplementedException();
         }

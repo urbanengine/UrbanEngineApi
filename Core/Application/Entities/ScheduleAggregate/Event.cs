@@ -2,7 +2,7 @@
 
 namespace UrbanEngine.Core.Application.Entities.ScheduleAggregate
 {
-    public class ScheduledEvent : Entity<long>
+    public class Event : Entity<long>
     {
     }
 }
