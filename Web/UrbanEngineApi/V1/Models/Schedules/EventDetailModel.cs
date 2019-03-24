@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UrbanEngine.Core.Application.Entities.ScheduleAggregate;
+﻿using UrbanEngine.Core.Application.Entities.ScheduleAggregate;
 using UrbanEngine.Core.Common.Validation;
 
 namespace UrbanEngine.Web.UrbanEngineApi.Schedules
@@ -8,7 +7,7 @@ namespace UrbanEngine.Web.UrbanEngineApi.Schedules
     {
         public Event AsEventToSchedule()
         {
-            return new Event { };
+            return new Event("", "");
         }
 
         public bool IsValid => string.IsNullOrEmpty(GetErrorMessage());

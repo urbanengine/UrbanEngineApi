@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
@@ -7,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -14,10 +14,10 @@ using Microsoft.Extensions.Options;
 using Microsoft.Extensions.PlatformAbstractions;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using UrbanEngine.Core.Application.Entities.ScheduleAggregate;
 using UrbanEngine.Core.Application.Interfaces.Persistence.Data;
 using UrbanEngine.Core.Application.Schedules;
 using UrbanEngine.Core.Common.Results;
+using UrbanEngine.Infrastructure.Persistence.Data;
 using UrbanEngine.Infrastructure.Persistence.Data.Repository;
 using UrbanEngine.Web.UrbanEngineApi.Configuration;
 
@@ -77,11 +77,18 @@ namespace UrbanEngine.Web.UrbanEngineApi
                 });
 
             #endregion
-            
+
             #region Dependency Injection 
 
+            // db context 
+            services.AddDbContext<UrbanEngineDbContext>(options =>
+            {
+                options.UseSqlite("Data Source=UrbanEngine.db");
+                options.UseLoggerFactory(GetLoggerFactory());
+            });
+
             // repositories  
-            services.AddScoped<IAsyncRepository<Event>, EfRepository<Event>>();
+            services.AddScoped<IEventRepository, EventRepository>();
 
             // services
             services.AddTransient<IScheduleService, ScheduleService>();
@@ -151,6 +158,17 @@ namespace UrbanEngine.Web.UrbanEngineApi
                 var fileName = typeof(Startup).GetTypeInfo().Assembly.GetName().Name + ".xml";
                 return Path.Combine(basePath, fileName);
             }
+        }
+
+        private ILoggerFactory GetLoggerFactory()
+        {
+            IServiceCollection serviceCollection = new ServiceCollection();
+            serviceCollection.AddLogging(builder =>
+                   builder.AddConsole()
+                          .AddFilter(DbLoggerCategory.Database.Command.Name,
+                                     LogLevel.Information));
+            return serviceCollection.BuildServiceProvider()
+                    .GetService<ILoggerFactory>();
         }
     }
 }
