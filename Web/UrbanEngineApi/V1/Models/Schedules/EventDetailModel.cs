@@ -70,7 +70,7 @@ namespace UrbanEngine.Web.UrbanEngineApi.Schedules
             return new EventDetailModel
             {
                 Description = eventDetail.Description,
-                Duration = new DateTimeRange(eventDetail.StartDate, eventDetail.EndDate),
+                Duration = new DateTimeRange(eventDetail.StartDate.Value, eventDetail.EndDate.Value),
                 EventTypeValue = eventDetail.EventType.Value,
                 OrganizerId = eventDetail.OrganizerId,
                 Title = eventDetail.Title

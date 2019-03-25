@@ -4,8 +4,8 @@ namespace UrbanEngine.Core.Application.SharedKernel
 {
     public class DateTimeRange : ValueObject<DateTimeRange>
     {
-        public DateTime Start { get; private set; }
-        public DateTime End { get; private set; }
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
 
         public DateTimeRange(DateTime start, DateTime end)
         {
@@ -19,7 +19,7 @@ namespace UrbanEngine.Core.Application.SharedKernel
             End = start.Add(duration);
         }
 
-        protected DateTimeRange() { }
+        public DateTimeRange() { }
 
         public int DurationInMinutes()
         {

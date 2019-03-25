@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System;
 using UrbanEngine.Infrastructure.Persistence.Data;
 
 namespace UrbanEngine.Web.UrbanEngineApi
@@ -15,8 +16,15 @@ namespace UrbanEngine.Web.UrbanEngineApi
 
             var logger = host.Services.GetRequiredService<ILogger<Program>>();
 
-            logger.LogInformation("Seed Database");
-            CreateOrMigrateDatabase<UrbanEngineDbContext>(host);
+            try
+            {
+                logger.LogInformation("Seed Database");
+                CreateOrMigrateDatabase<UrbanEngineDbContext>(host);
+            }
+            catch(Exception ex)
+            {
+                logger.LogError(ex, $"error trying to call {nameof(CreateOrMigrateDatabase)}");
+            }
 
             logger.LogDebug("Run the application"); 
             host.Run();

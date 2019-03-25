@@ -7,17 +7,21 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "ue");
+
             migrationBuilder.CreateTable(
                 name: "Event",
+                schema: "ue",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Title = table.Column<string>(nullable: false),
                     Description = table.Column<string>(nullable: true),
-                    StartDate = table.Column<DateTime>(nullable: false),
-                    EndDate = table.Column<DateTime>(nullable: false),
-                    EventType = table.Column<int>(nullable: true),
+                    StartDate = table.Column<DateTime>(nullable: true),
+                    EndDate = table.Column<DateTime>(nullable: true),
+                    EventType = table.Column<int>(nullable: false),
                     OrganizerId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -29,7 +33,8 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Event");
+                name: "Event",
+                schema: "ue");
         }
     }
 }

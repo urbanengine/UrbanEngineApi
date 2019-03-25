@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using UrbanEngine.Core.Application.Entities.ScheduleAggregate;
 
 namespace UrbanEngine.Infrastructure.Persistence.Data
 {
     public class UrbanEngineDbContext : DbContext
     {
+        public string SchemaName { get; private set; } = "ue";
+
         public UrbanEngineDbContext(DbContextOptions<UrbanEngineDbContext> options) 
             : base(options) { }
 
@@ -15,16 +16,11 @@ namespace UrbanEngine.Infrastructure.Persistence.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Event>(entity => {
-                entity.HasKey(e => e.Id);
+            // set a default schema 
+            modelBuilder.HasDefaultSchema(SchemaName);
 
-                entity.Property(p => p.Title).IsRequired();
-
-                entity.Property(p => p.EventType)
-                    .HasConversion(
-                        p => p.Value,
-                        p => EventType.FromValue(p));
-            });
+            // look for all configuration in this assembly
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(UrbanEngineDbContext).Assembly);
 
             base.OnModelCreating(modelBuilder);
         }

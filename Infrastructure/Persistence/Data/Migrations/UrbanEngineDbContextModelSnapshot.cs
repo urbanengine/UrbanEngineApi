@@ -14,6 +14,7 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("ue")
                 .HasAnnotation("ProductVersion", "2.2.3-servicing-35854");
 
             modelBuilder.Entity("UrbanEngine.Core.Application.Entities.ScheduleAggregate.Event", b =>
@@ -23,13 +24,13 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<DateTime>("EndDate");
+                    b.Property<DateTime?>("EndDate");
 
-                    b.Property<int?>("EventType");
+                    b.Property<int>("EventType");
 
                     b.Property<string>("OrganizerId");
 
-                    b.Property<DateTime>("StartDate");
+                    b.Property<DateTime?>("StartDate");
 
                     b.Property<string>("Title")
                         .IsRequired();

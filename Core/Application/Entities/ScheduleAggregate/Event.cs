@@ -7,8 +7,8 @@ namespace UrbanEngine.Core.Application.Entities.ScheduleAggregate
     { 
         public string Title { get; private set; }
         public string Description { get; private set; }
-        public DateTime StartDate { get; private set; }
-        public DateTime EndDate { get; private set; }
+        public DateTime? StartDate { get; private set; }
+        public DateTime? EndDate { get; private set; }
         public EventType EventType { get; private set; }
         public string OrganizerId { get; private set; }
 
@@ -17,7 +17,7 @@ namespace UrbanEngine.Core.Application.Entities.ScheduleAggregate
 
         }
 
-        public Event(string title, string description, EventType eventType, DateTime startDate, DateTime endDate, string organizerId)
+        public Event(string title, string description, EventType eventType, DateTime? startDate, DateTime? endDate, string organizerId)
         {
             Title = title;
             Description = description;
