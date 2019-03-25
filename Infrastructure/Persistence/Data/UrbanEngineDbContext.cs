@@ -15,7 +15,16 @@ namespace UrbanEngine.Infrastructure.Persistence.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Event>();
+            modelBuilder.Entity<Event>(entity => {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(p => p.Title).IsRequired();
+
+                entity.Property(p => p.EventType)
+                    .HasConversion(
+                        p => p.Value,
+                        p => EventType.FromValue(p));
+            });
 
             base.OnModelCreating(modelBuilder);
         }

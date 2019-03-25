@@ -330,3 +330,4 @@ ASALocalRun/
 .vscode/launch.json
 .vscode/tasks.json 
 /Web/UrbanEngineApi/UrbanEngine.Web.UrbanEngineApi.xml
+/Web/UrbanEngineApi/UrbanEngine.db

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
+using UrbanEngine.Core.Application.Entities.ScheduleAggregate;
 using UrbanEngine.Core.Application.Schedules;
 using UrbanEngine.Web.UrbanEngineApi.Schedules;
 
@@ -21,13 +22,19 @@ namespace UrbanEngine.Web.UrbanEngineApi.V1.Controllers
             _logger = logger;
         }
         
+        [HttpGet("types")]
+        public IActionResult ListEventTypes()
+        {
+            return Ok(EventType.List);
+        }
+
         [HttpPost]
         public async Task<IActionResult> ScheduleEventAsync([FromBody]EventDetailModel eventDetail)
         {
             if (!(eventDetail?.IsValid ?? false))
                 throw new ArgumentException(eventDetail?.GetErrorMessage() ?? $"{nameof(eventDetail)} was not found, cannot be null");
 
-            var result = await _scheduleService.ScheduleEventAsync(eventDetail?.AsEventToSchedule());
+            var result = await _scheduleService.ScheduleEventAsync(EventDetailModel.ToDomainEntity(eventDetail));
             return Ok(result);
         }
 
@@ -37,7 +44,15 @@ namespace UrbanEngine.Web.UrbanEngineApi.V1.Controllers
             var result = await _scheduleService.ListScheduledEventsAsync(filter);
             return Ok(result);
         }
-         
+        
+        [HttpGet("{eventId}")]
+        public async Task<IActionResult> GetEventDetail(long eventId)
+        {
+            var result = await _scheduleService.GetEventDetail(eventId);
+            var model = EventDetailModel.FromDomainEntity(result); 
+            return Ok(model); 
+        }
+
         [HttpDelete("{eventId}")]
         public async Task<IActionResult> DeleteEventAsync(long eventId, string reason)
         {

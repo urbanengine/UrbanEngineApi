@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
 {
@@ -12,8 +13,12 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true)
+                    Title = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    StartDate = table.Column<DateTime>(nullable: false),
+                    EndDate = table.Column<DateTime>(nullable: false),
+                    EventType = table.Column<int>(nullable: true),
+                    OrganizerId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

@@ -10,6 +10,8 @@ namespace UrbanEngine.Core.Application.Schedules
 
         Task<ScheduleResult<EventSession>> ScheduleEventSessionAsync(long eventId, EventSession sessionDetail);
 
+        Task<Event> GetEventDetail(long eventId);
+
         Task<bool> DeleteEventAsync(long eventId, string reason);
 
         Task<bool> DeleteEventSessionAsync(long eventId, long sessionId, string reason);
