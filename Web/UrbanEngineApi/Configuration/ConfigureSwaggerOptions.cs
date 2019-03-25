@@ -36,12 +36,12 @@ namespace UrbanEngine.Web.UrbanEngineApi.Configuration
         {
             var info = new Info()
             {
-                Title = "Sample API",
+                Title = "Urban Engine API",
                 Version = description.ApiVersion.ToString(),
-                Description = "A sample application with Swagger, Swashbuckle, and API versioning.",
-                Contact = new Contact() { Name = "Bill Mei", Email = "bill.mei@somewhere.com" },
-                TermsOfService = "Shareware",
-                License = new License() { Name = "MIT", Url = "https://opensource.org/licenses/MIT" }
+                Description = "Urban Engine API for managing Urban Engine events.",
+                Contact = new Contact() { Name = "Tyler Hughes", Email = "tyler@urbanengine.org" },
+                TermsOfService = "",
+                License = new License() { Name = "Apache 2.0", Url = "https://www.apache.org/licenses/LICENSE-2.0.html" }
             };
 
             if (description.IsDeprecated)
