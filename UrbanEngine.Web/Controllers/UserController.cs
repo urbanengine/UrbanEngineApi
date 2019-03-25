@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using UrbanEngine.Core;
 using UrbanEngine.Core.Entities;
 using UrbanEngine.Core.Interfaces;
 
-namespace urban_engine_api.Controllers {
+namespace urban_engine_api.Controllers
+{
     /// <summary>
     /// manages user account in the system
     /// </summary>

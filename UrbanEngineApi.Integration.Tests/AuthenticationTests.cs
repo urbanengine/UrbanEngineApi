@@ -2,14 +2,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using Newtonsoft.Json.Linq;
-using System;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+
+using Moq;
+using Newtonsoft.Json.Linq;
+
 using UrbanEngine.Web.Controllers;
 
 namespace UrbanEngineApi.Integration.Tests
@@ -30,21 +31,26 @@ namespace UrbanEngineApi.Integration.Tests
         #region Tests
 
         /// <summary>
-        /// Verifies that the API returns a 401 Unauthorized if non access token is provided in the request
+        /// Verifies that the API returns a 401 Unauthorized if no access token is provided in the request
         /// </summary>
         [TestMethod]
         public void UnAuthorizedAccess()
         {
+            // Arrange
             var mock = new Mock<ILogger<AboutController>>();
             ILogger<AboutController> logger = mock.Object;
 
+            // Act
             var controller = new AboutController( logger );
-
             var response = controller.GetVersion() as OkObjectResult;
 
+            // Assert
             Assert.AreEqual( HttpStatusCode.Unauthorized, response.StatusCode );
         }
 
+        /// <summary>
+        /// Verifies that the API returns a 401 Unauthorized if no access token is provided in the request
+        /// </summary>
         [TestMethod]
         public async Task TestGetToken()
         {
@@ -62,21 +68,40 @@ namespace UrbanEngineApi.Integration.Tests
             Assert.AreEqual( "Bearer", (string) responseJson["token_type"] );
         }
 
+        /// <summary>
+        /// Verifies that the API returns a 401 Unauthorized if no access token is provided in the request
+        /// </summary>
         [TestMethod]
         public async Task AuthorizedAccess()
         {
+            //// Arrange
+            //var mock = new Mock<ILogger<AboutController>>();
+            //ILogger<AboutController> logger = mock.Object;
+
+
+            //// Act
+            //var controller = new AboutController( logger );
+            //var result = controller.GetHeaderValue( "27" );
+            //var response = controller.GetVersion() as OkObjectResult;
+
+            // Arrange
             var client = new HttpClient();
             var token = await GetToken();
 
+            // Act
             var requestMessage = new HttpRequestMessage( HttpMethod.Get, "/about" );
             requestMessage.Headers.Authorization = new AuthenticationHeaderValue( "Bearer", token );
-            var booksResponse = await client.SendAsync( requestMessage );
+            var response = await client.SendAsync( requestMessage );
 
-            Assert.AreEqual( HttpStatusCode.OK, booksResponse.StatusCode );
+            // Assert
+            Assert.AreEqual( HttpStatusCode.OK, response.StatusCode );
 
-            var bookResponseString = await booksResponse.Content.ReadAsStringAsync();
-            var bookResponseJson = JArray.Parse( bookResponseString );
-            Assert.AreEqual( 4, bookResponseJson.Count );
+            // Arrange Again
+            var responseString = await response.Content.ReadAsStringAsync();
+            var responseJson = JArray.Parse( responseString );
+
+            // Assert again
+            Assert.AreEqual( 4, responseJson.Count );
         }
 
         #endregion

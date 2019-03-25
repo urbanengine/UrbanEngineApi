@@ -1,4 +1,5 @@
-﻿using System.Reflection; 
+﻿using System.Reflection;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -29,6 +30,7 @@ namespace UrbanEngine.Web.Controllers {
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [Authorize]
         public IActionResult GetVersion() {  
             var info = new {
                 Service = new {

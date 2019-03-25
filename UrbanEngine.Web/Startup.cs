@@ -1,27 +1,27 @@
-﻿namespace urban_engine_api {
-    using System.Reflection;
-    using System.IO;
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.ApiExplorer;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.PlatformAbstractions;
-    using Microsoft.EntityFrameworkCore;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Serialization;
-    using Swashbuckle.AspNetCore.Swagger;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.PlatformAbstractions;
+using System.IO;
+using System.Reflection;
 
-    using UrbanEngine.Core.Interfaces;
-    using UrbanEngine.Web.Configuration;
-    using UrbanEngine.Infrastructure.Managers;
-    using UrbanEngine.Infrastructure.Repository;
-    using UrbanEngine.Infrastructure.Context;
-    using Microsoft.AspNetCore.Authentication.JwtBearer;
-    using Microsoft.Extensions.Logging;
-    using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using Swashbuckle.AspNetCore.Swagger;
 
+using UrbanEngine.Core.Interfaces;
+using UrbanEngine.Infrastructure.Context;
+using UrbanEngine.Infrastructure.Managers;
+using UrbanEngine.Infrastructure.Repository;
+using UrbanEngine.Web.Configuration;
+
+namespace urban_engine_api
+{
     public class Startup {
         #region Properties
 
@@ -52,18 +52,17 @@
 
             #region Authentication
 
-            string domain = $"https://{Configuration["Auth0:Domain"]}/";
+            services.AddAuthentication( options =>
+             {
+                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-
-            }).AddJwtBearer(options =>
-            {
-                options.Authority = domain;
-                options.Audience = Configuration["Auth0:ApiIdentifier"];
-            });
+             } )
+             .AddJwtBearer( options =>
+             {
+                 options.Audience = Configuration[ "Auth0:ApiIdentifier" ];
+                 options.Authority = $"https://{Configuration[ "Auth0:Domain" ]}/";
+             } );
 
             #endregion
 
