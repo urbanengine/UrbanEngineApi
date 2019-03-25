@@ -22,7 +22,8 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .HasMaxLength(500);
 
                     b.Property<DateTime?>("EndDate");
 
@@ -33,11 +34,37 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
                     b.Property<DateTime?>("StartDate");
 
                     b.Property<string>("Title")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<long?>("VenueId");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("VenueId");
+
                     b.ToTable("Event");
+                });
+
+            modelBuilder.Entity("UrbanEngine.Core.Application.Entities.ScheduleAggregate.EventVenue", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Venue");
+                });
+
+            modelBuilder.Entity("UrbanEngine.Core.Application.Entities.ScheduleAggregate.Event", b =>
+                {
+                    b.HasOne("UrbanEngine.Core.Application.Entities.ScheduleAggregate.EventVenue", "Venue")
+                        .WithMany("Events")
+                        .HasForeignKey("VenueId");
                 });
 #pragma warning restore 612, 618
         }

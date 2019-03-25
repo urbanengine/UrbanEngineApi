@@ -34,6 +34,10 @@ namespace UrbanEngine.Web.UrbanEngineApi.Schedules
         /// identifies the person organizing the event
         /// </summary>
         public string OrganizerId { get; set; }
+        /// <summary>
+        /// venue where event will be held 
+        /// </summary>
+        public long? VenueId { get; set; }
         #endregion
 
         #region Methods
@@ -54,7 +58,8 @@ namespace UrbanEngine.Web.UrbanEngineApi.Schedules
                 EventType.FromValue(model.EventTypeValue), 
                 model.Duration.Start, 
                 model.Duration.End, 
-                model.OrganizerId);
+                model.OrganizerId,
+                model.VenueId);
         }
 
         /// <summary>
