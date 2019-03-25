@@ -4,7 +4,7 @@ using Xunit;
 namespace UrbanEngine.Tests.Managers {
     public class UserManagerTests
     {
-        private IUserManager _manager = null;
+        //private IUserManager _manager = null;
 
         [Fact]
         public void CanGetUserById()
