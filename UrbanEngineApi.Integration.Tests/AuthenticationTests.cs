@@ -34,18 +34,18 @@ namespace UrbanEngineApi.Integration.Tests
         /// Verifies that the API returns a 401 Unauthorized if no access token is provided in the request
         /// </summary>
         [TestMethod]
-        public void UnAuthorizedAccess()
+        public async Task UnAuthorizedAccess()
         {
             // Arrange
             var mock = new Mock<ILogger<AboutController>>();
-            ILogger<AboutController> logger = mock.Object;
+            var controller = new AboutController( mock.Object );
 
             // Act
-            var controller = new AboutController( logger );
-            var response = controller.GetVersion() as OkObjectResult;
+            var actionResult = controller.GetVersion();
+            var contentResult = actionResult as ContentResult;
 
             // Assert
-            Assert.AreEqual( HttpStatusCode.Unauthorized, response.StatusCode );
+            Assert.AreEqual( HttpStatusCode.Unauthorized, contentResult.StatusCode );
         }
 
         /// <summary>

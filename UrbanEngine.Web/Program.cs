@@ -24,10 +24,10 @@ namespace urban_engine_api {
          
         // this will create database if not exists or update it to latest if it does 
         static void CreateOrMigrateDatabase<TContext>( IWebHost host ) where TContext : DbContext {
-            using( var scope = host.Services.CreateScope() )
-            using( var context = scope.ServiceProvider.GetService<TContext>() ) {
-                context.Database.Migrate();
-            }
+            //using( var scope = host.Services.CreateScope() )
+            //using( var context = scope.ServiceProvider.GetService<TContext>() ) {
+            //    context.Database.Migrate();
+            //}
         }
 
     }
