@@ -12,6 +12,10 @@ using Moq;
 using Newtonsoft.Json.Linq;
 
 using UrbanEngine.Web.Controllers;
+using TestContext = UrbanEngineApi.Integration.Tests.Fixtures.TestContext;
+using UrbanEngineApi.Integration.Tests.Model;
+using Newtonsoft.Json;
+using System.Net.Http.Formatting;
 
 namespace UrbanEngineApi.Integration.Tests
 {
@@ -19,6 +23,12 @@ namespace UrbanEngineApi.Integration.Tests
     public class AuthenticationTests
     {
         private IConfiguration _configuration;
+        private readonly TestContext _context;
+
+        public AuthenticationTests()
+        {
+            _context = new TestContext();
+        }
 
         [TestInitialize]
         public void Init()
@@ -37,15 +47,13 @@ namespace UrbanEngineApi.Integration.Tests
         public async Task UnAuthorizedAccess()
         {
             // Arrange
-            var mock = new Mock<ILogger<AboutController>>();
-            var controller = new AboutController( mock.Object );
+            var client = _context.Client;
 
             // Act
-            var actionResult = controller.GetVersion();
-            var contentResult = actionResult as ContentResult;
+            var response = await client.GetAsync( "/about" );
 
             // Assert
-            Assert.AreEqual( HttpStatusCode.Unauthorized, contentResult.StatusCode );
+            Assert.AreEqual( HttpStatusCode.Unauthorized, response.StatusCode );
         }
 
         /// <summary>
@@ -54,18 +62,24 @@ namespace UrbanEngineApi.Integration.Tests
         [TestMethod]
         public async Task TestGetToken()
         {
-            var client = new HttpClient();
-            var bodyString = $@"{{""client_id"":""{_configuration["Auth0:ClientId"]}"", ""client_secret"":""{_configuration["Auth0:ClientSecret"]}"", ""audience"":""{_configuration["Auth0:Audience"]}"", ""grant_type"":""client_credentials""}}";
-            var response = await client.PostAsync($"{_configuration["Auth0:Authority"]}/oauth/token", new StringContent(bodyString, Encoding.UTF8, "application/json"));
+            // Arrange
+            var client = _context.Client;
+            var json = new Auth0RequestModel() {
+                audience = _configuration[ "Auth0:Audience" ],
+                authority = _configuration[ "Auth0:Authority" ],
+                client_id = _configuration["Auth0:ClientId"],
+                client_secret = _configuration["Auth0:ClientSecret"],
+                grant_type = "client_credentials"
+            };
+            var url = $"{json.authority}/oauth/token";
 
-            Assert.AreEqual( HttpStatusCode.OK, response.StatusCode );
+            // Act
+            var response = await client.PostAsync( url, json, new JsonMediaTypeFormatter() );
+            var deserializedResponse = await response.Content.ReadAsAsync<Auth0ResponseModel>();
 
-            var responseString = await response.Content.ReadAsStringAsync();
-            var responseJson = JObject.Parse( responseString );
-
-            // Verify that a non-null token has been received and that the type of token is Bearer
-            Assert.IsNotNull( (string) responseJson["access_token"] );
-            Assert.AreEqual( "Bearer", (string) responseJson["token_type"] );
+            // Assert
+            Assert.IsNotNull( deserializedResponse.access_token );
+            Assert.AreEqual( "Bearer", deserializedResponse.token_type );
         }
 
         /// <summary>
@@ -74,24 +88,13 @@ namespace UrbanEngineApi.Integration.Tests
         [TestMethod]
         public async Task AuthorizedAccess()
         {
-            //// Arrange
-            //var mock = new Mock<ILogger<AboutController>>();
-            //ILogger<AboutController> logger = mock.Object;
-
-
-            //// Act
-            //var controller = new AboutController( logger );
-            //var result = controller.GetHeaderValue( "27" );
-            //var response = controller.GetVersion() as OkObjectResult;
-
             // Arrange
-            var client = new HttpClient();
-            var token = await GetToken();
+            var client = _context.Client;
+            var token = GetToken();
 
             // Act
-            var requestMessage = new HttpRequestMessage( HttpMethod.Get, "/about" );
-            requestMessage.Headers.Authorization = new AuthenticationHeaderValue( "Bearer", token );
-            var response = await client.SendAsync( requestMessage );
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", token );
+            var response = await client.GetAsync( "/about" );
 
             // Assert
             Assert.AreEqual( HttpStatusCode.OK, response.StatusCode );
@@ -108,16 +111,16 @@ namespace UrbanEngineApi.Integration.Tests
 
         #region Private Methods
 
-        private async Task<string> GetToken()
+        private string GetToken()
         {
-            var client = new HttpClient();
+            var client = _context.Client;
             string token = "";
-            var bodyString = $@"{{""client_id"":""{_configuration["Auth0:ClientId"]}"", ""client_secret"":""{_configuration["Auth0:ClientSecret"]}"", ""audience"":""{_configuration["Auth0:Audience"]}"", ""grant_type"":""client_credentials""}}";
-            var response = await client.PostAsync($"{_configuration["Auth0:Authority"]}oauth/token", new StringContent(bodyString, Encoding.UTF8, "application/json"));
+            var bodyString = $@"{{""client_id"":""{_configuration[ "Auth0:ClientId" ]}"", ""client_secret"":""{_configuration[ "Auth0:ClientSecret" ]}"", ""audience"":""{_configuration[ "Auth0:Audience" ]}"", ""grant_type"":""client_credentials""}}";
+            var response = client.PostAsync( $"{_configuration[ "Auth0:Authority" ]}/oauth/token", new StringContent( bodyString, Encoding.UTF8, "application/json" ) ).Result;
 
             if ( response.IsSuccessStatusCode )
             {
-                var responseString = await response.Content.ReadAsStringAsync();
+                var responseString = response.Content.ReadAsStringAsync().Result;
                 var responseJson = JObject.Parse( responseString );
                 token = ( string ) responseJson[ "access_token" ];
             }
