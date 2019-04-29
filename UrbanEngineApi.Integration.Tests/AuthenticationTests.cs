@@ -10,7 +10,9 @@ using Newtonsoft.Json.Linq;
 
 using UrbanEngineApi.Integration.Tests.Extensions;
 using UrbanEngineApi.Integration.Tests.Model;
-using TestContext = UrbanEngineApi.Integration.Tests.Fixtures.TestContext;
+using HttpClientHelper = UrbanEngineApi.Integration.Tests.Helpers.HttpClientHelper;
+using System;
+using System.Diagnostics;
 
 namespace UrbanEngineApi.Integration.Tests
 {
@@ -18,11 +20,11 @@ namespace UrbanEngineApi.Integration.Tests
     public class AuthenticationTests
     {
         private IConfiguration _configuration;
-        private readonly TestContext _context;
+        private readonly HttpClientHelper _helper;
 
         public AuthenticationTests()
         {
-            _context = new TestContext();
+            _helper = new HttpClientHelper();
         }
 
         [TestInitialize]
@@ -42,7 +44,7 @@ namespace UrbanEngineApi.Integration.Tests
         public async Task UnAuthorizedAccess()
         {
             // Arrange
-            var client = _context.Client;
+            var client = _helper.Client;
 
             // Act
             var response = await client.GetAsync( "/about" );
@@ -88,22 +90,15 @@ namespace UrbanEngineApi.Integration.Tests
         public async Task AuthorizedAccess()
         {
             // Arrange
-            var client = _context.Client;
+            var client = _helper.Client;
             var token = await GetToken();
 
             // Act
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", token );
-            var response = await client.GetAsync( "/about" );
+            client.DefaultRequestHeaders.TryAddWithoutValidation( "Authorization", string.Format( "Bearer {0}", token ) );
+            var response = await client.GetAsync( "/about" ); // this throws an InvalidOperationException
 
             // Assert
-            Assert.AreEqual( HttpStatusCode.OK, response.StatusCode );
-
-            // Arrange Again
-            var responseString = await response.Content.ReadAsStringAsync();
-            var responseJson = JArray.Parse( responseString );
-
-            // Assert again
-            Assert.AreEqual( 4, responseJson.Count );
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         #endregion

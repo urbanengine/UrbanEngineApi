@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.TestHost;
 using System.Net.Http;
 using urban_engine_api;
 
-namespace UrbanEngineApi.Integration.Tests.Fixtures {
-    public class TestContext
+namespace UrbanEngineApi.Integration.Tests.Helpers {
+    public class HttpClientHelper
     {
         public HttpClient Client { get; set; }
         private TestServer _server;
 
-        public TestContext()
+        public HttpClientHelper()
         {
             SetupClient();
         }
