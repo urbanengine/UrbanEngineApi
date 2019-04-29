@@ -1,6 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Net;
 using System.Net.Http;
@@ -8,14 +6,11 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
-using Moq;
 using Newtonsoft.Json.Linq;
 
-using UrbanEngine.Web.Controllers;
-using TestContext = UrbanEngineApi.Integration.Tests.Fixtures.TestContext;
+using UrbanEngineApi.Integration.Tests.Extensions;
 using UrbanEngineApi.Integration.Tests.Model;
-using Newtonsoft.Json;
-using System.Net.Http.Formatting;
+using TestContext = UrbanEngineApi.Integration.Tests.Fixtures.TestContext;
 
 namespace UrbanEngineApi.Integration.Tests
 {
@@ -63,18 +58,22 @@ namespace UrbanEngineApi.Integration.Tests
         public async Task TestGetToken()
         {
             // Arrange
-            var client = _context.Client;
-            var json = new Auth0RequestModel() {
-                audience = _configuration[ "Auth0:Audience" ],
-                authority = _configuration[ "Auth0:Authority" ],
+            var client = new HttpClient();
+            var json = new Auth0RequestModel()
+            {
+                audience = _configuration["Auth0:Audience"],
+                authority = _configuration["Auth0:Authority"],
                 client_id = _configuration["Auth0:ClientId"],
                 client_secret = _configuration["Auth0:ClientSecret"],
                 grant_type = "client_credentials"
             };
-            var url = $"{json.authority}/oauth/token";
 
+            var payload = json.ToJson();
+            var content = new StringContent( payload, Encoding.UTF8, "application/json" );
+            var url = $"{json.authority}/oauth/token";
+            
             // Act
-            var response = await client.PostAsync( url, json, new JsonMediaTypeFormatter() );
+            var response = await client.PostAsync( url, content );
             var deserializedResponse = await response.Content.ReadAsAsync<Auth0ResponseModel>();
 
             // Assert
@@ -90,7 +89,7 @@ namespace UrbanEngineApi.Integration.Tests
         {
             // Arrange
             var client = _context.Client;
-            var token = GetToken();
+            var token = await GetToken();
 
             // Act
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", token );
@@ -111,18 +110,31 @@ namespace UrbanEngineApi.Integration.Tests
 
         #region Private Methods
 
-        private string GetToken()
+        private async Task<string> GetToken()
         {
-            var client = _context.Client;
-            string token = "";
-            var bodyString = $@"{{""client_id"":""{_configuration[ "Auth0:ClientId" ]}"", ""client_secret"":""{_configuration[ "Auth0:ClientSecret" ]}"", ""audience"":""{_configuration[ "Auth0:Audience" ]}"", ""grant_type"":""client_credentials""}}";
-            var response = client.PostAsync( $"{_configuration[ "Auth0:Authority" ]}/oauth/token", new StringContent( bodyString, Encoding.UTF8, "application/json" ) ).Result;
+            var client = new HttpClient();
+            string token = string.Empty;
+            var json = new Auth0RequestModel()
+            {
+                audience = _configuration["Auth0:Audience"],
+                authority = _configuration["Auth0:Authority"],
+                client_id = _configuration["Auth0:ClientId"],
+                client_secret = _configuration["Auth0:ClientSecret"],
+                grant_type = "client_credentials"
+            };
+
+            var payload = json.ToJson();
+            var content = new StringContent(payload, Encoding.UTF8, "application/json");
+            var url = $"{json.authority}/oauth/token";
+
+            // Act
+            var response = await client.PostAsync(url, content);
+            
 
             if ( response.IsSuccessStatusCode )
             {
-                var responseString = response.Content.ReadAsStringAsync().Result;
-                var responseJson = JObject.Parse( responseString );
-                token = ( string ) responseJson[ "access_token" ];
+                var deserializedResponse = await response.Content.ReadAsAsync<Auth0ResponseModel>();
+                token = deserializedResponse.access_token;
             }
 
             return token;
