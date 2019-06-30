@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UrbanEngine.Core.Application.Interfaces.Persistence.Data;
+using UrbanEngine.Core.Application.Specifications;
 
 namespace UrbanEngine.Infrastructure.Persistence.Data.Repository
 {

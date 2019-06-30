@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using UrbanEngine.Core.Application.Interfaces.Persistence.Data;
+using UrbanEngine.Core.Application.Specifications;
 
 namespace UrbanEngine.Infrastructure.Persistence.Data
 {
@@ -35,10 +35,10 @@ namespace UrbanEngine.Infrastructure.Persistence.Data
             }
 
             // Apply paging if enabled
-            if (specification.Skip.HasValue && specification.Take.HasValue)
+            if (specification.EnablePaging)
             {
-                query = query.Skip(specification.Skip.Value)
-                             .Take(specification.Take.Value);
+                query = query.Skip(specification.Skip)
+                             .Take(specification.Take);
             }
             return query;
         }

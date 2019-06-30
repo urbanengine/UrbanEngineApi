@@ -25,12 +25,12 @@
 
         public bool? DisablePaging { get; set; }
 
-        public int? GetSkipValue()
+        public int GetSkipValue()
         {
             return (PageNumber ?? 1) - 1;
         }
 
-        public int? GetTakeValue()
+        public int GetTakeValue()
         {
             return PageSize ?? DefaultMaxPageSize;
         }

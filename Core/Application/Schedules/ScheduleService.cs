@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using UrbanEngine.Core.Application.Entities.ScheduleAggregate;
 using UrbanEngine.Core.Application.Interfaces.Persistence.Data;
 using UrbanEngine.Core.Common.Paging;
-using UrbanEngine.Core.Common.Results;
 
 namespace UrbanEngine.Core.Application.Schedules
 {

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using UrbanEngine.Core.Application.Specifications;
 
 namespace UrbanEngine.Core.Application.Interfaces.Persistence.Data
 {
