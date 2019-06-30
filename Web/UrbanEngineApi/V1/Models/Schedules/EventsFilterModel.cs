@@ -1,4 +1,4 @@
-﻿namespace UrbanEngine.Web.UrbanEngineApi.Schedules
+﻿namespace UrbanEngine.Services.UrbanEngineApi.Schedules
 {
     public class EventsFilterModel
     {

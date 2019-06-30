@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace UrbanEngine.Web.UrbanEngineApi.Configuration
+namespace UrbanEngine.Services.UrbanEngineApi.Configuration
 {
     /// <summary>
     /// Configures the Swagger generation options.

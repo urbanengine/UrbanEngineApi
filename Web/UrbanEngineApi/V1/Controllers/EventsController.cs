@@ -4,9 +4,9 @@ using System;
 using System.Threading.Tasks;
 using UrbanEngine.Core.Application.Entities.ScheduleAggregate;
 using UrbanEngine.Core.Application.Schedules;
-using UrbanEngine.Web.UrbanEngineApi.Schedules;
+using UrbanEngine.Services.UrbanEngineApi.Schedules;
 
-namespace UrbanEngine.Web.UrbanEngineApi.V1.Controllers
+namespace UrbanEngine.Services.UrbanEngineApi.V1.Controllers
 { 
     [Route("api/[controller]")]
     [ApiVersion("1.0")]

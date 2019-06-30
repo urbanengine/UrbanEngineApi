@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using System.Reflection;
 
-namespace UrbanEngine.Web.UrbanEngineApi.VN.Controllers
+namespace UrbanEngine.Services.UrbanEngineApi.VN.Controllers
 {
     [Route("api/[controller]")]
     [ApiVersionNeutral]

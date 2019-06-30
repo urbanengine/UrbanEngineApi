@@ -5,7 +5,7 @@ using UrbanEngine.Core.Application.Entities.ScheduleAggregate;
 using UrbanEngine.Core.Application.SharedKernel;
 using UrbanEngine.Core.Common.Validation;
 
-namespace UrbanEngine.Web.UrbanEngineApi.Schedules
+namespace UrbanEngine.Services.UrbanEngineApi.Schedules
 {
     /// <summary>
     /// represents details specified by end user to manage events

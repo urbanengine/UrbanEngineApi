@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
-    <AssemblyName>UrbanEngine.Web.UrbanEngineApi</AssemblyName>
-    <RootNamespace>UrbanEngine.Web.UrbanEngineApi</RootNamespace>
+    <AssemblyName>UrbanEngine.Services.UrbanEngineApi</AssemblyName>
+    <RootNamespace>UrbanEngine.Services.UrbanEngineApi</RootNamespace>
     <DocumentationFile>bin\Debug\netcoreapp2.2\UrbanEngine.Web.UrbanEngineApi.xml</DocumentationFile>
   </PropertyGroup>
 

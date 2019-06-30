@@ -19,13 +19,13 @@ using UrbanEngine.Core.Application.Schedules;
 using UrbanEngine.Core.Common.Results;
 using UrbanEngine.Infrastructure.Persistence.Data;
 using UrbanEngine.Infrastructure.Persistence.Data.Repository;
-using UrbanEngine.Web.UrbanEngineApi.Configuration;
+using UrbanEngine.Services.UrbanEngineApi.Configuration;
 
-namespace UrbanEngine.Web.UrbanEngineApi
+namespace UrbanEngine.Services.UrbanEngineApi
 {
     public class Startup
     {
-        static int _errorEventId = 1; 
+        static int _errorEventId = 1;
 
         public Startup(IConfiguration configuration)
         {
@@ -39,7 +39,7 @@ namespace UrbanEngine.Web.UrbanEngineApi
         {
             services.AddMvc(options => options.EnableEndpointRouting = true)
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-             
+
             #region Versioning
 
             services.AddApiVersioning(
@@ -100,7 +100,7 @@ namespace UrbanEngine.Web.UrbanEngineApi
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApiVersionDescriptionProvider provider)
         {
             if (!env.IsDevelopment())
-            { 
+            {
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
@@ -118,7 +118,7 @@ namespace UrbanEngine.Web.UrbanEngineApi
                     // return a 500 status code and generic json message 
                     context.Response.StatusCode = 500;
                     context.Response.ContentType = "application/json";
-                     
+
                     var json = JsonConvert.SerializeObject(new FailureResult(exceptionHandlerPathFeature.Error));
                     await context.Response.WriteAsync(json);
 

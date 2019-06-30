@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using UrbanEngine.Infrastructure.Persistence.Data;
 
-namespace UrbanEngine.Web.UrbanEngineApi
+namespace UrbanEngine.Services.UrbanEngineApi
 {
     public class Program
     {
