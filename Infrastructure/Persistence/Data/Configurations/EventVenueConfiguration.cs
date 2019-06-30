@@ -14,6 +14,8 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Configurations
             builder.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(200);
+
+            builder.OwnsOne(p => p.Location);
         }
     }
 }

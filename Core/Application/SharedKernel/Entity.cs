@@ -3,9 +3,8 @@
     public abstract class Entity<TIdentity>
     {
 
-        public TIdentity Id { get; private set; }
+        public TIdentity Id { get; protected set; }
 
         protected Entity() { }
-
     }
 }

@@ -9,6 +9,8 @@ namespace UrbanEngine.Core.Application.Entities.ScheduleAggregate
 
         public string Name { get; private set; }
 
+        public Location Location { get; private set; }
+
         #endregion
 
         #region Navigation Properties
@@ -24,6 +26,19 @@ namespace UrbanEngine.Core.Application.Entities.ScheduleAggregate
         public EventVenue(string name)
         {
             Name = name;
+        }
+
+        public EventVenue(string name, Location location)
+        {
+            Name = name;
+            Location = location;
+        }
+
+        public EventVenue(long id, string name, Location location)
+        {
+            Id = id;
+            Name = name;
+            Location = location;
         }
 
         #endregion
