@@ -22,6 +22,9 @@ namespace UrbanEngine.Infrastructure.Persistence.Data
             // look for all configuration in this assembly
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(UrbanEngineDbContext).Assembly);
 
+            // apply seed data
+            modelBuilder.ApplySeedData();
+
             base.OnModelCreating(modelBuilder);
         }
     }
