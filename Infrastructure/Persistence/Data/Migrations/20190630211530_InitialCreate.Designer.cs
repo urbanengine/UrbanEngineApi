@@ -6,10 +6,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UrbanEngine.Infrastructure.Persistence.Data;
 
-namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
+namespace UrbanEngine.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(UrbanEngineDbContext))]
-    [Migration("20190325020732_InitialCreate")]
+    [Migration("20190630211530_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -67,6 +67,41 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
                     b.HasOne("UrbanEngine.Core.Application.Entities.ScheduleAggregate.EventVenue", "Venue")
                         .WithMany("Events")
                         .HasForeignKey("VenueId");
+                });
+
+            modelBuilder.Entity("UrbanEngine.Core.Application.Entities.ScheduleAggregate.EventVenue", b =>
+                {
+                    b.OwnsOne("UrbanEngine.Core.Application.Entities.Location", "Location", b1 =>
+                        {
+                            b1.Property<long>("EventVenueId");
+
+                            b1.Property<string>("Address")
+                                .HasColumnName("Address");
+
+                            b1.Property<string>("Address2")
+                                .HasColumnName("Address2");
+
+                            b1.Property<string>("City")
+                                .HasColumnName("City");
+
+                            b1.Property<string>("Country")
+                                .HasColumnName("Country");
+
+                            b1.Property<string>("PostalCode")
+                                .HasColumnName("PostalCode");
+
+                            b1.Property<string>("State")
+                                .HasColumnName("State");
+
+                            b1.HasKey("EventVenueId");
+
+                            b1.ToTable("Venue","ue");
+
+                            b1.HasOne("UrbanEngine.Core.Application.Entities.ScheduleAggregate.EventVenue")
+                                .WithOne("Location")
+                                .HasForeignKey("UrbanEngine.Core.Application.Entities.Location", "EventVenueId")
+                                .OnDelete(DeleteBehavior.Cascade);
+                        });
                 });
 #pragma warning restore 612, 618
         }
