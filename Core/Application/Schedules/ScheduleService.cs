@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UrbanEngine.Core.Application.Entities.ScheduleAggregate;
 using UrbanEngine.Core.Application.Interfaces.Persistence.Data;
+using UrbanEngine.Core.Common.Paging;
 using UrbanEngine.Core.Common.Results;
 
 namespace UrbanEngine.Core.Application.Schedules
@@ -10,15 +12,17 @@ namespace UrbanEngine.Core.Application.Schedules
     {
         #region Local Fields
 
-        private readonly IEventRepository _eventRepository; 
+        private readonly IEventRepository _eventRepository;
+        private readonly ILogger _logger;
 
         #endregion
 
         #region Constructors
 
-        public ScheduleService(IEventRepository eventRepository)
+        public ScheduleService(IEventRepository eventRepository, ILogger<ScheduleService> logger)
         {
             _eventRepository = eventRepository;
+            _logger = logger;
         }
 
         #endregion
@@ -27,6 +31,8 @@ namespace UrbanEngine.Core.Application.Schedules
 
         public async Task<ScheduleResult<Event>> ScheduleEventAsync(Event eventDetail)
         {
+            _logger.LogDebug("ScheduleEventAsync - eventDetail: {eventDetail}", eventDetail);
+
             var scheduledEvent = await _eventRepository.CreateAsync(eventDetail);
 
             ScheduleResult<Event> scheduleResult = scheduledEvent?.Id > 0 ?
@@ -43,13 +49,20 @@ namespace UrbanEngine.Core.Application.Schedules
 
         public async Task<Event> GetEventDetail(long eventId)
         {
+            _logger.LogDebug("GetEventDetail - eventId: {eventId}", eventId);
+
             var eventDetail = await _eventRepository.GetByIdAsync(eventId);
             return eventDetail;
         }
         
-        public Task<IEnumerable<ScheduleResult<Event>>> ListScheduledEventsAsync(ScheduleFilter filter)
+        public async Task<IEnumerable<Event>> ListScheduledEventsAsync(ScheduleFilter filter, IPagingParameters paging = null)
         {
-            throw new System.NotImplementedException();
+            _logger.LogDebug("ListScheduledEventsAsync - filter: {filter}, paging: {paging}", filter, paging);
+
+            var specification = new ScheduleFilterSpecification(filter, paging);
+
+            var scheduledEvents = await _eventRepository.ListAsync(specification);
+            return scheduledEvents;
         }
 
         public Task<IEnumerable<ScheduleResult<EventSession>>> ListEventSessionsAsync(long eventId)
