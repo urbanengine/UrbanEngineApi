@@ -2,6 +2,8 @@
 {
     public class PagingParameters : IPagingParameters
     {
+        public const int DefaultMaxPageSize = 50;
+
         #region Constructors
 
         public PagingParameters() { }
@@ -22,6 +24,16 @@
         public int? PageSize { get; set; }
 
         public bool? DisablePaging { get; set; }
+
+        public int? GetSkipValue()
+        {
+            return (PageNumber ?? 1) - 1;
+        }
+
+        public int? GetTakeValue()
+        {
+            return PageSize ?? DefaultMaxPageSize;
+        }
 
         #endregion
 

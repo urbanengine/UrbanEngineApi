@@ -19,5 +19,17 @@
         /// true to disable paging all together
         /// </summary>
         bool? DisablePaging { get; }
+
+        /// <summary>
+        /// returns value to use in call to Take on a linq expression
+        /// </summary>
+        /// <returns></returns>
+        int? GetTakeValue();
+
+        /// <summary>
+        /// returns value to use in call to Skip on a linq expression
+        /// </summary>
+        /// <returns></returns>
+        int? GetSkipValue();
     }
 }
