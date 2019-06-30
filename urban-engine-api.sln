@@ -3,14 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanEngine.Web", "UrbanEngine.Web\UrbanEngine.Web.csproj", "{A6CF57BA-E990-4C29-8A9C-6A6B5FA6DA53}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanEngine.Core", "UrbanEngine.Core\UrbanEngine.Core.csproj", "{20C15634-7FB0-4333-BE38-140D14CA82A8}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanEngine.Infrastructure", "UrbanEngine.Infrastructure\UrbanEngine.Infrastructure.csproj", "{CCE19EE5-1633-4BA4-AB8C-C84DC6B8B2DF}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanEngine.Tests", "UrbanEngine.Tests\UrbanEngine.Tests.csproj", "{A6A3457D-C86E-45F0-A963-55FA63C83947}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{0A3F2788-CBC0-4D0F-917B-30BCD6AECE1C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{AACF838B-4D5C-4F0B-9C4B-69AD6D407818}"
@@ -29,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.Tests", "Tests\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Core\Common\Common.csproj", "{F2475457-239E-442D-9F44-4194B5669E91}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanEngineApi", "Web\UrbanEngineApi\UrbanEngineApi.csproj", "{30DFB8DD-4312-4705-9689-8D478C824978}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanEngineApi", "Services\UrbanEngineApi\UrbanEngineApi.csproj", "{30DFB8DD-4312-4705-9689-8D478C824978}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
