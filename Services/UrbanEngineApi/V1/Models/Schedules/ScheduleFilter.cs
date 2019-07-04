@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using UrbanEngine.Core.Application.Schedules;
+﻿using UrbanEngine.Core.Application.Schedules;
 using UrbanEngine.Core.Common.Paging;
 
 namespace UrbanEngine.Services.UrbanEngineApi.V1.Models.Schedules

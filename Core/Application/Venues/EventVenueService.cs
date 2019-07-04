@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using UrbanEngine.Core.Application.Entities.ScheduleAggregate;
 using UrbanEngine.Core.Application.Interfaces.Persistence.Data;
 using UrbanEngine.Core.Common.Results;
 
@@ -18,17 +17,19 @@ namespace UrbanEngine.Core.Application.Venues
             _logger = logger;
         }
 
-        public async Task<QueryResult> GetVenues(IEventVenueFilter filter)
+        public async Task<QueryResult> GetVenues<TProjected>(IEventVenueFilter filter) 
+            where TProjected : IEventVenueModel, new()
         {
             _logger.LogDebug("GetVenues - {filter}", filter);
 
-            var specification = new EventVenueSpecification(filter);
+            var selector = new TProjected(); 
+            var specification = new EventVenueSpecification(filter, selector);
             _logger.LogDebug("Specification created to filter results - {specification}", specification);
 
             var data = await _repository.ListAsync(specification); 
             _logger.LogDebug("EventVenues found {count}", data.Count);
 
-            var result = QueryResult<IEnumerable<EventVenue>>.New(data); 
+            var result = QueryResult<IEnumerable<IEventVenueModel>>.New(data); 
             return result;
         }
     }

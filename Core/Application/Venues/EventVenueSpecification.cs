@@ -6,14 +6,16 @@ using UrbanEngine.Core.Application.Specifications;
 
 namespace UrbanEngine.Core.Application.Venues
 {
-    public class EventVenueSpecification : BaseSpecification<EventVenue>
+    public class EventVenueSpecification : ProjectedBaseSpecification<EventVenue, IEventVenueModel>
     {
-        public EventVenueSpecification(IEventVenueFilter filter)
+        public EventVenueSpecification(IEventVenueFilter filter, IEventVenueModel selector)
         {
             ApplyCriteria(GetExpression(filter)); 
 
             if(filter.DisablePaging != true)
                 ApplyPaging(filter.GetSkipValue(), filter.GetTakeValue());
+
+            ApplySelector(selector.Projection);
         }
 
         private Expression<Func<EventVenue, bool>> GetExpression(IEventVenueFilter filter)
@@ -39,4 +41,5 @@ namespace UrbanEngine.Core.Application.Venues
             return predicate;
         }
     }
+    
 }

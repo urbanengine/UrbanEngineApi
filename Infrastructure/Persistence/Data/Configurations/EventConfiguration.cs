@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UrbanEngine.Core.Application.Entities.ScheduleAggregate;
 
 namespace UrbanEngine.Infrastructure.Persistence.Data.Configurations

@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Net;
 using System.Threading.Tasks;
 using UrbanEngine.Core.Application.Venues;
 using UrbanEngine.Services.UrbanEngineApi.V1.Models.Venues;
@@ -37,7 +35,7 @@ namespace UrbanEngineApi.V1.Controllers
         [HttpGet]
         public async Task<IActionResult> GetVenues([FromQuery]EventVenueFilter filter)
         {
-            var result = await _service.GetVenues(filter);
+            var result = await _service.GetVenues<EventVenueListItem>(filter);
             return Ok(result);
         }
     }

@@ -5,6 +5,7 @@ namespace UrbanEngine.Core.Application.Venues
 {
     public interface IEventVenueService
     {
-        Task<QueryResult> GetVenues(IEventVenueFilter filter);
+        Task<QueryResult> GetVenues<TProjected>(IEventVenueFilter filter)
+            where TProjected : IEventVenueModel, new();
     }
 }
