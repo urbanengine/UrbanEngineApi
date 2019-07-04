@@ -21,6 +21,8 @@ namespace UrbanEngine.Core.Application.Entities.ScheduleAggregate
 
         public string Country { get; set; }
 
+        public RegionType Region { get; set; }
+
         #endregion
 
         #region Navigation Properties

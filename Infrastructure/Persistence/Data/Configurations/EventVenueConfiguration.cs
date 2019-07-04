@@ -32,6 +32,11 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Configurations
 
             builder.Property(e => e.Country)
                 .HasMaxLength(75);
+             
+            builder.Property(p => p.Region)
+                .HasConversion(
+                    p => p.Value,
+                    p => RegionType.FromValue(p));
         }
     }
 }
