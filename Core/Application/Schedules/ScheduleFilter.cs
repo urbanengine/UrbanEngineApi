@@ -30,6 +30,8 @@ namespace UrbanEngine.Core.Application.Schedules
         {
             var predicate = PredicateBuilder.New<Event>();
 
+            predicate = predicate.And(p => p.IsDeleted != true);
+
             if (DateTime.TryParse(StartDate, out var startDateParsed))
                 predicate = predicate.And(p => p.StartDate >= startDateParsed);
 

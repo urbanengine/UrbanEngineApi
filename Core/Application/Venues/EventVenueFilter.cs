@@ -36,20 +36,22 @@ namespace UrbanEngine.Core.Application.Venues
         {
             var predicate = PredicateBuilder.New<EventVenue>();
 
-            if (!string.IsNullOrEmpty(City))
-                predicate = predicate.Or(p => p.City.ToLower().Trim() == City.ToLower().Trim());
+            predicate = predicate.And(p => p.IsDeleted != true);
 
-            if (!string.IsNullOrEmpty(State))
-                predicate = predicate.Or(p => p.State.ToLower().Trim() == State.ToLower().Trim());
+            if(!string.IsNullOrEmpty(City))
+                predicate = predicate.And(p => p.City.ToLower().Trim() == City.ToLower().Trim());
 
-            if (!string.IsNullOrEmpty(PostalCode))
-                predicate = predicate.Or(p => p.PostalCode.ToLower().Trim() == PostalCode.ToLower().Trim());
+            if(!string.IsNullOrEmpty(State))
+                predicate = predicate.And(p => p.State.ToLower().Trim() == State.ToLower().Trim());
+
+            if(!string.IsNullOrEmpty(PostalCode))
+                predicate = predicate.And(p => p.PostalCode.ToLower().Trim() == PostalCode.ToLower().Trim());
 
             if (!string.IsNullOrEmpty(Region) && RegionType.TryFromName(Region, out var regionTypeFromName))
-                predicate = predicate.Or(p => p.Region == regionTypeFromName);
+                predicate = predicate.And(p => p.Region == regionTypeFromName);
             else if (!string.IsNullOrEmpty(Region) && int.TryParse(Region, out var regionValue) && RegionType.TryFromValue(regionValue, out var regionTypeFromValue))
-                predicate = predicate.Or(p => p.Region == regionTypeFromValue);
-
+                predicate = predicate.And(p => p.Region == regionTypeFromValue);
+             
             return predicate;
         }
     }
