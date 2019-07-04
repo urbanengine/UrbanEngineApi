@@ -8,6 +8,25 @@
 
 This section will contain any notes to be aware of for developing Urban Engine API
 
+## Exception Handling for API Controllers
+
+To provide a common response when exceptions occur and to ensure exceptions are logged and sensitive error messages are not returned to the client
+an exception handler is added in the [Startup.cs](Services/UrbanEngineApi/Startup.cs) file. This allows the capture of any exceptions
+thrown by controller endpoints without having to add `try/catch` and `logging` statements in your controllers themselves.
+
+Example:
+
+```csharp
+	// see Configure method in Startup.cs
+    app.UseExceptionHandler(errorApp =>
+    {
+        errorApp.Run(async context =>
+        {
+			// ...see implementation details in Startup.cs file...
+        });
+    });
+```
+
 ## Migrate
 
 When the UrbanEngineApi starts up it is currently set to call `Migrate` to update the database. Whether this is run or not is controll by an Environment Variable
