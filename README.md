@@ -8,6 +8,14 @@
 
 This section will contain any notes to be aware of for developing Urban Engine API
 
+## Results
+
+To make things consistent objects in the [Results](Core/Common/Results) folder are used. Use this to return responses from API endpoints to provide consistent return types
+
+* FailureResult: used to indicate a failure occurred, for example an exception was thrown
+* CommandResult: used to indicate result of a command such as an Insert, Update, Delete
+* QueryResult: used to indicate result of a query that was performed, returns data and paging information if applicable
+
 ## Exception Handling for API Controllers
 
 To provide a common response when exceptions occur and to ensure exceptions are logged and sensitive error messages are not returned to the client
