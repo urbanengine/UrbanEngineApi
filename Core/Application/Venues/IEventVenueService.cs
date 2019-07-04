@@ -9,5 +9,9 @@ namespace UrbanEngine.Core.Application.Venues
             where TProjected : IEventVenueModel, new();
 
         Task<CommandResultWithData> CreateVenue(IEventVenueModel eventVenue);
+
+        Task<CommandResultWithData> UpdateVenue(long eventVenueId, IEventVenueModel eventVenue);
+
+        Task<CommandResult> DeleteVenue(long eventVenueId);
     }
 }

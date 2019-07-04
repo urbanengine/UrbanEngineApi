@@ -30,6 +30,11 @@ namespace UrbanEngine.Services.UrbanEngineApi.V1.Models.Venues
         /// </summary>
         public string PostalCode { get; set; }
 
+        /// <summary>
+        /// whether to include delete venues in the results
+        /// </summary>
+        public bool? IsDeleted { get; set; }
+
         #endregion
     }
 }

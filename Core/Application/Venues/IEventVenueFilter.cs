@@ -26,5 +26,10 @@ namespace UrbanEngine.Core.Application.Venues
         /// postal code venue is located in
         /// </summary>
         string PostalCode { get; }
+
+        /// <summary>
+        /// whether to include delete venues in the results
+        /// </summary>
+        bool? IsDeleted { get; }
     }
 }
