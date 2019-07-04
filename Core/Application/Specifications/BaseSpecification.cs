@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using UrbanEngine.Core.Common.Paging;
 
 namespace UrbanEngine.Core.Application.Specifications
 {
@@ -46,14 +45,7 @@ namespace UrbanEngine.Core.Application.Specifications
             Take = take;
             EnablePaging = true;
         }
-
-        protected virtual void ApplyPaging(IPagingParameters paging)
-        {
-            Skip = paging.GetSkipValue();
-            Take = paging.GetTakeValue();
-            EnablePaging = true;
-        }
-
+        
         protected virtual void ApplyOrderBy(Expression<Func<T, object>> orderByExpression)
         {
             OrderBy = orderByExpression;
