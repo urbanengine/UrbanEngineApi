@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UrbanEngine.Core.Application.Entities.ScheduleAggregate;
 
 namespace UrbanEngine.Infrastructure.Persistence.Data.Configurations
@@ -15,6 +16,9 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Configurations
                 .IsRequired()
                 .HasMaxLength(200);
 
+            builder.HasAlternateKey(e => e.Name)
+                .HasName("AK_Name");
+            
             builder.Property(e => e.Address)
                 .IsRequired(false)
                 .HasMaxLength(100);

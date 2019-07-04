@@ -46,7 +46,7 @@ namespace UrbanEngine.Core.Application.Venues
 
             _logger.LogDebug("create entity in database");
             var createdEntity = await _repository.CreateAsync(entity);
-
+            
             _logger.LogDebug("convert created entity to model");
             var model = eventVenue.FromDomainEntity(createdEntity);
 

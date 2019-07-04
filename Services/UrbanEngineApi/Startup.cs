@@ -119,18 +119,18 @@ namespace UrbanEngine.Services.UrbanEngineApi
                         context.Features.Get<IExceptionHandlerPathFeature>();
 
                     // get the exception that was thrown from endpoint
-                    var exeptionThrown = exceptionHandlerPathFeature.Error;
+                    var exceptionThrown = exceptionHandlerPathFeature.Error;
 
                     // return a status code and generic json message 
-                    context.Response.StatusCode = FailureResult.GetStatusCode(exeptionThrown);
+                    context.Response.StatusCode = FailureResult.GetStatusCode(exceptionThrown);
                     context.Response.ContentType = "application/json";
 
-                    var json = JsonConvert.SerializeObject(new FailureResult(exeptionThrown));
+                    var json = JsonConvert.SerializeObject(new FailureResult(exceptionThrown));
                     await context.Response.WriteAsync(json);
 
                     // log the error 
                     var logger = errorApp.ApplicationServices.GetService<ILogger<Program>>();
-                    logger.LogError(_errorEventId++, exeptionThrown, $"exception caught in UseExceptionHandler middleware, see exception for details");
+                    logger.LogError(_errorEventId++, exceptionThrown, $"exception caught in UseExceptionHandler middleware, see exception for details");
                 });
             });
 

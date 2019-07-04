@@ -9,7 +9,7 @@ using UrbanEngine.Infrastructure.Persistence.Data;
 namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
 {
     [DbContext(typeof(UrbanEngineDbContext))]
-    [Migration("20190704173631_InitialCreate")]
+    [Migration("20190704210516_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -93,6 +93,9 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasAlternateKey("Name")
+                        .HasName("AK_Name");
+
                     b.ToTable("Venue");
 
                     b.HasData(
@@ -102,7 +105,7 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
                             Address = "3001 9th Avenue Southwest",
                             City = "Huntsville",
                             Country = "United States",
-                            DateCreated = new DateTime(2019, 7, 4, 13, 36, 30, 837, DateTimeKind.Local).AddTicks(7132),
+                            DateCreated = new DateTime(2019, 7, 4, 17, 5, 16, 402, DateTimeKind.Local).AddTicks(2165),
                             IsDeleted = false,
                             Name = "Huntsville West",
                             PostalCode = "35805",
