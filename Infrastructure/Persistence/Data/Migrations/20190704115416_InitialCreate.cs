@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace UrbanEngine.Infrastructure.Persistence.Migrations
+namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
 {
     public partial class InitialCreate : Migration
     {
@@ -18,12 +18,12 @@ namespace UrbanEngine.Infrastructure.Persistence.Migrations
                     Id = table.Column<long>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(maxLength: 200, nullable: false),
-                    Address = table.Column<string>(nullable: true),
-                    Address2 = table.Column<string>(nullable: true),
-                    City = table.Column<string>(nullable: true),
-                    State = table.Column<string>(nullable: true),
-                    PostalCode = table.Column<string>(nullable: true),
-                    Country = table.Column<string>(nullable: true)
+                    Address = table.Column<string>(maxLength: 100, nullable: true),
+                    Address2 = table.Column<string>(maxLength: 100, nullable: true),
+                    City = table.Column<string>(maxLength: 75, nullable: true),
+                    State = table.Column<string>(maxLength: 75, nullable: true),
+                    PostalCode = table.Column<string>(maxLength: 30, nullable: true),
+                    Country = table.Column<string>(maxLength: 75, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -56,6 +56,12 @@ namespace UrbanEngine.Infrastructure.Persistence.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.InsertData(
+                schema: "ue",
+                table: "Venue",
+                columns: new[] { "Id", "Address", "Address2", "City", "Country", "Name", "PostalCode", "State" },
+                values: new object[] { 1L, null, null, "Huntsville", null, "CoWorking Night", null, "AL" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Event_VenueId",
