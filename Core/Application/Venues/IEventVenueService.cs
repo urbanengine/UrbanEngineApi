@@ -7,5 +7,7 @@ namespace UrbanEngine.Core.Application.Venues
     {
         Task<QueryResult> GetVenues<TProjected>(IEventVenueFilter filter)
             where TProjected : IEventVenueModel, new();
+
+        Task<CommandResultWithData> CreateVenue(IEventVenueModel eventVenue);
     }
 }

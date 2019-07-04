@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UrbanEngine.Core.Application.Interfaces.Persistence.Data;
@@ -30,6 +31,30 @@ namespace UrbanEngine.Core.Application.Venues
             _logger.LogDebug("EventVenues found {count}", data.Count);
 
             var result = QueryResult<IEnumerable<IEventVenueModel>>.New(data); 
+            return result;
+        }
+
+        public async Task<CommandResultWithData> CreateVenue(IEventVenueModel eventVenue)
+        {
+            _logger.LogDebug("CreateVenue - {input}", eventVenue);
+
+            if (eventVenue == null)
+                throw new ArgumentNullException($"{nameof(eventVenue)} cannot be null");
+
+            _logger.LogDebug("convert model to domain entity");
+            var entity = eventVenue.ToDomainEntity();
+
+            _logger.LogDebug("create entity in database");
+            var createdEntity = await _repository.CreateAsync(entity);
+
+            _logger.LogDebug("convert created entity to model");
+            var model = eventVenue.FromDomainEntity(createdEntity);
+
+            _logger.LogDebug("create command result to return to client");
+            var result = createdEntity?.Id > 0 ?
+                new CommandResultWithData(model, "event venue created", 200, true) :
+                new CommandResultWithData(null, message: "failed to create event venue", statusCode: 0, success: false); 
+
             return result;
         }
     }

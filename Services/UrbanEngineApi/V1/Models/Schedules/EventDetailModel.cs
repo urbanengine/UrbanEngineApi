@@ -44,7 +44,6 @@ namespace UrbanEngine.Services.UrbanEngineApi.Schedules
 
         /// <summary>
         /// converts ViewModel to Domain Entity
-        /// converts ViewModel to Domain Entity
         /// </summary>
         /// <returns></returns>
         public static Event ToDomainEntity(EventDetailModel model)
