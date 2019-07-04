@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UrbanEngine.Core.Application.Interfaces.Persistence.Data;
 using UrbanEngine.Core.Application.Specifications;
+using UrbanEngine.Infrastructure.Persistence.Data.Extensions;
 
 namespace UrbanEngine.Infrastructure.Persistence.Data.Repository
 {
@@ -48,7 +49,13 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Repository
 
         public async Task<IReadOnlyList<TEntity>> ListAsync(ISpecification<TEntity> specification)
         {
-            return await ApplySpecification(specification).ToListAsync();
+            var queryable = ApplySpecification(specification);
+
+            var result = specification.EnablePaging ? 
+                await queryable.ToPagedListAsync(specification.Skip, specification.Take) : 
+                await queryable.ToListAsync();
+            
+            return result;
         }
 
         public async Task<TEntity> CreateAsync(TEntity entity) 

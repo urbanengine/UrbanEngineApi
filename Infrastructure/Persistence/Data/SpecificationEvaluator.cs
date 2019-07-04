@@ -34,12 +34,6 @@ namespace UrbanEngine.Infrastructure.Persistence.Data
                 query = query.OrderByDescending(specification.OrderByDescending);
             }
 
-            // Apply paging if enabled
-            if (specification.EnablePaging)
-            {
-                query = query.Skip(specification.Skip)
-                             .Take(specification.Take);
-            }
             return query;
         }
     }
