@@ -45,7 +45,7 @@ the [Program.cs](Services/UrbanEngineApi/Program.cs) file in the UrbanEngineApi 
 ## EF Migrations
 
 Run the following command to create a migration, replace `InitialCreate` with name of a migration you want to use. 
-NOTE: if you are using SQL Express it only allows one migration and you will have to remove migrations
+NOTE: if you are using SQL Lite it only allows one migration and you will have to remove migrations
 
 ```console
 dotnet ef migrations add InitialCreate --startup-project Services\UrbanEngineApi --project Infrastructure\Persistence --output-dir Data\Migrations
@@ -57,7 +57,7 @@ To remove the last migration
 dotnet ef migrations remove --startup-project Services\UrbanEngineApi --project Infrastructure\Persistence
 ```
 
-If working with the local SQL Express database you'll have to delete the *.db file first as well
+If working with the local SQL Lite database you'll have to delete the *.db file first as well
 
 ## Seed Data
 
