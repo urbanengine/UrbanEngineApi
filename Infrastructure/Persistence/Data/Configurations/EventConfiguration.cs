@@ -4,12 +4,13 @@ using UrbanEngine.Core.Application.Entities.ScheduleAggregate;
 
 namespace UrbanEngine.Infrastructure.Persistence.Data.Configurations
 {
-    internal class EventConfiguration : IEntityTypeConfiguration<Event>
+    internal class EventConfiguration : EntityBaseConfiguration<Event, long>
     {
-        public void Configure(EntityTypeBuilder<Event> builder)
+        public override string TableName => "Event";
+
+        public override void Configure(EntityTypeBuilder<Event> builder)
         {
-            builder.ToTable("Event");
-            builder.HasKey(e => e.Id);
+            base.Configure(builder); 
 
             builder.Property(e => e.Title)
                 .IsRequired()

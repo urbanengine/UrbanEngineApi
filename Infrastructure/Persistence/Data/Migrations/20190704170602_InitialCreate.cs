@@ -17,6 +17,8 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    IsDeleted = table.Column<bool>(nullable: false, defaultValue: false),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(maxLength: 200, nullable: false),
                     Address = table.Column<string>(maxLength: 100, nullable: true),
                     Address2 = table.Column<string>(maxLength: 100, nullable: true),
@@ -38,6 +40,8 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    IsDeleted = table.Column<bool>(nullable: false, defaultValue: false),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     Title = table.Column<string>(maxLength: 100, nullable: false),
                     Description = table.Column<string>(maxLength: 500, nullable: true),
                     StartDate = table.Column<DateTime>(nullable: true),
@@ -61,8 +65,8 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
             migrationBuilder.InsertData(
                 schema: "ue",
                 table: "Venue",
-                columns: new[] { "Id", "Address", "Address2", "City", "Country", "Name", "PostalCode", "Region", "State" },
-                values: new object[] { 1L, null, null, "Huntsville", null, "CoWorking Night", null, null, "AL" });
+                columns: new[] { "Id", "Address", "Address2", "City", "Country", "DateCreated", "Name", "PostalCode", "Region", "State" },
+                values: new object[] { 1L, null, null, "Huntsville", null, new DateTime(2019, 7, 4, 13, 6, 2, 280, DateTimeKind.Local).AddTicks(5173), "CoWorking Night", null, null, "AL" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Event_VenueId",

@@ -22,12 +22,19 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime?>("DateCreated")
+                        .IsRequired();
+
                     b.Property<string>("Description")
                         .HasMaxLength(500);
 
                     b.Property<DateTime?>("EndDate");
 
                     b.Property<int>("EventType");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(false);
 
                     b.Property<string>("OrganizerId");
 
@@ -63,6 +70,13 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
                     b.Property<string>("Country")
                         .HasMaxLength(75);
 
+                    b.Property<DateTime?>("DateCreated")
+                        .IsRequired();
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(false);
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200);
@@ -84,6 +98,8 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
                         {
                             Id = 1L,
                             City = "Huntsville",
+                            DateCreated = new DateTime(2019, 7, 4, 13, 6, 2, 280, DateTimeKind.Local).AddTicks(5173),
+                            IsDeleted = false,
                             Name = "CoWorking Night",
                             State = "AL"
                         });
