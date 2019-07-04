@@ -53,7 +53,7 @@ namespace UrbanEngine.Core.Application.Schedules
             return eventDetail;
         }
         
-        public async Task<IEnumerable<Event>> ListScheduledEventsAsync(ScheduleFilter filter)
+        public async Task<IEnumerable<Event>> ListScheduledEventsAsync(IScheduleFilter filter)
         {
             _logger.LogDebug("ListScheduledEventsAsync - filter: {filter}", filter);
 

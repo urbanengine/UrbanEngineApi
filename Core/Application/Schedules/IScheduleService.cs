@@ -16,7 +16,7 @@ namespace UrbanEngine.Core.Application.Schedules
 
         Task<bool> DeleteEventSessionAsync(long eventId, long sessionId, string reason);
 
-        Task<IEnumerable<Event>> ListScheduledEventsAsync(ScheduleFilter scheduleFilter);
+        Task<IEnumerable<Event>> ListScheduledEventsAsync(IScheduleFilter scheduleFilter);
 
         Task<IEnumerable<ScheduleResult<EventSession>>> ListEventSessionsAsync(long eventId);
     }

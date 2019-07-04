@@ -97,10 +97,14 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
                         new
                         {
                             Id = 1L,
+                            Address = "3001 9th Avenue Southwest",
                             City = "Huntsville",
-                            DateCreated = new DateTime(2019, 7, 4, 13, 6, 2, 280, DateTimeKind.Local).AddTicks(5173),
+                            Country = "United States",
+                            DateCreated = new DateTime(2019, 7, 4, 13, 36, 30, 837, DateTimeKind.Local).AddTicks(7132),
                             IsDeleted = false,
-                            Name = "CoWorking Night",
+                            Name = "Huntsville West",
+                            PostalCode = "35805",
+                            Region = 1,
                             State = "AL"
                         });
                 });

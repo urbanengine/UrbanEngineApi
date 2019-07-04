@@ -18,7 +18,7 @@ namespace UrbanEngine.Core.Application.Venues
             _logger = logger;
         }
 
-        public async Task<QueryResult> GetVenues(EventVenueFilter filter)
+        public async Task<QueryResult> GetVenues(IEventVenueFilter filter)
         {
             _logger.LogDebug("GetVenues - {filter}", filter);
 

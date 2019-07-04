@@ -4,6 +4,7 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 using UrbanEngine.Core.Application.Venues;
+using UrbanEngine.Services.UrbanEngineApi.V1.Models.Venues;
 
 namespace UrbanEngineApi.V1.Controllers
 {

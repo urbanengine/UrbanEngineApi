@@ -66,7 +66,7 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
                 schema: "ue",
                 table: "Venue",
                 columns: new[] { "Id", "Address", "Address2", "City", "Country", "DateCreated", "Name", "PostalCode", "Region", "State" },
-                values: new object[] { 1L, null, null, "Huntsville", null, new DateTime(2019, 7, 4, 13, 6, 2, 280, DateTimeKind.Local).AddTicks(5173), "CoWorking Night", null, null, "AL" });
+                values: new object[] { 1L, "3001 9th Avenue Southwest", null, "Huntsville", "United States", new DateTime(2019, 7, 4, 13, 36, 30, 837, DateTimeKind.Local).AddTicks(7132), "Huntsville West", "35805", 1, "AL" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Event_VenueId",

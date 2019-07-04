@@ -16,7 +16,14 @@ namespace UrbanEngine.Infrastructure.Persistence.Data
         {
             return new EventVenue[]
             {
-                new EventVenue(1, "CoWorking Night") { City = "Huntsville", State = "AL" }
+                new EventVenue(1, "Huntsville West") {
+                    Address = "3001 9th Avenue Southwest",
+                    City = "Huntsville",
+                    State = "AL",
+                    PostalCode = "35805",
+                    Region = RegionType.SouthernRegion,
+                    Country = "United States"
+                }
             };
         }
         

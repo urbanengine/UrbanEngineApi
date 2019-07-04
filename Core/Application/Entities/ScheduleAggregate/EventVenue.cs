@@ -20,7 +20,7 @@ namespace UrbanEngine.Core.Application.Entities.ScheduleAggregate
         public string PostalCode { get; set; }
 
         public string Country { get; set; }
-
+        
         public RegionType Region { get; set; }
 
         #endregion
