@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using UrbanEngine.Core.Application.Entities;
 using UrbanEngine.Core.Application.Entities.ScheduleAggregate;
 
 namespace UrbanEngine.Infrastructure.Persistence.Data
@@ -17,10 +16,10 @@ namespace UrbanEngine.Infrastructure.Persistence.Data
         {
             return new EventVenue[]
             {
-                new EventVenue(1, "CoWorking Night", new Location { Address = "3001 9th Avenue Southwest", City = "Huntsville", State = "AL", Zip = "35805" })
+                new EventVenue(1, "CoWorking Night") { City = "Huntsville", State = "AL" }
             };
         }
-
+        
         #endregion
     }
 }

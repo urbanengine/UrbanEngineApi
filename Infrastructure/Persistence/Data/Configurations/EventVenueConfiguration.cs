@@ -15,7 +15,23 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Configurations
                 .IsRequired()
                 .HasMaxLength(200);
 
-            builder.OwnsOne(p => p.Location);
+            builder.Property(e => e.Address)
+                .HasMaxLength(100);
+
+            builder.Property(e => e.Address2)
+                .HasMaxLength(100);
+
+            builder.Property(e => e.City)
+                .HasMaxLength(75);
+
+            builder.Property(e => e.State)
+                .HasMaxLength(75);
+
+            builder.Property(e => e.PostalCode)
+                .HasMaxLength(30);
+
+            builder.Property(e => e.Country)
+                .HasMaxLength(75);
         }
     }
 }

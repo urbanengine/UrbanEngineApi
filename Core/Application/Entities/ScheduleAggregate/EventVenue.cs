@@ -8,8 +8,18 @@ namespace UrbanEngine.Core.Application.Entities.ScheduleAggregate
         #region Properties
 
         public string Name { get; private set; }
+         
+        public string Address { get; set; }
 
-        public Location Location { get; private set; }
+        public string Address2 { get; set; }
+
+        public string City { get; set; }
+
+        public string State { get; set; }
+
+        public string PostalCode { get; set; }
+
+        public string Country { get; set; }
 
         #endregion
 
@@ -27,18 +37,11 @@ namespace UrbanEngine.Core.Application.Entities.ScheduleAggregate
         {
             Name = name;
         }
-
-        public EventVenue(string name, Location location)
-        {
-            Name = name;
-            Location = location;
-        }
-
-        public EventVenue(long id, string name, Location location)
+        
+        public EventVenue(long id, string name)
         {
             Id = id;
             Name = name;
-            Location = location;
         }
 
         #endregion
