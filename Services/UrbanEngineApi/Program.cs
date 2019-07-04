@@ -19,7 +19,7 @@ namespace UrbanEngine.Services.UrbanEngineApi
             try
             {
                 logger.LogInformation("Seed Database");
-                CreateOrMigrateDatabase<UrbanEngineDbContext>(host);
+                CreateOrMigrateDatabase<UrbanEngineDbContext>(host, logger);
             }
             catch(Exception ex)
             {
@@ -35,12 +35,22 @@ namespace UrbanEngine.Services.UrbanEngineApi
                 .UseStartup<Startup>();
 
         // this will create database if not exists or update it to latest if it does 
-        static void CreateOrMigrateDatabase<TContext>(IWebHost host) where TContext : DbContext
+        static void CreateOrMigrateDatabase<TContext>(IWebHost host, ILogger logger) where TContext : DbContext
         {
-            using (var scope = host.Services.CreateScope())
-            using (var context = scope.ServiceProvider.GetService<TContext>())
+            var applyMigrations = Environment.GetEnvironmentVariable("APPLY_MIGRATIONS");
+            if (applyMigrations.Trim().ToLower() == "true")
             {
-                context.Database.Migrate();
+                using (var scope = host.Services.CreateScope())
+                using (var context = scope.ServiceProvider.GetService<TContext>())
+                {
+                    logger.LogInformation("attempting to apply migrations");
+                    context.Database.Migrate();
+                    logger.LogInformation("migrations applied");
+                }
+            }
+            else
+            {
+                logger.LogInformation("environment variable APPLY_MIGRATIONS is set to {value} and migrations will NOT be applied", applyMigrations);
             }
         }
     }
