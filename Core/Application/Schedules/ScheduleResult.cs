@@ -4,8 +4,8 @@ namespace UrbanEngine.Core.Application.Schedules
 {
     public class ScheduleResult<TEntity> : CommandResult where TEntity : class
     {
-        public ScheduleResult(TEntity scheduledItem, string message, bool success) 
-            : base(message, success)
+        public ScheduleResult(TEntity scheduledItem, string message, int? statusCode = null, bool? success = null) 
+            : base(message, statusCode, success)
         {
             ScheduledItem = scheduledItem;
         }

@@ -16,6 +16,7 @@ using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using UrbanEngine.Core.Application.Interfaces.Persistence.Data;
 using UrbanEngine.Core.Application.Schedules;
+using UrbanEngine.Core.Application.Venues;
 using UrbanEngine.Core.Common.Results;
 using UrbanEngine.Infrastructure.Persistence.Data;
 using UrbanEngine.Infrastructure.Persistence.Data.Repository;
@@ -89,9 +90,11 @@ namespace UrbanEngine.Services.UrbanEngineApi
 
             // repositories  
             services.AddScoped<IEventRepository, EventRepository>();
+            services.AddScoped<IEventVenueRepository, EventVenueRepository>();
 
             // services
             services.AddTransient<IScheduleService, ScheduleService>();
+            services.AddTransient<IEventVenueService, EventVenueService>();
 
             #endregion
         }
@@ -115,16 +118,19 @@ namespace UrbanEngine.Services.UrbanEngineApi
                     var exceptionHandlerPathFeature =
                         context.Features.Get<IExceptionHandlerPathFeature>();
 
-                    // return a 500 status code and generic json message 
-                    context.Response.StatusCode = 500;
+                    // get the exception that was thrown from endpoint
+                    var exeptionThrown = exceptionHandlerPathFeature.Error;
+
+                    // return a status code and generic json message 
+                    context.Response.StatusCode = FailureResult.GetStatusCode(exeptionThrown);
                     context.Response.ContentType = "application/json";
 
-                    var json = JsonConvert.SerializeObject(new FailureResult(exceptionHandlerPathFeature.Error));
+                    var json = JsonConvert.SerializeObject(new FailureResult(exeptionThrown));
                     await context.Response.WriteAsync(json);
 
                     // log the error 
                     var logger = errorApp.ApplicationServices.GetService<ILogger<Program>>();
-                    logger.LogError(_errorEventId++, exceptionHandlerPathFeature.Error, $"exception caught in UseExceptionHandler middleware, see exception for details");
+                    logger.LogError(_errorEventId++, exeptionThrown, $"exception caught in UseExceptionHandler middleware, see exception for details");
                 });
             });
 

@@ -34,8 +34,8 @@ namespace UrbanEngine.Core.Application.Schedules
             var scheduledEvent = await _eventRepository.CreateAsync(eventDetail);
 
             ScheduleResult<Event> scheduleResult = scheduledEvent?.Id > 0 ?
-                new ScheduleResult<Event>(scheduledEvent, "event created", true) :
-                new ScheduleResult<Event>(null, "failed to create event", false);
+                new ScheduleResult<Event>(scheduledEvent, "event created") :
+                new ScheduleResult<Event>(null, "failed to create event", success: false);
 
             return scheduleResult;
         }
