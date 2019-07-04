@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using UrbanEngine.Core.Application.Specifications;
 
@@ -33,8 +34,21 @@ namespace UrbanEngine.Infrastructure.Persistence.Data
             {
                 query = query.OrderByDescending(specification.OrderByDescending);
             }
-
+            
             return query;
+        }
+
+        public static IQueryable<TProjected> GetProjectedQuery<TProjected>(IQueryable<TEntity> inputQuery, IProjectedSpecification<TEntity, TProjected> specification)
+        {
+            if (!(specification?.IsProjected ?? false))
+                throw new InvalidOperationException("in order to use GetProjectedQuery a Selector must be specified for the IProjectedSpecification");
+
+            // apply base specification 
+            var query = GetQuery(inputQuery, specification);
+
+            // project using the specified selector
+            IQueryable<TProjected> projectedQuery = query.Select(specification.Selector);
+            return projectedQuery; 
         }
     }
 }

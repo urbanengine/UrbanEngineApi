@@ -22,7 +22,17 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Repository
             return await ApplySpecification(specification).SingleOrDefaultAsync();
         }
 
+        public async Task<TProjected> SingleOrDefaultAsync<TProjected>(IProjectedSpecification<TEntity, TProjected> specification)
+        {
+            return await ApplySpecification(specification).SingleOrDefaultAsync();
+        }
+
         public async Task<TEntity> FirstOrDefaultAsync(ISpecification<TEntity> specification)
+        {
+            return await ApplySpecification(specification).FirstOrDefaultAsync();
+        }
+
+        public async Task<TProjected> FirstOrDefaultAsync<TProjected>(IProjectedSpecification<TEntity, TProjected> specification)
         {
             return await ApplySpecification(specification).FirstOrDefaultAsync();
         }
@@ -58,6 +68,17 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Repository
             return result;
         }
 
+        public async Task<IReadOnlyList<TProjected>> ListAsync<TProjected>(IProjectedSpecification<TEntity, TProjected> specification)
+        {
+            var queryable = ApplySpecification(specification);
+
+            var result = specification.EnablePaging ?
+                await queryable.ToPagedListAsync(specification.Skip, specification.Take) :
+                await queryable.ToListAsync();
+
+            return result;
+        }
+
         public async Task<TEntity> CreateAsync(TEntity entity) 
         {
             _dbContext.Add(entity);
@@ -83,5 +104,9 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Repository
             return SpecificationEvaluator<TEntity>.GetQuery(_dbContext.Set<TEntity>().AsQueryable(), spec);
         }
 
+        private IQueryable<TProjected> ApplySpecification<TProjected>(IProjectedSpecification<TEntity, TProjected> spec)
+        {
+            return SpecificationEvaluator<TEntity>.GetProjectedQuery(_dbContext.Set<TEntity>().AsQueryable(), spec);
+        }
     }
 }

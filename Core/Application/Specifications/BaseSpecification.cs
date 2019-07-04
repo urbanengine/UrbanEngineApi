@@ -56,4 +56,25 @@ namespace UrbanEngine.Core.Application.Specifications
             OrderByDescending = orderByDescendingExpression;
         }
     }
+
+    public abstract class ProjectedBaseSpecification<TEntity, TResult> : BaseSpecification<TEntity>, IProjectedSpecification<TEntity, TResult>
+    { 
+        public Expression<Func<TEntity, TResult>> Selector { get; private set; }
+
+        public bool IsProjected => Selector != null;
+
+        protected ProjectedBaseSpecification(Expression<Func<TEntity, bool>> criteria, Expression<Func<TEntity, TResult>> selector)
+            : base(criteria)
+        {
+            Selector = selector; 
+        }
+
+        protected ProjectedBaseSpecification()
+        : base() { }
+
+        protected virtual void ApplySelector(Expression<Func<TEntity, TResult>> selector)
+        {
+            Selector = selector;
+        }
+    }
 }
