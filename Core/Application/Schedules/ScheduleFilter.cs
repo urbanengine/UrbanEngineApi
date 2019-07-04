@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Linq.Expressions;
+using LinqKit;
 using UrbanEngine.Core.Application.Entities.ScheduleAggregate;
 using UrbanEngine.Core.Common.Filters;
+using UrbanEngine.Core.Common.Paging;
 
 namespace UrbanEngine.Core.Application.Schedules
 {
     /// <summary>
-    /// used to filter schedule results
+    /// used to filter and paginate schedule results
     /// </summary>
-    public class ScheduleFilter : IFilter<Event>
+    public class ScheduleFilter : PagingParameters, IFilter<Event>, IPagingParameters
     {
         /// <summary>
         /// start date
@@ -26,7 +28,15 @@ namespace UrbanEngine.Core.Application.Schedules
         /// <returns></returns>
         public Expression<Func<Event, bool>> GetExpression()
         {
-            return p => 1 == 1;
+            var predicate = PredicateBuilder.New<Event>();
+
+            if (DateTime.TryParse(StartDate, out var startDateParsed))
+                predicate = predicate.And(p => p.StartDate >= startDateParsed);
+
+            if (DateTime.TryParse(EndDate, out var endDateParsed))
+                predicate = predicate.And(p => p.EndDate < endDateParsed);
+
+            return predicate;
         }
     }
 }

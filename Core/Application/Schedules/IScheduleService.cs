@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using UrbanEngine.Core.Application.Entities.ScheduleAggregate;
-using UrbanEngine.Core.Common.Paging;
 
 namespace UrbanEngine.Core.Application.Schedules
 {
@@ -17,7 +16,7 @@ namespace UrbanEngine.Core.Application.Schedules
 
         Task<bool> DeleteEventSessionAsync(long eventId, long sessionId, string reason);
 
-        Task<IEnumerable<Event>> ListScheduledEventsAsync(ScheduleFilter scheduleFilter, IPagingParameters paging = null);
+        Task<IEnumerable<Event>> ListScheduledEventsAsync(ScheduleFilter scheduleFilter);
 
         Task<IEnumerable<ScheduleResult<EventSession>>> ListEventSessionsAsync(long eventId);
     }

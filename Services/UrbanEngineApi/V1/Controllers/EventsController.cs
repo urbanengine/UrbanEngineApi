@@ -4,11 +4,13 @@ using System;
 using System.Threading.Tasks;
 using UrbanEngine.Core.Application.Entities.ScheduleAggregate;
 using UrbanEngine.Core.Application.Schedules;
-using UrbanEngine.Core.Common.Paging;
 using UrbanEngine.Services.UrbanEngineApi.Schedules;
 
 namespace UrbanEngine.Services.UrbanEngineApi.V1.Controllers
-{ 
+{
+    /// <summary>
+    /// manage and query event information
+    /// </summary>
     [Route("api/[controller]")]
     [ApiVersion("1.0")]
     [ApiController]
@@ -17,18 +19,32 @@ namespace UrbanEngine.Services.UrbanEngineApi.V1.Controllers
         private readonly IScheduleService _scheduleService;
         private readonly ILogger _logger;
 
+        /// <summary>
+        /// create a new instanace of controller
+        /// </summary>
+        /// <param name="scheduleService"></param>
+        /// <param name="logger"></param>
         public EventsController(IScheduleService scheduleService, ILogger<EventsController> logger)
         {
             _scheduleService = scheduleService;
             _logger = logger;
         }
         
+        /// <summary>
+        /// types of events
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("types")]
         public IActionResult ListEventTypes()
         {
             return Ok(EventType.List);
         }
 
+        /// <summary>
+        /// schedule an event
+        /// </summary>
+        /// <param name="eventDetail"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> ScheduleEventAsync([FromBody]EventDetailModel eventDetail)
         {
@@ -39,13 +55,23 @@ namespace UrbanEngine.Services.UrbanEngineApi.V1.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// list events for a specified filter
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
         [HttpGet("list")]
-        public async Task<IActionResult> ListScheduledEventsAsync([FromQuery]ScheduleFilter filter, [FromQuery]PagingParameters paging)
+        public async Task<IActionResult> ListScheduledEventsAsync([FromQuery]ScheduleFilter filter)
         {
-            var result = await _scheduleService.ListScheduledEventsAsync(filter, paging);
-            return Ok(result);
+            var result = await _scheduleService.ListScheduledEventsAsync(filter);
+            return Ok(result); 
         }
         
+        /// <summary>
+        /// get details about a specific event
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <returns></returns>
         [HttpGet("{eventId}")]
         public async Task<IActionResult> GetEventDetail(long eventId)
         {
@@ -54,6 +80,12 @@ namespace UrbanEngine.Services.UrbanEngineApi.V1.Controllers
             return Ok(model); 
         }
 
+        /// <summary>
+        /// delete a specified event
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <param name="reason"></param>
+        /// <returns></returns>
         [HttpDelete("{eventId}")]
         public async Task<IActionResult> DeleteEventAsync(long eventId, string reason)
         {
@@ -64,6 +96,12 @@ namespace UrbanEngine.Services.UrbanEngineApi.V1.Controllers
             return Ok(result);
         }
         
+        /// <summary>
+        /// add sessions for an event
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <param name="sessionDetail"></param>
+        /// <returns></returns>
         [HttpPost("{eventId}/sessions")]
         public async Task<IActionResult> ScheduleEventSessionAsync(long eventId, [FromBody]SessionDetailModel sessionDetail)
         {
@@ -77,6 +115,13 @@ namespace UrbanEngine.Services.UrbanEngineApi.V1.Controllers
             return Ok(result);
         }
         
+        /// <summary>
+        /// delete an event session
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <param name="sessionId"></param>
+        /// <param name="reason"></param>
+        /// <returns></returns>
         [HttpDelete("{eventId}/sessions/{sessionId}")]
         public async Task<IActionResult> DeleteEventSessionAsync(long eventId, long sessionId, string reason)
         {
@@ -87,6 +132,11 @@ namespace UrbanEngine.Services.UrbanEngineApi.V1.Controllers
             return Ok(result);
         }
         
+        /// <summary>
+        /// list event sessions for a specified event
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <returns></returns>
         [HttpGet("{eventId}/sessions/list")]
         public async Task<IActionResult> ListEventSessionsAsync(long eventId)
         {

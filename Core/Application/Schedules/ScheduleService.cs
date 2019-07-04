@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UrbanEngine.Core.Application.Entities.ScheduleAggregate;
 using UrbanEngine.Core.Application.Interfaces.Persistence.Data;
-using UrbanEngine.Core.Common.Paging;
 
 namespace UrbanEngine.Core.Application.Schedules
 {
@@ -54,11 +53,11 @@ namespace UrbanEngine.Core.Application.Schedules
             return eventDetail;
         }
         
-        public async Task<IEnumerable<Event>> ListScheduledEventsAsync(ScheduleFilter filter, IPagingParameters paging = null)
+        public async Task<IEnumerable<Event>> ListScheduledEventsAsync(ScheduleFilter filter)
         {
-            _logger.LogDebug("ListScheduledEventsAsync - filter: {filter}, paging: {paging}", filter, paging);
+            _logger.LogDebug("ListScheduledEventsAsync - filter: {filter}", filter);
 
-            var specification = new ScheduleFilterSpecification(filter, paging);
+            var specification = new ScheduleFilterSpecification(filter);
 
             var scheduledEvents = await _eventRepository.ListAsync(specification);
             return scheduledEvents;
