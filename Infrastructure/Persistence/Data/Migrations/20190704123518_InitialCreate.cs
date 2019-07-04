@@ -23,7 +23,8 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
                     City = table.Column<string>(maxLength: 75, nullable: true),
                     State = table.Column<string>(maxLength: 75, nullable: true),
                     PostalCode = table.Column<string>(maxLength: 30, nullable: true),
-                    Country = table.Column<string>(maxLength: 75, nullable: true)
+                    Country = table.Column<string>(maxLength: 75, nullable: true),
+                    Region = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -60,8 +61,8 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
             migrationBuilder.InsertData(
                 schema: "ue",
                 table: "Venue",
-                columns: new[] { "Id", "Address", "Address2", "City", "Country", "Name", "PostalCode", "State" },
-                values: new object[] { 1L, null, null, "Huntsville", null, "CoWorking Night", null, "AL" });
+                columns: new[] { "Id", "Address", "Address2", "City", "Country", "Name", "PostalCode", "Region", "State" },
+                values: new object[] { 1L, null, null, "Huntsville", null, "CoWorking Night", null, null, "AL" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Event_VenueId",

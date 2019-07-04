@@ -9,7 +9,7 @@ using UrbanEngine.Infrastructure.Persistence.Data;
 namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
 {
     [DbContext(typeof(UrbanEngineDbContext))]
-    [Migration("20190704115416_InitialCreate")]
+    [Migration("20190704123518_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -71,6 +71,8 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
 
                     b.Property<string>("PostalCode")
                         .HasMaxLength(30);
+
+                    b.Property<int?>("Region");
 
                     b.Property<string>("State")
                         .HasMaxLength(75);

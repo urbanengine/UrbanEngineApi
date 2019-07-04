@@ -70,6 +70,8 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
                     b.Property<string>("PostalCode")
                         .HasMaxLength(30);
 
+                    b.Property<int?>("Region");
+
                     b.Property<string>("State")
                         .HasMaxLength(75);
 
