@@ -10,7 +10,8 @@ namespace UrbanEngine.Core.Common.Results
         
         public override string ResultType => "Query";
 
-        public QueryResult(object data, IPagingResult paging = null)
+        public QueryResult(object data, IPagingResult paging = null, string message = null)
+            : base(message)
         {
             Data = data; 
             Paging = paging;
