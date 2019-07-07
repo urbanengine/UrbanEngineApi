@@ -1,8 +1,6 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting; 
+using System.Linq; 
 using System.Threading.Tasks;
-using UrbanEngine.Core.Application.Specifications;
 using UrbanEngine.Infrastructure.Persistence.Data.Repository;
 using UrbanEngine.Tests.Persistence.Tests.TestHelpers;
 using UrbanEngine.Tests.Persistence.Tests.TestHelpers.Scopes;
@@ -51,7 +49,6 @@ namespace Persistence.Tests.Data.Repository
             }
         }
 
-
         [TestMethod]
         public async Task AnyAsync_Should_BeFalse_NoItems()
         {
@@ -65,19 +62,74 @@ namespace Persistence.Tests.Data.Repository
             }
         }
 
-        private class DefaultScope : RepositoryTestScope<TestRepository>
+        [TestMethod]
+        public async Task FirstOrDefaultAsync_Should_Return_FirstItem()
         {
-            public DefaultScope()
+            var expectedResult = TestSeedData.FakeEntities.ElementAt(0).Id;
+            var specById = new TestSpecification(p => p.Id == expectedResult); 
+
+            using (var scope = new DefaultScope())
             {
-                InstanceUnderTest = new TestRepository(GetDbContext());
+                var result = await scope.InstanceUnderTest.FirstOrDefaultAsync(specById);
+                var actualResult = result?.Id;
+                Assert.AreEqual(expectedResult, actualResult);
             }
         }
 
-        private class TestRepository : EfRepository<FakeEntity>
+        [TestMethod]
+        public async Task SingleOrDefaultAsync_Should_Return_ItemByName()
         {
-            public TestRepository(UrbanEngineTestDbContext dbContext) : base(dbContext)
+            var expectedResult = TestSeedData.FakeEntities.ElementAt(0).Name;
+            var specById = new TestSpecification(p => p.Name == expectedResult);
+
+            using (var scope = new DefaultScope())
             {
+                var result = await scope.InstanceUnderTest.SingleOrDefaultAsync(specById);
+                var actualResult = result?.Name;
+                Assert.AreEqual(expectedResult, actualResult);
             }
+        }
+
+        [TestMethod]
+        public async Task ListAsync_Should_Return_ExpectedItems()
+        {
+            var expectedResult = TestSeedData.FakeEntities.Where(p => p.IsDeleted == false); 
+            var spec = new TestSpecification(p => p.IsDeleted == false);
+
+            using (var scope = new DefaultScope())
+            {
+                var result = await scope.InstanceUnderTest.ListAsync(spec);
+                var actualResult = result.Count();
+                Assert.AreEqual(expectedResult, actualResult);
+            }
+        }
+
+        [TestMethod]
+        public async Task ListAllAsync_Should_Return_AllItems()
+        {
+            var expectedResult = TestSeedData.FakeEntities.Count(); 
+
+            using (var scope = new DefaultScope())
+            {
+                var result = await scope.InstanceUnderTest.ListAllAsync();
+                var actualResult = result.Count();
+                Assert.AreEqual(expectedResult, actualResult);
+            }
+        }
+
+        private class DefaultScope : RepositoryTestScope<TestReadOnlyRepository>
+        {
+            public DefaultScope()
+            {
+                InstanceUnderTest = new TestReadOnlyRepository(GetDbContext());
+            }
+        }
+
+        // inherint from EfRepository to test all the inherited functionality
+        private class TestReadOnlyRepository : EfRepository<FakeEntity>
+        {
+            public TestReadOnlyRepository(UrbanEngineTestDbContext dbContext) 
+                : base(dbContext) { }
         }
 
     }
