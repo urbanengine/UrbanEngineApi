@@ -1,11 +1,28 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using UrbanEngine.Core.Application.Entities.ScheduleAggregate;
 
 namespace UrbanEngine.Infrastructure.Persistence.Data
 {
-    internal static class SeedDataGenerator
+    public interface ISeedDataGenerator
     {
-        public static void ApplySeedData(this ModelBuilder modelBuilder)
+        void ApplySeedData(ModelBuilder modelBuilder);
+    }
+
+    internal class SeedDataGenerator : ISeedDataGenerator
+    {
+        #region Singleton Support
+
+        private static readonly Lazy<SeedDataGenerator> _instance =
+            new Lazy<SeedDataGenerator>(new SeedDataGenerator());
+
+        private SeedDataGenerator() { }
+
+        public static SeedDataGenerator Instance => _instance.Value;
+         
+        #endregion
+
+        public void ApplySeedData(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<EventVenue>().HasData(EventVenueSeedData());
         }
