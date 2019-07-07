@@ -93,7 +93,7 @@ namespace Persistence.Tests.Data.Repository
         [TestMethod]
         public async Task ListAsync_Should_Return_ExpectedItems()
         {
-            var expectedResult = TestSeedData.FakeEntities.Where(p => p.IsDeleted == false); 
+            var expectedResult = TestSeedData.FakeEntities.Where(p => p.IsDeleted == false).Count(); 
             var spec = new TestSpecification(p => p.IsDeleted == false);
 
             using (var scope = new DefaultScope())
