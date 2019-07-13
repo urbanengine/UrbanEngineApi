@@ -36,7 +36,7 @@ namespace UrbanEngineApi.V1.Controllers
         [HttpGet]
         public async Task<IActionResult> GetVenues([FromQuery]EventVenueFilter filter)
         {
-            var result = await _service.GetVenues<EventVenueModel>(filter);
+            var result = await _service.GetVenuesAsync<EventVenueModel>(filter);
             return Ok(result);
         }
 
@@ -51,7 +51,7 @@ namespace UrbanEngineApi.V1.Controllers
             if (!(eventVenue?.IsValid ?? false))
                 throw new ArgumentException(eventVenue?.GetErrorMessage() ?? $"{nameof(eventVenue)} was not found, cannot be null");
 
-            var result = await _service.CreateVenue(eventVenue);
+            var result = await _service.CreateVenueAsync(eventVenue);
             return Ok(result);
         }
 
@@ -68,7 +68,7 @@ namespace UrbanEngineApi.V1.Controllers
             if (!(eventVenue?.IsValid ?? false))
                 throw new ArgumentException(eventVenue?.GetErrorMessage() ?? $"{nameof(eventVenue)} was not found, cannot be null");
 
-            var result = await _service.UpdateVenue(eventVenueId, eventVenue);
+            var result = await _service.UpdateVenueAsync(eventVenueId, eventVenue);
             return Ok(result);
         }
 
@@ -83,7 +83,7 @@ namespace UrbanEngineApi.V1.Controllers
             if (eventVenueId < 0)
                 throw new ArgumentException($"{nameof(eventVenueId)} must be greater than 0");
 
-            var result = await _service.DeleteVenue(eventVenueId);
+            var result = await _service.DeleteVenueAsync(eventVenueId);
             return Ok(result);
         }
     }

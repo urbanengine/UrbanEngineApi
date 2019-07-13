@@ -19,10 +19,10 @@ namespace UrbanEngine.Core.Application.Venues
             _logger = logger;
         }
 
-        public async Task<QueryResult> GetVenues<TProjected>(IEventVenueFilter filter) 
+        public async Task<QueryResult> GetVenuesAsync<TProjected>(IEventVenueFilter filter) 
             where TProjected : IEventVenueModel, new()
         {
-            _logger.LogDebug("GetVenues - {filter}", filter);
+            _logger.LogDebug("GetVenuesAsync - {filter}", filter);
 
             var selector = new TProjected(); 
             var specification = new EventVenueSpecification(filter, selector);
@@ -35,15 +35,15 @@ namespace UrbanEngine.Core.Application.Venues
             return result;
         }
 
-        public async Task<CommandResultWithData> CreateVenue(IEventVenueModel eventVenue)
+        public async Task<CommandResultWithData> CreateVenueAsync(IEventVenueModel eventVenue)
         {
-            _logger.LogDebug("CreateVenue - {input}", eventVenue); 
+            _logger.LogDebug("CreateVenueAsync - {input}", eventVenue); 
             return await CreateOrUpdateVenue(eventVenue);
         }
 
-        public async Task<CommandResultWithData> UpdateVenue(long eventVenueId, IEventVenueModel eventVenue)
+        public async Task<CommandResultWithData> UpdateVenueAsync(long eventVenueId, IEventVenueModel eventVenue)
         { 
-            _logger.LogDebug("UpdateVenue - id {id}, venue {input}", eventVenueId, eventVenue);
+            _logger.LogDebug("UpdateVenueAsync - id {id}, venue {input}", eventVenueId, eventVenue);
              
             if (eventVenueId <= 0)
                 throw new ArgumentException($"{nameof(eventVenueId)} must be greater than 0");
@@ -51,9 +51,9 @@ namespace UrbanEngine.Core.Application.Venues
             return await CreateOrUpdateVenue(eventVenue, eventVenueId);
         }
 
-        public async Task<CommandResult> DeleteVenue(long eventVenueId)
+        public async Task<CommandResult> DeleteVenueAsync(long eventVenueId)
         {
-            _logger.LogDebug("DeleteVenue {id}", eventVenueId);
+            _logger.LogDebug("DeleteVenueAsync {id}", eventVenueId);
 
             if (eventVenueId <= 0)
                 throw new ArgumentException($"{nameof(eventVenueId)} must be greater than 0");
