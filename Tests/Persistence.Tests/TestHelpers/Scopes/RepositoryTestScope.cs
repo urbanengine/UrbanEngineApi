@@ -11,7 +11,7 @@ namespace UrbanEngine.Tests.Persistence.Tests.TestHelpers.Scopes
         private UrbanEngineTestDbContext _context;
         private SqliteConnection _connection;
 
-        public RepositoryTestScope() : base()
+        protected RepositoryTestScope() : base()
         {
         }
 
@@ -29,14 +29,12 @@ namespace UrbanEngine.Tests.Persistence.Tests.TestHelpers.Scopes
                 _connection.Open();
             }
 
-            if(_context == null)
-            {
-                var optionsBuilder = new DbContextOptionsBuilder<UrbanEngineTestDbContext>();
-                optionsBuilder.UseSqlite(_connection);
+            if (_context != null) return _context;
+            var optionsBuilder = new DbContextOptionsBuilder<UrbanEngineTestDbContext>();
+            optionsBuilder.UseSqlite(_connection);
 
-                _context = new UrbanEngineTestDbContext(optionsBuilder.Options);
-                _context.Database.EnsureCreated();  
-            }
+            _context = new UrbanEngineTestDbContext(optionsBuilder.Options);
+            _context.Database.EnsureCreated();
             return _context;
         }
     }
