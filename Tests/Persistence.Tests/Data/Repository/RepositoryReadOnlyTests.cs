@@ -1,11 +1,11 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting; 
-using System.Linq; 
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UrbanEngine.Infrastructure.Persistence.Data.Repository;
 using UrbanEngine.Tests.Persistence.Tests.TestHelpers;
 using UrbanEngine.Tests.Persistence.Tests.TestHelpers.Scopes;
 
-namespace Persistence.Tests.Data.Repository
+namespace UrbanEngine.Tests.Persistence.Tests.Data.Repository
 {
     [TestClass]
     public class RepositoryReadOnlyTests
@@ -27,12 +27,11 @@ namespace Persistence.Tests.Data.Repository
         public async Task CountAsync_Should_BeZero_NoItems()
         {
             var specWithNoItems = TestSpecification.NoItems;
-            var expectedResult = 0;
 
             using (var scope = new DefaultScope())
             {
                 var actualResult = await scope.InstanceUnderTest.CountAsync(specWithNoItems);
-                Assert.AreEqual(expectedResult, actualResult);
+                Assert.AreEqual(0, actualResult);
             }
         }
 
@@ -40,12 +39,11 @@ namespace Persistence.Tests.Data.Repository
         public async Task AnyAsync_Should_BeTrue_AllItems()
         {
             var specWithItems = TestSpecification.AllItems;
-            var expectedResult = true;
 
             using (var scope = new DefaultScope())
             {
                 var actualResult = await scope.InstanceUnderTest.AnyAsync(specWithItems);
-                Assert.AreEqual(expectedResult, actualResult);
+                Assert.AreEqual(true, actualResult);
             }
         }
 
@@ -53,12 +51,11 @@ namespace Persistence.Tests.Data.Repository
         public async Task AnyAsync_Should_BeFalse_NoItems()
         {
             var specWithNoItems = TestSpecification.NoItems;
-            var expectedResult = false;
 
             using (var scope = new DefaultScope())
             {
                 var actualResult = await scope.InstanceUnderTest.AnyAsync(specWithNoItems);
-                Assert.AreEqual(expectedResult, actualResult);
+                Assert.AreEqual(false, actualResult);
             }
         }
 
@@ -93,7 +90,7 @@ namespace Persistence.Tests.Data.Repository
         [TestMethod]
         public async Task ListAsync_Should_Return_ExpectedItems()
         {
-            var expectedResult = TestSeedData.FakeEntities.Where(p => p.IsDeleted == false).Count(); 
+            var expectedResult = TestSeedData.FakeEntities.Count(p => p.IsDeleted == false); 
             var spec = new TestSpecification(p => p.IsDeleted == false);
 
             using (var scope = new DefaultScope())
@@ -117,7 +114,19 @@ namespace Persistence.Tests.Data.Repository
             }
         }
 
-        private class DefaultScope : RepositoryTestScope<TestReadOnlyRepository>
+        [TestMethod]
+        public async Task GetByIdAsync_Should_Return_Item()
+        {
+            var expectedResult = TestSeedData.FakeEntities.ElementAt(1);
+
+            using (var scope = new DefaultScope())
+            {
+                var result = await scope.InstanceUnderTest.GetByIdAsync(expectedResult.Id);
+                Assert.AreEqual(expectedResult.Id, result.Id);
+            }
+        }
+
+        private sealed class DefaultScope : RepositoryTestScope<TestReadOnlyRepository>
         {
             public DefaultScope()
             {
@@ -125,7 +134,7 @@ namespace Persistence.Tests.Data.Repository
             }
         }
 
-        // inherint from EfRepository to test all the inherited functionality
+        // inherit from EfRepository to test all the inherited functionality
         private class TestReadOnlyRepository : EfRepository<FakeEntity>
         {
             public TestReadOnlyRepository(UrbanEngineTestDbContext dbContext) 
