@@ -5,6 +5,9 @@ namespace UrbanEngine.Core.Application.Venues
 {
     public interface IEventVenueService
     {
+        Task<QueryResult> GetVenueAsync<TProjected>(long eventVenueId)
+            where TProjected : IEventVenueModel, new();
+
         Task<QueryResult> GetVenuesAsync<TProjected>(IEventVenueFilter filter)
             where TProjected : IEventVenueModel, new();
 

@@ -1,8 +1,10 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UrbanEngine.Core.Application.Venues;
 using UrbanEngine.Tests.Application.TestHelpers.Scopes;
 using Moq;
+using UrbanEngine.Core.Application.Interfaces.Persistence.Data;
 
 namespace UrbanEngine.Tests.Application.Venues
 {
@@ -39,9 +41,28 @@ namespace UrbanEngine.Tests.Application.Venues
 
         private sealed class DefaultScope : TestScope<IEventVenueService>
         {
+            public Mock<IEventVenueRepository> MockRepository { get; }
+
             public DefaultScope()
             {
-                InstanceUnderTest = new EventVenueService(null, null);
+                var mockLogger = GetMockLogger();
+                MockRepository = GetMockRepository();
+
+                InstanceUnderTest = new EventVenueService(MockRepository.Object, mockLogger.Object);
+            }
+
+            private Mock<IEventVenueRepository> GetMockRepository()
+            {
+                var mockRepository = new Mock<IEventVenueRepository>();
+
+                //mockRepository.Setup(s=>s.ListAsync())
+
+                return mockRepository;
+            }
+
+            private Mock<ILogger<EventVenueService>> GetMockLogger()
+            {
+                return new Mock<ILogger<EventVenueService>>();
             }
         }
     }

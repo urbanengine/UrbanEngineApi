@@ -8,8 +8,8 @@ namespace UrbanEngine.Core.Application.Venues
     {
         Expression<Func<EventVenue, IEventVenueModel>> Projection { get; }
 
-        EventVenue ToDomainEntity();
+        EventVenue ToDomainEntity(long? id = null);
 
-        IEventVenueModel FromDomainEntity(EventVenue eventVenue);
+        IEventVenueModel FromDomainEntity(EventVenue eventVenue); 
     }
 }
