@@ -6,7 +6,7 @@ using UrbanEngine.Core.Application.Specifications;
 
 namespace UrbanEngine.Core.Application.Venues
 {
-    public class EventVenueSpecification : ProjectedBaseSpecification<EventVenue, IEventVenueModel>
+    public sealed class EventVenueSpecification : ProjectedBaseSpecification<EventVenue, IEventVenueModel>
     {
         public EventVenueSpecification(IEventVenueFilter filter, IEventVenueModel selector)
         {
