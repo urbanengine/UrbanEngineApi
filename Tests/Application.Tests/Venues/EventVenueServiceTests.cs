@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -9,6 +10,7 @@ using UrbanEngine.Tests.Application.TestHelpers.Scopes;
 using Moq;
 using UrbanEngine.Core.Application.Entities.ScheduleAggregate;
 using UrbanEngine.Core.Application.Interfaces.Persistence.Data;
+using UrbanEngine.Core.Common.Paging;
 using UrbanEngine.Core.Common.Results;
 
 namespace UrbanEngine.Tests.Application.Venues
@@ -242,9 +244,18 @@ namespace UrbanEngine.Tests.Application.Venues
 
                 mockRepository
                     .Setup(s => s.ListAsync(It.IsAny<EventVenueSpecification>()))
-                    .ReturnsAsync((EventVenueSpecification spec) => new List<EventVenueModelFake>{ ModelFake });
+                    .ReturnsAsync((EventVenueSpecification spec) =>
+                    {
+                        var data = new List<EventVenueModelFake> {ModelFake};
+                        return new PageableReadOnlyList<EventVenueModelFake>(
+                            data,
+                            spec.Skip,
+                            spec.Take,
+                            data.Count);
+                    });
 
-                mockRepository
+
+            mockRepository
                     .Setup(s => s.FirstOrDefaultAsync(It.IsAny<EventVenueSpecification>()))
                     .ReturnsAsync((EventVenueSpecification spec) => ModelFake);
 
