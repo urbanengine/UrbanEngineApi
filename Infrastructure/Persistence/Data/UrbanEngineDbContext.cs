@@ -4,9 +4,9 @@ namespace UrbanEngine.Infrastructure.Persistence.Data
 {
     public class UrbanEngineDbContext : DbContext
     {
-        public string SchemaName { get; private set; } = "ue";
+        public string SchemaName { get; set; } = "ue";
 
-        public UrbanEngineDbContext(DbContextOptions<UrbanEngineDbContext> options) 
+        public UrbanEngineDbContext(DbContextOptions options) 
             : base(options) { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -17,15 +17,28 @@ namespace UrbanEngine.Infrastructure.Persistence.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // set a default schema 
-            modelBuilder.HasDefaultSchema(SchemaName);
+            if(!string.IsNullOrEmpty(SchemaName))
+                modelBuilder.HasDefaultSchema(SchemaName);
 
-            // look for all configuration in this assembly
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(UrbanEngineDbContext).Assembly);
+            // apply configurations
+            ApplyConfigurations(modelBuilder);
 
             // apply seed data
-            modelBuilder.ApplySeedData();
+            ApplySeedData(modelBuilder);
 
+            // call to base to handle any remaining 
             base.OnModelCreating(modelBuilder);
+        }
+
+        protected virtual void ApplySeedData(ModelBuilder modelBuilder)
+        {
+            SeedDataGenerator.Instance.ApplySeedData(modelBuilder);
+        }
+
+        protected virtual void ApplyConfigurations(ModelBuilder modelBuilder)
+        {
+            // look for all configuration in this assembly
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(UrbanEngineDbContext).Assembly);
         }
     }
 }
