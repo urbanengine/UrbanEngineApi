@@ -4,7 +4,9 @@ using UrbanEngine.Core.Application.Specifications;
 
 namespace UrbanEngine.Core.Application.Interfaces.Persistence.Data
 {
-    public interface IAsyncRepository<TEntity> where TEntity : class
+    public interface IRepository { }
+
+    public interface IAsyncRepository<TEntity> : IRepository where TEntity : class
     {
         Task<TEntity> GetByIdAsync(object id); 
         Task<TEntity> CreateAsync(TEntity entity);

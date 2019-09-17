@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UrbanEngine.Core.Application.Entities.ScheduleAggregate;
 using UrbanEngine.Core.Application.Venues;
 using UrbanEngine.Core.Common.Validation;
@@ -9,11 +10,11 @@ using UrbanEngine.Core.Common.Validation;
 namespace UrbanEngine.Services.UrbanEngineApi.V1.Models.Venues
 {
     /// <summary>
-    /// represents an item to show in a list for event venues
+    /// represents details about an event venue
     /// </summary>
-    public class EventVenueModel : IEventVenueModel, IValidate
+    public class EventVenueDetailModel : IEventVenueModel, IValidate
     {
-        public long? Id { get; set; }
+        public  long Id { get; private set; }
 
         public string Name { get; set; }
 
@@ -39,13 +40,13 @@ namespace UrbanEngine.Services.UrbanEngineApi.V1.Models.Venues
             get => x => FromDomainEntity(x); 
         }
 
-        public EventVenue ToDomainEntity()
+        public EventVenue ToDomainEntity(long? id = null)
         {
             if (!IsValid)
                 throw new Exception(GetErrorMessage());
 
-            return new EventVenue(Name)
-            {
+            return new EventVenue(id ?? 0, Name)
+            { 
                 Address = Address,
                 Address2 = Address2,
                 City = City,
@@ -58,7 +59,7 @@ namespace UrbanEngine.Services.UrbanEngineApi.V1.Models.Venues
 
         public IEventVenueModel FromDomainEntity(EventVenue eventVenue)
         {
-            return new EventVenueModel
+            return new EventVenueDetailModel
             {
                 Id = eventVenue.Id,
                 Name = eventVenue.Name,

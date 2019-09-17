@@ -12,7 +12,7 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Repository
     {
         private readonly DbContext _dbContext;
 
-        public EfRepository(DbContext dbContext)
+        protected EfRepository(DbContext dbContext)
         {
             _dbContext = dbContext;
         }
