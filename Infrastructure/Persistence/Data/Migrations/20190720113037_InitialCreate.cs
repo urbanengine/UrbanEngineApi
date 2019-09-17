@@ -31,7 +31,6 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Venue", x => x.Id);
-                    table.UniqueConstraint("AK_Name", x => x.Name);
                 });
 
             migrationBuilder.CreateTable(
@@ -67,13 +66,20 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
                 schema: "ue",
                 table: "Venue",
                 columns: new[] { "Id", "Address", "Address2", "City", "Country", "DateCreated", "Name", "PostalCode", "Region", "State" },
-                values: new object[] { 1L, "3001 9th Avenue Southwest", null, "Huntsville", "United States", new DateTime(2019, 7, 4, 17, 5, 16, 402, DateTimeKind.Local).AddTicks(2165), "Huntsville West", "35805", 1, "AL" });
+                values: new object[] { 1L, "3001 9th Avenue Southwest", null, "Huntsville", "United States", new DateTime(2019, 7, 20, 7, 30, 37, 486, DateTimeKind.Local).AddTicks(3958), "Huntsville West", "35805", 1, "AL" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Event_VenueId",
                 schema: "ue",
                 table: "Event",
                 column: "VenueId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Venue_Name",
+                schema: "ue",
+                table: "Venue",
+                column: "Name",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

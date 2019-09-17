@@ -19,10 +19,25 @@ namespace UrbanEngine.Core.Application.Venues
             _logger = logger;
         }
 
-        public async Task<QueryResult> GetVenues<TProjected>(IEventVenueFilter filter) 
+        public async Task<QueryResult> GetVenueAsync<TProjected>(long eventVenueId)
             where TProjected : IEventVenueModel, new()
         {
-            _logger.LogDebug("GetVenues - {filter}", filter);
+            _logger.LogDebug("GetVenueAsync - {eventVenueId}", eventVenueId);
+
+            var selector = new TProjected();
+            var specification = new EventVenueSpecification(p => p.Id == eventVenueId, selector);
+
+            var data = await _repository.FirstOrDefaultAsync(specification);
+            _logger.LogDebug("EventVenue found {found}", data != null);
+
+            var result = QueryResult<IEventVenueModel>.New(data); 
+            return result;
+        }
+
+        public async Task<QueryResult> GetVenuesAsync<TProjected>(IEventVenueFilter filter) 
+            where TProjected : IEventVenueModel, new()
+        {
+            _logger.LogDebug("GetVenuesAsync - {filter}", filter);
 
             var selector = new TProjected(); 
             var specification = new EventVenueSpecification(filter, selector);
@@ -35,15 +50,15 @@ namespace UrbanEngine.Core.Application.Venues
             return result;
         }
 
-        public async Task<CommandResultWithData> CreateVenue(IEventVenueModel eventVenue)
+        public async Task<CommandResultWithData> CreateVenueAsync(IEventVenueModel eventVenue)
         {
-            _logger.LogDebug("CreateVenue - {input}", eventVenue); 
+            _logger.LogDebug("CreateVenueAsync - {input}", eventVenue); 
             return await CreateOrUpdateVenue(eventVenue);
         }
 
-        public async Task<CommandResultWithData> UpdateVenue(long eventVenueId, IEventVenueModel eventVenue)
+        public async Task<CommandResultWithData> UpdateVenueAsync(long eventVenueId, IEventVenueModel eventVenue)
         { 
-            _logger.LogDebug("UpdateVenue - id {id}, venue {input}", eventVenueId, eventVenue);
+            _logger.LogDebug("UpdateVenueAsync - id {id}, venue {input}", eventVenueId, eventVenue);
              
             if (eventVenueId <= 0)
                 throw new ArgumentException($"{nameof(eventVenueId)} must be greater than 0");
@@ -51,9 +66,9 @@ namespace UrbanEngine.Core.Application.Venues
             return await CreateOrUpdateVenue(eventVenue, eventVenueId);
         }
 
-        public async Task<CommandResult> DeleteVenue(long eventVenueId)
+        public async Task<CommandResult> DeleteVenueAsync(long eventVenueId)
         {
-            _logger.LogDebug("DeleteVenue {id}", eventVenueId);
+            _logger.LogDebug("DeleteVenueAsync {id}", eventVenueId);
 
             if (eventVenueId <= 0)
                 throw new ArgumentException($"{nameof(eventVenueId)} must be greater than 0");
@@ -84,29 +99,32 @@ namespace UrbanEngine.Core.Application.Venues
                 throw new ArgumentNullException($"{nameof(eventVenue)} cannot be null");
 
             _logger.LogDebug("convert model to domain entity");
-            var entity = eventVenue.ToDomainEntity();
+            var entity = eventVenue.ToDomainEntity(id: eventVenueId);
 
             EventVenue createdOrUpdatedEntity;
+            var action = "";
             if (eventVenueId > 0)
             {
                 _logger.LogDebug("update entity in database with id {id}", eventVenueId);
 
                 var itemsUpdated = await _repository.UpdateAsync(entity);
                 createdOrUpdatedEntity = itemsUpdated > 0 ? entity : null;
+                action = "updated";
             }
             else
             {
                 _logger.LogDebug("create entity in database");
                 createdOrUpdatedEntity = await _repository.CreateAsync(entity);
+                action = "created";
             }
 
-            _logger.LogDebug("convert created entity to model");
+            _logger.LogDebug($"convert {action} entity to model");
             var model = eventVenue.FromDomainEntity(createdOrUpdatedEntity);
 
             _logger.LogDebug("create command result to return to client");
             var result = createdOrUpdatedEntity?.Id > 0 ?
-                new CommandResultWithData(model, "event venue created", 200, true) :
-                new CommandResultWithData(null, message: "failed to create event venue", statusCode: 0, success: false); 
+                new CommandResultWithData(model, $"event venue {action}", 200, true) :
+                new CommandResultWithData(null, message: $"failed to {action} event venue", statusCode: 0, success: false); 
 
             return result;
         }

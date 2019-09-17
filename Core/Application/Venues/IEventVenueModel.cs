@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
 using UrbanEngine.Core.Application.Entities.ScheduleAggregate;
-using UrbanEngine.Core.Common.Validation;
 
 namespace UrbanEngine.Core.Application.Venues
 {
@@ -9,8 +8,8 @@ namespace UrbanEngine.Core.Application.Venues
     {
         Expression<Func<EventVenue, IEventVenueModel>> Projection { get; }
 
-        EventVenue ToDomainEntity();
+        EventVenue ToDomainEntity(long? id = null);
 
-        IEventVenueModel FromDomainEntity(EventVenue eventVenue);
+        IEventVenueModel FromDomainEntity(EventVenue eventVenue); 
     }
 }

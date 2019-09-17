@@ -6,7 +6,7 @@ using UrbanEngine.Core.Application.Specifications;
 
 namespace UrbanEngine.Core.Application.Venues
 {
-    public class EventVenueSpecification : ProjectedBaseSpecification<EventVenue, IEventVenueModel>
+    public sealed class EventVenueSpecification : ProjectedBaseSpecification<EventVenue, IEventVenueModel>
     {
         public EventVenueSpecification(IEventVenueFilter filter, IEventVenueModel selector)
         {
@@ -18,14 +18,21 @@ namespace UrbanEngine.Core.Application.Venues
             ApplySelector(selector.Projection);
         }
 
+        public EventVenueSpecification(Expression<Func<EventVenue, bool>> criteria, IEventVenueModel selector = null)
+        {
+            ApplyCriteria(criteria);
+
+            if(selector != null)
+                ApplySelector(selector.Projection);
+        }
+
         private Expression<Func<EventVenue, bool>> GetExpression(IEventVenueFilter filter)
         {
             var predicate = PredicateBuilder.New<EventVenue>();
 
-            if (filter.IsDeleted.HasValue)
-                predicate = predicate.And(p => p.IsDeleted == filter.IsDeleted.Value);
-            else
-                predicate = predicate.And(p => p.IsDeleted != true);
+            predicate = filter.IsDeleted.HasValue ? 
+                predicate.And(p => p.IsDeleted == filter.IsDeleted.Value) : 
+                predicate.And(p => p.IsDeleted != true);
 
             if (!string.IsNullOrEmpty(filter.City))
                 predicate = predicate.And(p => p.City.ToLower().Trim() == filter.City.ToLower().Trim());

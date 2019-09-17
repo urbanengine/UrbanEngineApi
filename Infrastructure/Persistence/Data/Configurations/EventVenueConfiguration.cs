@@ -16,8 +16,8 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Configurations
                 .IsRequired()
                 .HasMaxLength(200);
 
-            builder.HasAlternateKey(e => e.Name)
-                .HasName("AK_Name");
+            builder.HasIndex(e => e.Name)
+                .IsUnique();
             
             builder.Property(e => e.Address)
                 .IsRequired(false)
