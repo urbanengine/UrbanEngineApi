@@ -30,5 +30,5 @@ configuration: Release
 before_build:
 - cmd: dotnet restore
 
-after_build:
-  - cmd: dotnet test .\UrbanEngine.Tests\UrbanEngine.Tests.csproj
+# after_build:
+#  - cmd: dotnet test .\UrbanEngine.Tests\UrbanEngine.Tests.csproj
