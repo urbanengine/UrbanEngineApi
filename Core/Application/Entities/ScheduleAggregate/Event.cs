@@ -7,13 +7,13 @@ namespace UrbanEngine.Core.Application.Entities.ScheduleAggregate
     {
         #region Properties 
 
-        public string Title { get; private set; }
-        public string Description { get; private set; }
-        public DateTime? StartDate { get; private set; }
+        public string Title { get; private set; } // required
+        public string Description { get; private set; } // required
+        public DateTime? StartDate { get; private set; } // required
         public DateTime? EndDate { get; private set; }
         public EventType EventType { get; private set; }
-        public string OrganizerId { get; private set; } 
-        public long? VenueId { get; private set; }
+        public string OrganizerId { get; private set; } // required
+        public long? VenueId { get; private set; } // required
 
         #endregion
 

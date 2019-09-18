@@ -7,8 +7,8 @@ namespace UrbanEngine.Core.Application.Entities.ScheduleAggregate
     {
         #region Properties
 
-        public string Name { get; private set; }
-         
+        public string Name { get; private set; } // required
+
         public string Address { get; set; }
 
         public string Address2 { get; set; }
@@ -22,6 +22,8 @@ namespace UrbanEngine.Core.Application.Entities.ScheduleAggregate
         public string Country { get; set; }
         
         public RegionType Region { get; set; }
+
+        public bool IsAvailable { get; set; } // required
 
         #endregion
 
