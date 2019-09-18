@@ -4,7 +4,6 @@ using System;
 using System.Threading.Tasks;
 using UrbanEngine.Core.Application.Entities.ScheduleAggregate;
 using UrbanEngine.Core.Application.Schedules;
-using UrbanEngine.Services.UrbanEngineApi.Schedules;
 using UrbanEngine.Services.UrbanEngineApi.V1.Models.Schedules;
 
 namespace UrbanEngine.Services.UrbanEngineApi.V1.Controllers

@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using UrbanEngine.Core.Application.Venues;
 using UrbanEngine.Services.UrbanEngineApi.V1.Models.Venues;
 
-namespace UrbanEngineApi.V1.Controllers
+namespace UrbanEngine.Services.UrbanEngineApi.V1.Controllers
 {
     /// <summary>
     /// manage and query information about event venues
