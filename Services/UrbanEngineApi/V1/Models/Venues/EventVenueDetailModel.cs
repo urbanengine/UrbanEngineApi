@@ -13,7 +13,7 @@ namespace UrbanEngine.Services.UrbanEngineApi.V1.Models.Venues
     /// </summary>
     public class EventVenueDetailModel : IEventVenueModel, IValidate
     {
-        public  long Id { get; private set; }
+        public  long Id { get; set; }
 
         public string Name { get; set; }
 

@@ -26,7 +26,8 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
                     State = table.Column<string>(maxLength: 75, nullable: true),
                     PostalCode = table.Column<string>(maxLength: 30, nullable: true),
                     Country = table.Column<string>(maxLength: 75, nullable: true),
-                    Region = table.Column<int>(nullable: true)
+                    Region = table.Column<int>(nullable: true),
+                    IsAvailable = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -42,7 +43,7 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     IsDeleted = table.Column<bool>(nullable: false, defaultValue: false),
                     DateCreated = table.Column<DateTime>(nullable: false),
-                    Title = table.Column<string>(maxLength: 100, nullable: false),
+                    Name = table.Column<string>(maxLength: 100, nullable: false),
                     Description = table.Column<string>(maxLength: 500, nullable: true),
                     StartDate = table.Column<DateTime>(nullable: true),
                     EndDate = table.Column<DateTime>(nullable: true),
@@ -65,8 +66,8 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
             migrationBuilder.InsertData(
                 schema: "ue",
                 table: "Venue",
-                columns: new[] { "Id", "Address", "Address2", "City", "Country", "DateCreated", "Name", "PostalCode", "Region", "State" },
-                values: new object[] { 1L, "3001 9th Avenue Southwest", null, "Huntsville", "United States", new DateTime(2019, 7, 20, 7, 30, 37, 486, DateTimeKind.Local).AddTicks(3958), "Huntsville West", "35805", 1, "AL" });
+                columns: new[] { "Id", "Address", "Address2", "City", "Country", "DateCreated", "IsAvailable", "Name", "PostalCode", "Region", "State" },
+                values: new object[] { 1L, "3001 9th Avenue Southwest", null, "Huntsville", "United States", new DateTime(2019, 10, 25, 12, 54, 54, 357, DateTimeKind.Local).AddTicks(4060), false, "Huntsville West", "35805", 1, "AL" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Event_VenueId",

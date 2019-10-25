@@ -7,13 +7,26 @@ namespace UrbanEngine.Core.Application.Entities.ScheduleAggregate
     {
         #region Properties 
 
-        public string Title { get; private set; } // required
+        public string Name { get; private set; } // required
         public string Description { get; private set; } // required
         public DateTime? StartDate { get; private set; } // required
         public DateTime? EndDate { get; private set; }
         public EventType EventType { get; private set; }
         public string OrganizerId { get; private set; } // required
         public long? VenueId { get; private set; } // required
+
+        public TimeSpan? Duration
+        {
+            get
+            {
+                if (StartDate.HasValue && EndDate.HasValue)
+                {
+                    return EndDate - StartDate;
+                }
+
+                return null;
+            }
+        }
 
         #endregion
 
@@ -30,9 +43,16 @@ namespace UrbanEngine.Core.Application.Entities.ScheduleAggregate
 
         }
 
-        public Event(string title, string description, EventType eventType, DateTime? startDate, DateTime? endDate, string organizerId, long? venueId)
+        public Event(long id, string name, DateTime startDate)
         {
-            Title = title;
+            Id = id;
+            Name = name;
+            StartDate = startDate;
+        }
+
+        public Event(string name, string description, EventType eventType, DateTime? startDate, DateTime? endDate, string organizerId, long? venueId)
+        {
+            Name = name;
             Description = description;
             StartDate = startDate;
             EndDate = endDate;
@@ -40,6 +60,15 @@ namespace UrbanEngine.Core.Application.Entities.ScheduleAggregate
             OrganizerId = organizerId;
             VenueId = venueId;
         }
+
+        /*
+            id
+            name
+            description
+            startdate (with time)
+            duration ( end date - start date)
+            EventVenue.Name
+        */
 
         #endregion
     }

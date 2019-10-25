@@ -13,13 +13,13 @@ namespace UrbanEngine.Services.UrbanEngineApi.V1.Models.Events
         
         #region Properties 
          
-        public  long Id { get; private set; }
-        public string Title { get; set; }
+        public  long Id { get; set; }
+        public string Name { get; set; }
         public string Description { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public string Type { get; set; }
-        public string OrganizerId { get; private set; } 
+        public string OrganizerId { get; private set; } = "1"; // TODO: need to remove hard coded value
         public long? VenueId { get; set; }
 
         #endregion
@@ -35,7 +35,7 @@ namespace UrbanEngine.Services.UrbanEngineApi.V1.Models.Events
                 throw new Exception(GetErrorMessage());
 
             return new Event(
-                title: Title,
+                name: Name,
                 description: Description,
                 eventType: !string.IsNullOrEmpty(Type) ? EventType.FromName(Type) : null,
                 startDate: StartDate,
@@ -49,7 +49,7 @@ namespace UrbanEngine.Services.UrbanEngineApi.V1.Models.Events
             return new EventDetailModel
             {
                 Id = eventData.Id,
-                Title = eventData.Title,
+                Name = eventData.Name,
                 Description = eventData.Description,
                 Type = eventData.EventType?.Name,
                 StartDate = eventData.StartDate,
@@ -73,8 +73,8 @@ namespace UrbanEngine.Services.UrbanEngineApi.V1.Models.Events
         {
             IList<string> errors = new List<string>();
 
-            if(string.IsNullOrEmpty(Title))
-                errors.Add($"{nameof(Title)} is a required value and cannot be null");
+            if(string.IsNullOrEmpty(Name))
+                errors.Add($"{nameof(Name)} is a required value and cannot be null");
             
             if(string.IsNullOrEmpty(Description))
                 errors.Add($"{nameof(Description)} is a required value and cannot be null");

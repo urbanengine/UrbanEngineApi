@@ -11,7 +11,7 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Configurations
         {
             base.Configure(builder); 
 
-            builder.Property(e => e.Title)
+            builder.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(100);
 
@@ -23,6 +23,8 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Configurations
             builder.Property(e => e.StartDate).IsRequired(false);
             builder.Property(e => e.OrganizerId).IsRequired(false);
             builder.Property(e => e.VenueId).IsRequired(false);
+
+            builder.Ignore(e => e.Duration);
 
             builder.Property(p => p.EventType)
                 .HasConversion(

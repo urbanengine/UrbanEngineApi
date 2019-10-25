@@ -77,7 +77,7 @@ namespace UrbanEngine.Services.UrbanEngineApi.V1.Models.Schedules
                 Duration = new DateTimeRange(eventDetail.StartDate.Value, eventDetail.EndDate.Value),
                 EventTypeValue = eventDetail.EventType.Value,
                 OrganizerId = eventDetail.OrganizerId,
-                Title = eventDetail.Title
+                Title = eventDetail.Name
             };
         }
 

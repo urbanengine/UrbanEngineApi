@@ -14,6 +14,12 @@ To make things consistent objects in the [Results](Core/Common/Results) folder a
 * CommandResult: used to indicate result of a command such as an Insert, Update, Delete
 * QueryResult: used to indicate result of a query that was performed, returns data and paging information if applicable
 
+## CRUD Operations End to End for simple Entity
+
+If creating an entity and all that is needed are basic CRUD operations follow this checklist to add various interfaces and classes at the appropriate layers
+
+- 
+
 ## Exception Handling for API Controllers
 
 To provide a common response when exceptions occur and to ensure exceptions are logged and sensitive error messages are not returned to the client
