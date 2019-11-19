@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UrbanEngine.Core.Application.Entities.ScheduleAggregate;
 using UrbanEngine.Core.Application.Venues;
 using UrbanEngine.Core.Common.Validation;
@@ -14,7 +13,7 @@ namespace UrbanEngine.Services.UrbanEngineApi.V1.Models.Venues
     /// </summary>
     public class EventVenueDetailModel : IEventVenueModel, IValidate
     {
-        public  long Id { get; private set; }
+        public  long Id { get; set; }
 
         public string Name { get; set; }
 
@@ -35,10 +34,7 @@ namespace UrbanEngine.Services.UrbanEngineApi.V1.Models.Venues
         #region IEventVenueModel Members
 
         [JsonIgnore]
-        public Expression<Func<EventVenue, IEventVenueModel>> Projection
-        {
-            get => x => FromDomainEntity(x); 
-        }
+        public Expression<Func<EventVenue, IEventVenueModel>> Projection => x => FromDomainEntity(x);
 
         public EventVenue ToDomainEntity(long? id = null)
         {

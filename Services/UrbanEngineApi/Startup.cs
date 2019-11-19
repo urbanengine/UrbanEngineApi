@@ -14,6 +14,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.Extensions.PlatformAbstractions;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using UrbanEngine.Core.Application.Events;
 using UrbanEngine.Core.Application.Interfaces.Persistence.Data;
 using UrbanEngine.Core.Application.Schedules;
 using UrbanEngine.Core.Application.Venues;
@@ -95,6 +96,7 @@ namespace UrbanEngine.Services.UrbanEngineApi
             // services
             services.AddTransient<IScheduleService, ScheduleService>();
             services.AddTransient<IEventVenueService, EventVenueService>();
+            services.AddTransient<IEventService, EventService>();
 
             #endregion
         }

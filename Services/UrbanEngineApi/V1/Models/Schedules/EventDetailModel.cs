@@ -1,11 +1,11 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using UrbanEngine.Core.Application.Entities.ScheduleAggregate;
 using UrbanEngine.Core.Application.SharedKernel;
 using UrbanEngine.Core.Common.Validation;
 
-namespace UrbanEngine.Services.UrbanEngineApi.Schedules
+namespace UrbanEngine.Services.UrbanEngineApi.V1.Models.Schedules
 {
     /// <summary>
     /// represents details specified by end user to manage events
@@ -77,7 +77,7 @@ namespace UrbanEngine.Services.UrbanEngineApi.Schedules
                 Duration = new DateTimeRange(eventDetail.StartDate.Value, eventDetail.EndDate.Value),
                 EventTypeValue = eventDetail.EventType.Value,
                 OrganizerId = eventDetail.OrganizerId,
-                Title = eventDetail.Title
+                Title = eventDetail.Name
             };
         }
 

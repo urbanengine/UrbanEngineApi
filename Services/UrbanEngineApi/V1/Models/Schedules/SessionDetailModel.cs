@@ -1,7 +1,7 @@
 ﻿using UrbanEngine.Core.Application.Entities.ScheduleAggregate;
 using UrbanEngine.Core.Common.Validation;
 
-namespace UrbanEngine.Services.UrbanEngineApi.Schedules
+namespace UrbanEngine.Services.UrbanEngineApi.V1.Models.Schedules
 {
     public class SessionDetailModel : IValidate
     {

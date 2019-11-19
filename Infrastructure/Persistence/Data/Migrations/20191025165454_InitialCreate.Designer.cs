@@ -9,7 +9,7 @@ using UrbanEngine.Infrastructure.Persistence.Data;
 namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
 {
     [DbContext(typeof(UrbanEngineDbContext))]
-    [Migration("20190720113037_InitialCreate")]
+    [Migration("20191025165454_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,13 +38,13 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasDefaultValue(false);
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
                     b.Property<string>("OrganizerId");
 
                     b.Property<DateTime?>("StartDate");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(100);
 
                     b.Property<long?>("VenueId");
 
@@ -74,6 +74,8 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
 
                     b.Property<DateTime?>("DateCreated")
                         .IsRequired();
+
+                    b.Property<bool>("IsAvailable");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
@@ -105,7 +107,8 @@ namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
                             Address = "3001 9th Avenue Southwest",
                             City = "Huntsville",
                             Country = "United States",
-                            DateCreated = new DateTime(2019, 7, 20, 7, 30, 37, 486, DateTimeKind.Local).AddTicks(3958),
+                            DateCreated = new DateTime(2019, 10, 25, 12, 54, 54, 357, DateTimeKind.Local).AddTicks(4060),
+                            IsAvailable = false,
                             IsDeleted = false,
                             Name = "Huntsville West",
                             PostalCode = "35805",
