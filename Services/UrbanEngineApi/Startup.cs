@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.PlatformAbstractions;
@@ -29,18 +30,25 @@ namespace UrbanEngine.Services.UrbanEngineApi
     {
         static int _errorEventId = 1;
 
+        /// <summary>
+        /// Constructor for UrbanEngineApi Startup class
+        /// </summary>
+        /// <param name="configuration"></param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
+        /// <summary>
+        /// property for the application's configuration settings
+        /// </summary>
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc(options => options.EnableEndpointRouting = true)
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             #region Versioning
 
@@ -102,7 +110,7 @@ namespace UrbanEngine.Services.UrbanEngineApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApiVersionDescriptionProvider provider)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
             if (!env.IsDevelopment())
             {
@@ -155,7 +163,11 @@ namespace UrbanEngine.Services.UrbanEngineApi
             #endregion
 
             app.UseHttpsRedirection();
-            app.UseMvc();
+
+            app.UseEndpoints( endpoints =>
+            {
+                endpoints.MapControllerRoute( "default", "{controller=Home}/{action=Index}" );
+            } );
         }
 
         static string XmlCommentsFilePath

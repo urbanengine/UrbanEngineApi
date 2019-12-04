@@ -64,6 +64,7 @@ namespace UrbanEngine.Services.UrbanEngineApi.V1.Controllers
         /// <summary>
         /// updates an existing event Events
         /// </summary>
+        /// <param name="EventId"></param>
         /// <param name="EventDetail"></param>
         /// <returns></returns>
         [HttpPut("{EventId}")]
