@@ -1,20 +1,16 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Microsoft.Extensions.PlatformAbstractions;
 using Newtonsoft.Json;
-using Swashbuckle.AspNetCore.SwaggerGen;
 using UrbanEngine.Core.Application.Events;
 using UrbanEngine.Core.Application.Interfaces.Persistence.Data;
 using UrbanEngine.Core.Application.Schedules;
@@ -22,7 +18,7 @@ using UrbanEngine.Core.Application.Venues;
 using UrbanEngine.Core.Common.Results;
 using UrbanEngine.Infrastructure.Persistence.Data;
 using UrbanEngine.Infrastructure.Persistence.Data.Repository;
-using UrbanEngine.Services.UrbanEngineApi.Configuration;
+using Microsoft.OpenApi.Models;
 
 namespace UrbanEngine.Services.UrbanEngineApi
 {
@@ -47,44 +43,36 @@ namespace UrbanEngine.Services.UrbanEngineApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(options => options.EnableEndpointRouting = true)
-                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-
-            #region Versioning
-
-            services.AddApiVersioning(
-                options =>
-                {
-                    // reporting api versions will return the headers "api-supported-versions" and "api-deprecated-versions"
-                    options.ReportApiVersions = true;
-                });
-
-            services.AddVersionedApiExplorer(
-                options =>
-                {
-                    // add the versioned api explorer, which also adds IApiVersionDescriptionProvider service
-                    // note: the specified format code will format the version as "'v'major[.minor][-status]"
-                    options.GroupNameFormat = "'v'VVV";
-
-                    // note: this option is only necessary when versioning by url segment. the SubstitutionFormat
-                    // can also be used to control the format of the API version in route templates
-                    options.SubstituteApiVersionInUrl = true;
-                });
-
-            #endregion
+            services.AddControllers();
 
             #region Swagger 
 
-            services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
-            services.AddSwaggerGen(
-                options =>
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    // add a custom operation filter which sets default values
-                    options.OperationFilter<SwaggerDefaultValues>();
-
-                    // integrate xml comments
-                    options.IncludeXmlComments(XmlCommentsFilePath);
+                    Title = "Urban Engine API",
+                    Version = "v1",
+                    Description = "Urban Engine API",
+                    // TermsOfService = new Uri(""),
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Tyler Hughes",
+                        Email = "tyler@urbanengine.org"
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "Apache 2.0",
+                        Url = new Uri("https://www.apache.org/licenses/LICENSE-2.0.html")
+                    }
                 });
+
+                // Set the comments path for the Swagger JSON and UI.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+            });
+
 
             #endregion
 
@@ -110,12 +98,11 @@ namespace UrbanEngine.Services.UrbanEngineApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (!env.IsDevelopment())
+            if (env.IsDevelopment())
             {
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                app.UseDeveloperExceptionPage();
             }
 
             #region Error Handling 
@@ -150,34 +137,24 @@ namespace UrbanEngine.Services.UrbanEngineApi
 
             app.UseSwagger();
 
-            app.UseSwaggerUI(
-                options =>
-                {
-                    // build a swagger endpoint for each discovered API version
-                    foreach (var description in provider.ApiVersionDescriptions)
-                    {
-                        options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
-                    }
-                });
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Urban Engine API v1");
+                //c.RoutePrefix = string.Empty;
+            });
 
             #endregion
 
             app.UseHttpsRedirection();
 
-            app.UseEndpoints( endpoints =>
-            {
-                endpoints.MapControllerRoute( "default", "{controller=Home}/{action=Index}" );
-            } );
-        }
+            app.UseRouting();
 
-        static string XmlCommentsFilePath
-        {
-            get
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
             {
-                var basePath = PlatformServices.Default.Application.ApplicationBasePath;
-                var fileName = typeof(Startup).GetTypeInfo().Assembly.GetName().Name + ".xml";
-                return Path.Combine(basePath, fileName);
-            }
+                endpoints.MapControllers();
+            });
         }
 
         private ILoggerFactory GetLoggerFactory()

@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using UrbanEngine.Core.Application.Venues;
-using UrbanEngine.Services.UrbanEngineApi.V1.Models.Venues;
+using UrbanEngine.Services.UrbanEngineApi.Models.Venues;
 
-namespace UrbanEngine.Services.UrbanEngineApi.V1.Controllers
+namespace UrbanEngine.Services.UrbanEngineApi.Controllers
 {
     /// <summary>
     /// manage and query information about event venues

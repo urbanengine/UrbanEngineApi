@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
+using Microsoft.Extensions.Hosting;
 using UrbanEngine.Infrastructure.Persistence.Data;
 
 namespace UrbanEngine.Services.UrbanEngineApi
@@ -12,41 +12,42 @@ namespace UrbanEngine.Services.UrbanEngineApi
     {
         public static void Main(string[] args)
         {
-            var host = CreateWebHostBuilder(args).Build();
+            var hostBuilder = CreateHostBuilder(args).Build();
 
-            var logger = host.Services.GetRequiredService<ILogger<Program>>();
+            var logger = hostBuilder.Services.GetRequiredService<ILogger<Program>>();
 
             try
             {
                 logger.LogInformation("Seed Database");
-                CreateOrMigrateDatabase<UrbanEngineDbContext>(host, logger);
+                CreateOrMigrateDatabase<UrbanEngineDbContext>(hostBuilder, logger);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.LogError(ex, $"error trying to call {nameof(CreateOrMigrateDatabase)}");
             }
 
             logger.LogDebug("Run the application"); 
-            host.Run();
+            hostBuilder.Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
 
         // this will create database if not exists or update it to latest if it does 
-        static void CreateOrMigrateDatabase<TContext>(IWebHost host, ILogger logger) where TContext : DbContext
+        static void CreateOrMigrateDatabase<TContext>(IHost host, ILogger logger) where TContext : DbContext
         {
             var applyMigrations = Environment.GetEnvironmentVariable("APPLY_MIGRATIONS");
-            if (applyMigrations.Trim().ToLower() == "true")
+            if (applyMigrations != null && applyMigrations.Trim().ToLower() == "true")
             {
-                using (var scope = host.Services.CreateScope())
-                using (var context = scope.ServiceProvider.GetService<TContext>())
-                {
-                    logger.LogInformation("attempting to apply migrations");
-                    context.Database.Migrate();
-                    logger.LogInformation("migrations applied");
-                }
+                using var scope = host.Services.CreateScope();
+                using var context = scope.ServiceProvider.GetService<TContext>();
+                logger.LogInformation("attempting to apply migrations");
+                context.Database.Migrate();
+                logger.LogInformation("migrations applied");
             }
             else
             {

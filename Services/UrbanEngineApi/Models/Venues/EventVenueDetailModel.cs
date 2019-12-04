@@ -1,12 +1,12 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Newtonsoft.Json;
 using UrbanEngine.Core.Application.Entities.ScheduleAggregate;
 using UrbanEngine.Core.Application.Venues;
 using UrbanEngine.Core.Common.Validation;
 
-namespace UrbanEngine.Services.UrbanEngineApi.V1.Models.Venues
+namespace UrbanEngine.Services.UrbanEngineApi.Models.Venues
 {
     /// <summary>
     /// represents details about an event venue

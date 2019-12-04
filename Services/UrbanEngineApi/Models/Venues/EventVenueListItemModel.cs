@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Linq.Expressions;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Newtonsoft.Json;
 using UrbanEngine.Core.Application.Entities.ScheduleAggregate;
 using UrbanEngine.Core.Application.Venues;
 
-namespace UrbanEngine.Services.UrbanEngineApi.V1.Models.Venues
+namespace UrbanEngine.Services.UrbanEngineApi.Models.Venues
 {
     /// <summary>
     /// represents basic information to show for an event venue when displayed in a list

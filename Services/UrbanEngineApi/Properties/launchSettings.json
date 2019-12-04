@@ -21,7 +21,7 @@
     "UrbanEngineApi": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "http://localhost:5000/swagger",
+      "launchUrl": "http://localhost:44338",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

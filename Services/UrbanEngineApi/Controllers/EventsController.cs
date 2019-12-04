@@ -3,15 +3,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using UrbanEngine.Core.Application.Events;
-using UrbanEngine.Services.UrbanEngineApi.V1.Models.Events;
+using UrbanEngine.Services.UrbanEngineApi.Models.Events;
 
-namespace UrbanEngine.Services.UrbanEngineApi.V1.Controllers
+namespace UrbanEngine.Services.UrbanEngineApi.Controllers
 {
     /// <summary>
     /// manage and query event information
     /// </summary>
     [Route("api/[controller]")]
-    [ApiVersion("1.0")]
     [ApiController]
     public class EventsController : ControllerBase
     {

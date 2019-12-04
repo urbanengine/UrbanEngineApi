@@ -6,7 +6,7 @@ using UrbanEngine.Core.Application.Entities.ScheduleAggregate;
 using UrbanEngine.Core.Application.Events;
 using UrbanEngine.Core.Common.Validation;
 
-namespace UrbanEngine.Services.UrbanEngineApi.V1.Models.Events
+namespace UrbanEngine.Services.UrbanEngineApi.Models.Events
 {
     public class EventDetailModel : IEventModel, IValidate
     {

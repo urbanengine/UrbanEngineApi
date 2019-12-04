@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Reflection;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Reflection;
 
-namespace UrbanEngine.Services.UrbanEngineApi.VN.Controllers
+namespace UrbanEngine.Services.UrbanEngineApi.Controllers
 {
     [Route("api/[controller]")]
-    [ApiVersionNeutral]
     [ApiController]
     public class AboutController : ControllerBase
     { 
@@ -25,7 +24,7 @@ namespace UrbanEngine.Services.UrbanEngineApi.VN.Controllers
                 {
                     Name = GetShortName(),
                     Version = GetAssemblyVersion(),
-                    ApiVersion = ApiVersion.Default.ToString()
+                    ApiVersion = "v1"
                 }
             };
 

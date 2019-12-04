@@ -1,7 +1,7 @@
 ﻿using UrbanEngine.Core.Application.Schedules;
 using UrbanEngine.Core.Common.Paging;
 
-namespace UrbanEngine.Services.UrbanEngineApi.V1.Models.Schedules
+namespace UrbanEngine.Services.UrbanEngineApi.Models.Schedules
 {
     /// <summary>
     /// used to filter and paginate schedule results

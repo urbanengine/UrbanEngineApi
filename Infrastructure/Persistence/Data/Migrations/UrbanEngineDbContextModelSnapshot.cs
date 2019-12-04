@@ -2,8 +2,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using UrbanEngine.Infrastructure.Persistence.Data;
 
 namespace UrbanEngine.Infrastructure.Persistence.Data.Migrations
 {

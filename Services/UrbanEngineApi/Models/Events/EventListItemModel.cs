@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using UrbanEngine.Core.Application.Entities.ScheduleAggregate;
 using UrbanEngine.Core.Application.Events;
 
-namespace UrbanEngine.Services.UrbanEngineApi.V1.Models.Events
+namespace UrbanEngine.Services.UrbanEngineApi.Models.Events
 {
     public class EventListItemModel : IEventModel
     {

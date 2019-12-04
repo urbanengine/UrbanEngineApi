@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-
-namespace UrbanEngine.Core.Common.Lookup
+﻿namespace UrbanEngine.Core.Common.Lookup
 {
     public class LookupItem
     {

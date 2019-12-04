@@ -3,7 +3,7 @@ using UrbanEngine.Core.Application.Entities.ScheduleAggregate;
 using UrbanEngine.Core.Application.Events;
 using UrbanEngine.Core.Common.Paging;
 
-namespace UrbanEngine.Services.UrbanEngineApi.V1.Models.Events
+namespace UrbanEngine.Services.UrbanEngineApi.Models.Events
 {
     /// <summary>
     /// filters and paginates event search results

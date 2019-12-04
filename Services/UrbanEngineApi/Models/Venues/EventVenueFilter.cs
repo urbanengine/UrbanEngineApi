@@ -1,7 +1,7 @@
 ﻿using UrbanEngine.Core.Application.Venues;
 using UrbanEngine.Core.Common.Paging;
 
-namespace UrbanEngine.Services.UrbanEngineApi.V1.Models.Venues
+namespace UrbanEngine.Services.UrbanEngineApi.Models.Venues
 {
     /// <summary>
     /// filters and paginates event venue search results
