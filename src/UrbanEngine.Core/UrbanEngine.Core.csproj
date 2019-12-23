@@ -7,13 +7,14 @@
   <ItemGroup>
     <Folder Include="Handlers\Events\" />
     <Folder Include="Messages\Events\" />
-    <Folder Include="Messages\Venues\" />
-    <Folder Include="Models\" />
+    <Folder Include="Models\Events\" />
+    <Folder Include="Specifications\Events\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Ardalis.SmartEnum" Version="1.0.8" />
     <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="LinqKit" Version="1.1.17" />
     <PackageReference Include="MediatR" Version="7.0.0" />
   </ItemGroup>
 
