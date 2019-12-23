@@ -1,21 +1,18 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
+using UrbanEngine.Infrastructure.Data;
 using UrbanEngine.SharedKernel.Results;
 
 namespace UrbanEngine.Web
@@ -61,6 +58,14 @@ namespace UrbanEngine.Web
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
+
+            // db context 
+            services.AddDbContext<UrbanEngineDbContext>(options =>
+            {
+                //options.UseSqlite("Data Source=UrbanEngine.db");
+                options.UseNpgsql("host=localhost;database=postgres_local;user id=postgres_admin;password=Postgres2020!;");
+                options.UseLoggerFactory(GetLoggerFactory());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -100,7 +105,6 @@ namespace UrbanEngine.Web
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Urban Engine API v1");
-                //c.RoutePrefix = string.Empty;
             });
 
             app.UseHttpsRedirection();
@@ -113,6 +117,17 @@ namespace UrbanEngine.Web
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private ILoggerFactory GetLoggerFactory()
+        {
+            IServiceCollection serviceCollection = new ServiceCollection();
+            serviceCollection.AddLogging(builder =>
+                   builder.AddConsole()
+                          .AddFilter(DbLoggerCategory.Database.Command.Name,
+                                     LogLevel.Information));
+            return serviceCollection.BuildServiceProvider()
+                    .GetService<ILoggerFactory>();
         }
     }
 }

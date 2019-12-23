@@ -14,6 +14,7 @@
       "launchBrowser": true,
       "launchUrl": "weatherforecast",
       "environmentVariables": {
+        "APPLY_MIGRATIONS": "true",
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
