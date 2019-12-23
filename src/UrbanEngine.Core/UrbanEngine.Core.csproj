@@ -5,11 +5,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Entities\" />
-    <Folder Include="Events\" />
-    <Folder Include="Handlers\" />
-    <Folder Include="Messages\" />
-    <Folder Include="Services\" />
+    <Folder Include="Handlers\Events\" />
+    <Folder Include="Messages\Events\" />
+    <Folder Include="Messages\Venues\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Ardalis.SmartEnum" Version="1.0.8" />
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="MediatR" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UrbanEngine.SharedKernel\UrbanEngine.SharedKernel.csproj" />
   </ItemGroup>
 
 </Project>
