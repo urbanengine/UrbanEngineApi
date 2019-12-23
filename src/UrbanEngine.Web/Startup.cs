@@ -1,6 +1,8 @@
 using System;
 using System.IO;
 using System.Reflection;
+using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
@@ -12,7 +14,12 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
+using UrbanEngine.Core.Entities;
+using UrbanEngine.Core.Managers.Events;
+using UrbanEngine.Core.Managers.Venues;
 using UrbanEngine.Infrastructure.Data;
+using UrbanEngine.Infrastructure.Data.Repository;
+using UrbanEngine.SharedKernel.Data;
 using UrbanEngine.SharedKernel.Results;
 
 namespace UrbanEngine.Web
@@ -66,6 +73,20 @@ namespace UrbanEngine.Web
                 options.UseNpgsql("host=localhost;database=postgres_local;user id=postgres_admin;password=Postgres2020!;");
                 options.UseLoggerFactory(GetLoggerFactory());
             });
+
+            // repositories
+            services.AddScoped<IAsyncRepository<EventEntity>, EventRepository>();
+            services.AddScoped<IAsyncRepository<EventVenueEntity>, EventVenueRepository>();
+
+            // managers
+            services.AddScoped<IEventManager, EventManager>();
+            services.AddScoped<IEventVenueManager, EventVenueManager>();
+
+            // AutoMapper
+            services.AddAutoMapper(typeof(Configuration.AutoMapperProfile).Assembly);
+
+            // Mediatr
+            services.AddMediatR(typeof(UrbanEngine.Core.Handlers.Venues.GetVenuesHandler).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

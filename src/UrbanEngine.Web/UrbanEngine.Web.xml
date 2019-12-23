@@ -4,5 +4,12 @@
         <name>UrbanEngine.Web</name>
     </assembly>
     <members>
+        <member name="M:UrbanEngine.Web.Controllers.EventVenuesController.GetVenuesAsync(UrbanEngine.Core.Messages.Venues.GetEventVenuesMessage)">
+            <summary>
+            retrieves a list of event venues based on specified filter
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>
