@@ -1,0 +1,24 @@
+version: '3'
+
+services: 
+    db:
+        image: postgres:11.6
+        ports:
+            - "5432:5432"
+        volumes:
+            - pgdata:/var/lib/postgresql/data
+            - pgconf:/etc/postgresql
+            - pglog:/var/log/postgresql
+        environment: 
+            - POSTGRES_DB=postgres_local
+            - POSTGRES_USER=postgres_admin
+            - POSTGRES_PASSWORD=Postgres2020!
+
+volumes:
+    pgdata:
+        driver: local
+    pgconf:
+        driver: local
+    pglog:
+        driver: local
+
