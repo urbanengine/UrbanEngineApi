@@ -9,6 +9,9 @@ namespace UrbanEngine.Web.Configuration
         public AutoMapperProfile()
         {
             CreateMap<EventVenueEntity, EventVenueListItemDto>();
+
+            CreateMap<EventVenueEntity, EventVenueDetailDto>()
+                .ReverseMap();
         }
     }
 }
