@@ -4,6 +4,52 @@
         <name>UrbanEngine.Web</name>
     </assembly>
     <members>
+        <member name="T:UrbanEngine.Web.Controllers.EventsController">
+            <summary>
+            manage and query information about events
+            </summary>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.EventsController.#ctor(MediatR.IMediator)">
+            <summary>
+            ctor
+            </summary>
+            <param name="mediator"></param>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.EventsController.GetEventByIdAsync(System.Int64)">
+            <summary>
+            get event for specified id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.EventsController.GetEventsAsync(UrbanEngine.Core.Messages.Events.GetEventsMessage)">
+            <summary>
+            retrieves a list of events based on specified filter
+            </summary>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.EventsController.CreateEventAsync(UrbanEngine.Core.Models.Events.EventDetailDto)">
+            <summary>
+            create a new event
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.EventsController.UpdateEventAsync(UrbanEngine.Core.Models.Events.EventDetailDto)">
+            <summary>
+            create a new event
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.EventsController.DeleteEventAsync(UrbanEngine.Core.Messages.Events.DeleteEventMessage)">
+            <summary>
+            delete a Event
+            </summary>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
         <member name="T:UrbanEngine.Web.Controllers.EventVenuesController">
             <summary>
             manage and query information about event venues
