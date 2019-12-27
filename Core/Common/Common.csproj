@@ -1,9 +1,0 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <AssemblyName>UrbanEngine.Core.Common</AssemblyName>
-    <RootNamespace>UrbanEngine.Core.Common</RootNamespace>
-  </PropertyGroup>
-
-</Project>
