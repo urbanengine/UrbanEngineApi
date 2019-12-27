@@ -26,14 +26,26 @@ namespace UrbanEngine.Web.Controllers
         }
 
         /// <summary>
+        /// get event venue for specified id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetVenueByIdAsync(long id)
+        {
+            var result = await _mediator.Send(new GetVenueByIdMessage { Id = id });
+            return Ok(result);
+        }
+
+        /// <summary>
         /// retrieves a list of event venues based on specified filter
         /// </summary>
-        /// <param name="filter"></param>
+        /// <param name="message"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetVenuesAsync([FromQuery]GetEventVenuesMessage filter)
+        public async Task<IActionResult> GetVenuesAsync([FromQuery]GetVenuesMessage message)
         {
-            var result = await _mediator.Send(filter);
+            var result = await _mediator.Send(message);
             return Ok(result);
         }
 
@@ -45,7 +57,7 @@ namespace UrbanEngine.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateVenueAsync([FromQuery]EventVenueDetailDto data)
         {
-            var message = new SaveEventVenueMessage
+            var message = new SaveVenueMessage
             {
                 Detail = data,
                 Action = ActionType.Create
@@ -62,7 +74,7 @@ namespace UrbanEngine.Web.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateVenueAsync([FromQuery]EventVenueDetailDto data)
         {
-            var message = new SaveEventVenueMessage
+            var message = new SaveVenueMessage
             {
                 Detail = data,
                 Action = ActionType.Update

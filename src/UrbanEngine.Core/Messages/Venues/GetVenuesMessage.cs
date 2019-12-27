@@ -10,7 +10,7 @@ namespace UrbanEngine.Core.Messages.Venues
     /// <summary>
     /// filters and paginates event venue search results
     /// </summary>
-    public class GetEventVenuesMessage : PagingParameters, IEventVenueFilter, IRequest<QueryResult<IEnumerable<EventVenueListItemDto>>>
+    public class GetVenuesMessage : PagingParameters, IEventVenueFilter, IRequest<QueryResult<IEnumerable<EventVenueListItemDto>>>
     {
         #region IEventVenueFilter Members
 

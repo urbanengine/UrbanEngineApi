@@ -15,11 +15,18 @@
             </summary>
             <param name="mediator"></param>
         </member>
-        <member name="M:UrbanEngine.Web.Controllers.EventVenuesController.GetVenuesAsync(UrbanEngine.Core.Messages.Venues.GetEventVenuesMessage)">
+        <member name="M:UrbanEngine.Web.Controllers.EventVenuesController.GetVenueByIdAsync(System.Int64)">
+            <summary>
+            get event venue for specified id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.EventVenuesController.GetVenuesAsync(UrbanEngine.Core.Messages.Venues.GetVenuesMessage)">
             <summary>
             retrieves a list of event venues based on specified filter
             </summary>
-            <param name="filter"></param>
+            <param name="message"></param>
             <returns></returns>
         </member>
         <member name="M:UrbanEngine.Web.Controllers.EventVenuesController.CreateVenueAsync(UrbanEngine.Core.Models.Venues.EventVenueDetailDto)">

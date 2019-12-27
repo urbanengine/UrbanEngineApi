@@ -13,7 +13,7 @@ using UrbanEngine.SharedKernel.Results;
 
 namespace UrbanEngine.Core.Handlers.Venues
 {
-    public class GetVenuesHandler : IRequestHandler<GetEventVenuesMessage, QueryResult<IEnumerable<EventVenueListItemDto>>>
+    public class GetVenuesHandler : IRequestHandler<GetVenuesMessage, QueryResult<IEnumerable<EventVenueListItemDto>>>
     {
         private readonly IEventVenueManager _manager;
         private readonly IMapper _mapper;
@@ -26,7 +26,7 @@ namespace UrbanEngine.Core.Handlers.Venues
             _logger = logger;
         }
 
-        public async Task<QueryResult<IEnumerable<EventVenueListItemDto>>> Handle(GetEventVenuesMessage request, CancellationToken cancellationToken)
+        public async Task<QueryResult<IEnumerable<EventVenueListItemDto>>> Handle(GetVenuesMessage request, CancellationToken cancellationToken)
         {
             _logger.LogInformation($"{nameof(GetVenuesHandler)} - Handler - Start");
 
