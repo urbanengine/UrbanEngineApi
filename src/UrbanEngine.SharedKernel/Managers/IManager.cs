@@ -15,6 +15,6 @@ namespace UrbanEngine.SharedKernel.Managers
         Task<IEnumerable<TEntity>> GetAsync(ISpecification<TEntity> specification);
         Task<TEntity> CreateAsync(TEntity entity);
         Task<TEntity> UpdateAsync(TEntity entity);
-        Task<bool> DeleteAsync(object id);
+        Task<bool> DeleteAsync(object id, bool softDelete);
     }
 }

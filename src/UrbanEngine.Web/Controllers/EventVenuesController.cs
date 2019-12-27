@@ -82,5 +82,17 @@ namespace UrbanEngine.Web.Controllers
             var result = await _mediator.Send(message);
             return Ok(result);
         }
+
+        /// <summary>
+        /// delete a venue
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        public async Task<IActionResult> DeleteVenueAsync([FromQuery]DeleteVenueMessage message)
+        {
+            var result = await _mediator.Send(message);
+            return Ok(result);
+        }
     }
 }

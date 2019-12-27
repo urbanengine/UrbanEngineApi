@@ -6,7 +6,7 @@ namespace UrbanEngine.SharedKernel.Data
     {
         long Id { get; }
 
-        bool IsDeleted { get; }
+        bool IsDeleted { get; set; }
 
         DateTime? DateCreated { get; }
     }

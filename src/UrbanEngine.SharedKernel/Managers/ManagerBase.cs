@@ -46,12 +46,21 @@ namespace UrbanEngine.SharedKernel.Managers
             return await GetByIdAsync(entity.Id);
         }
 
-        public async Task<bool> DeleteAsync(object id)
+        public async Task<bool> DeleteAsync(object id, bool softDelete)
         {
             var entity = await GetByIdAsync(id);
-            var result = await _repository.DeleteAsync(entity);
-            var isDeleted = result > 0;
-            return isDeleted;
+
+            int result;
+            if(!softDelete)
+            {
+                result = await _repository.DeleteAsync(entity);           
+            }
+            else
+            {
+                entity.IsDeleted = true;
+                result = await _repository.UpdateAsync(entity);
+            }
+            return result > 0;
         }
     }
 }

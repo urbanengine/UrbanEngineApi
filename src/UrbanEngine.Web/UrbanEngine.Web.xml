@@ -43,5 +43,12 @@
             <param name="data"></param>
             <returns></returns>
         </member>
+        <member name="M:UrbanEngine.Web.Controllers.EventVenuesController.DeleteVenueAsync(UrbanEngine.Core.Messages.Venues.DeleteVenueMessage)">
+            <summary>
+            delete a venue
+            </summary>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>
