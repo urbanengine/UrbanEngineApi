@@ -1,0 +1,1 @@
+docker-compose --project-name=postgres_local --file=docker-compose.yml down
