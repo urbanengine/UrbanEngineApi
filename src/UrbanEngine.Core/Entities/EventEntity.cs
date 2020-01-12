@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UrbanEngine.Core.Enums;
 using UrbanEngine.SharedKernel.Data;
 
@@ -34,6 +35,8 @@ namespace UrbanEngine.Core.Entities
         #region Navigation Properties
 
         public EventVenueEntity Venue { get; private set; }
+
+        public IList<CheckInEntity> CheckIns { get; set; }
 
         #endregion
 
