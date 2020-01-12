@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using UrbanEngine.SharedKernel.Data;
+using UrbanEngine.SharedKernel.Paging;
 
 namespace UrbanEngine.SharedKernel.Specifications
 {
@@ -11,6 +12,12 @@ namespace UrbanEngine.SharedKernel.Specifications
         protected BaseSpecification(Expression<Func<TEntity, bool>> criteria)
         {
             Criteria = criteria;
+        }
+
+        protected BaseSpecification( IPagingParameters pagingParameters )
+        {
+            if ( pagingParameters.DisablePaging != true )
+                ApplyPaging( pagingParameters.GetSkipValue(), pagingParameters.GetTakeValue() );
         }
 
         protected BaseSpecification() { }

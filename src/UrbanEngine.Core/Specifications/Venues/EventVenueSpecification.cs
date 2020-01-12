@@ -9,12 +9,9 @@ namespace UrbanEngine.Core.Specifications.Venues
 {
     public sealed class EventVenueSpecification : BaseSpecification<EventVenueEntity>
     {
-        public EventVenueSpecification(IEventVenueFilter filter)
+        public EventVenueSpecification(IEventVenueFilter filter ) : base( filter )
         {
-            ApplyCriteria(GetExpression(filter)); 
-
-            if(filter.DisablePaging != true)
-                ApplyPaging(filter.GetSkipValue(), filter.GetTakeValue());
+            ApplyCriteria(GetExpression(filter));
         }
 
         private Expression<Func<EventVenueEntity, bool>> GetExpression(IEventVenueFilter filter)
