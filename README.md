@@ -67,3 +67,96 @@ If working with the local SQL Lite database you'll have to delete the *.db file 
 
 The [SeedDataGenerator](Infrastructre/Persistence/Data/SeedDataGenerator.cs) is used to seed the database
 with any initial data. Use this to add any data that should always be present in the database
+
+## Running the dev database locally
+
+A docker compose file exists to help spin up a docker container that runs PostgresSQL. Follow the steps to run the database locally in your dev environment.
+
+1. Open a command prompt
+2. cd to the `UrbanEngineApi` directory
+3. Ensure that Docker is running
+4. Run the following command
+
+    ```powershell
+    & scripts\start-postgres-local.ps1
+    ```
+
+5. Open `pgAdmin` and ensure you can connect to the database locally
+6. To stop the database when you are finished run the following
+
+    ```powershell
+    & scripts\stop-postgres-local.ps1
+    ```
+
+## How to setup a new workflow
+
+### (Step 1) - Create your entity
+
+1. Go to the `UrbanEngine.Core` project
+2. Go to Entities folder
+3. Create a new Entity to model what this will look like in the database, use the naming convention of suffix name of entity with `Entity`
+4. Make sure your class inherits from `UrbanEngine.SharedKernel.Data.EntityBase`
+5. Add any additional properties to your entity
+
+### (Step 2) - Create the mapping for EF
+
+1. Go to `UrbanEngine.Infrastructure` project
+2. Go to `Data\Configuration`
+3. Create a new Configuration for EF Core
+4. Inherit from `EntityBaseConfiguration`
+5. Override the `Configure` method and add in any mappings
+6. NOTE: inheriting from EntityBaseConfiguration will map the table, primary key, and any common properties from `EntityBase`
+7. Be sure to make the class internal
+
+### (Step 3) - Create the repository
+
+1. Go to `UrbanEngine.Infrastructure` project
+2. Go to `Data\Repository
+3. Create a new repository for your entity
+4. Inherit from `EfRepository<T>`
+5. Add a constructor that inherits from base
+
+### (Step 4) - Generate Migrations
+
+1. This step can come when you are completely done modeling your entity but should happen before you create a pull request.
+2. Open a command prompt
+3. cd to the `src\UrbanEngine.Infrastructure` directory
+4. In the command window type `dotnet ef --help` to ensure you have the dotnet ef tool installed
+5. If EF tools are not installed you'll need to install them using
+
+   ```powershell
+   dotnet tool install --global dotnet-ef
+   ```
+
+6. Run the following command, change the `<yourmigrationname>` to be a name to indicate what is going into this migration
+
+   ```powerhsell
+    dotnet ef migrations add <yourmigrationname> --startup-project ../UrbanEngine.Web/UrbanEngine.Web.csproj --project UrbanEngine.Infrastructure.csproj --output-dir Data/Migrations
+   ```
+
+7. Go to `UrbanEngine.Web` project and right click, go to properties. Click Debug, If it does not already exist add an environment variable `APPLY_MIGRATIONS` and set the value to be `true`
+8. Make sure your database is [running locally](#running-the-dev-database-locally)
+9. Run the UrbanEngine.Web project
+10. Go to `pgAdmin` and ensure your changes are refelected
+
+Explore other options with `dotnet ef` tools for additional options
+
+### (Step 5) - Creating Specification and Filter
+
+1. Go to `UrbanEngine.Core`
+2. Under Specificatiosn create a new Specification
+3. Inherit from `BaseSpecification<T>`
+4. Create an interface for filtering, this is passed to the constructor of your Specification class
+5. Add any properties to the filter class that you would use to search on
+6. Look at other Specification classes for examples
+
+### Next Steps
+
+Working with Tyler, got to this point
+
+* Add the Manager class
+* Add the Models
+* Add the Messages
+* Add the Handler
+* Add the Controller
+* Add the Unit Tests
