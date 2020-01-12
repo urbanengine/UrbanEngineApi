@@ -11,8 +11,8 @@ namespace UrbanEngine.Core.Entities
 
         public string Name { get; private set; } // required
         public string Description { get; private set; } // required
-        public DateTime? StartDate { get; private set; } // required
-        public DateTime? EndDate { get; private set; }
+        public DateTimeOffset? StartDate { get; private set; } // required
+        public DateTimeOffset? EndDate { get; private set; }
         public EventType EventType { get; private set; }
         public string OrganizerId { get; private set; } // required
         public long? VenueId { get; private set; } // required
