@@ -8,12 +8,9 @@ namespace UrbanEngine.Core.Specifications.Events
 {
     public sealed class EventSpecification : BaseSpecification<EventEntity>
     {
-        public EventSpecification(IEventFilter filter)
+        public EventSpecification(IEventFilter filter) : base( filter )
         {
-            ApplyCriteria(GetExpression(filter)); 
-
-            if(filter.DisablePaging != true)
-                ApplyPaging(filter.GetSkipValue(), filter.GetTakeValue());
+            ApplyCriteria(GetExpression(filter));            
         }
          
         private Expression<Func<EventEntity, bool>> GetExpression(IEventFilter filter)
