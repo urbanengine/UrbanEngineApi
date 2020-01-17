@@ -20,7 +20,7 @@ namespace UrbanEngine.SharedKernel.Data
         /// <summary>
         /// uniquely identifies the entity
         /// </summary>
-        public long Id { get; protected set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// used for soft deletes to indicate if item is deleted
