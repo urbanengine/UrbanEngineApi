@@ -2,7 +2,7 @@
 
 [![Build Status](https://dev.azure.com/urbanengine/Urban%20Engine/_apis/build/status/urban-engine-api?branchName=master)](https://dev.azure.com/urbanengine/Urban%20Engine/_build/latest?definitionId=2&branchName=master)
 
-# DEV Notes
+## DEV Notes
 
 This section will contain any notes to be aware of for developing Urban Engine API
 
@@ -14,12 +14,6 @@ To make things consistent objects in the [Results](Core/Common/Results) folder a
 * CommandResult: used to indicate result of a command such as an Insert, Update, Delete
 * QueryResult: used to indicate result of a query that was performed, returns data and paging information if applicable
 
-## CRUD Operations End to End for simple Entity
-
-If creating an entity and all that is needed are basic CRUD operations follow this checklist to add various interfaces and classes at the appropriate layers
-
-- 
-
 ## Exception Handling for API Controllers
 
 To provide a common response when exceptions occur and to ensure exceptions are logged and sensitive error messages are not returned to the client
@@ -29,14 +23,14 @@ thrown by controller endpoints without having to add `try/catch` and `logging` s
 Example:
 
 ```csharp
-	// see Configure method in Startup.cs
-    app.UseExceptionHandler(errorApp =>
+// see Configure method in Startup.cs
+app.UseExceptionHandler(errorApp =>
+{
+    errorApp.Run(async context =>
     {
-        errorApp.Run(async context =>
-        {
-			// ...see implementation details in Startup.cs file...
-        });
+        // ...see implementation details in Startup.cs file...
     });
+});
 ```
 
 ## Migrate
@@ -208,7 +202,7 @@ Explore other options with `dotnet ef` tools for additional options
 ### Upcoming TODO
 
 * Writing Unit Tests
+* Minor bug with List All to fix (see CheckIn)
 * Recurring Events
 * Authentication
 * Authorization
-* Minor bug with List All to fix (see CheckIn)
