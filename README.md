@@ -211,3 +211,4 @@ Explore other options with `dotnet ef` tools for additional options
 * Recurring Events
 * Authentication
 * Authorization
+* Minor bug with List All to fix (see CheckIn)
