@@ -15,6 +15,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using UrbanEngine.Core.Entities;
+using UrbanEngine.Core.Managers.CheckIn;
 using UrbanEngine.Core.Managers.Events;
 using UrbanEngine.Core.Managers.Venues;
 using UrbanEngine.Infrastructure.Data;
@@ -77,10 +78,12 @@ namespace UrbanEngine.Web
             // repositories
             services.AddScoped<IAsyncRepository<EventEntity>, EventRepository>();
             services.AddScoped<IAsyncRepository<EventVenueEntity>, EventVenueRepository>();
+            services.AddScoped<IAsyncRepository<CheckInEntity>, CheckInRepository>();
 
             // managers
             services.AddScoped<IEventManager, EventManager>();
             services.AddScoped<IEventVenueManager, EventVenueManager>();
+            services.AddScoped<ICheckInManager, CheckInManager>();
 
             // AutoMapper
             services.AddAutoMapper(typeof(Configuration.AutoMapperProfile).Assembly);

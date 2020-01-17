@@ -54,8 +54,9 @@ namespace UrbanEngine.Core.Entities
             StartDate = startDate;
         }
 
-        public EventEntity(string name, string description, EventType eventType, DateTime? startDate, DateTime? endDate, string organizerId, long? venueId)
+        public EventEntity(long id, string name, string description, EventType eventType, DateTime? startDate, DateTime? endDate, string organizerId, long? venueId)
         {
+            Id = id;
             Name = name;
             Description = description;
             StartDate = startDate;
