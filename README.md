@@ -42,24 +42,26 @@ Example:
 ## Migrate
 
 When the UrbanEngineApi starts up it is currently set to call `Migrate` to update the database. Whether this is run or not is controll by an Environment Variable
-called `APPLY_MIGRATIONS` and if this is set to the value of `True` then Migrations will be applied on application start up. This is good to have turned on for any 
-development or testing environments but should be disabled in Production and applied only when expected. To see the code where migrations are run go to 
+called `APPLY_MIGRATIONS` and if this is set to the value of `True` then Migrations will be applied on application start up. This is good to have turned on for any
+development or testing environments but should be disabled in Production and applied only when expected. To see the code where migrations are run go to
 the [Program.cs](Services/UrbanEngineApi/Program.cs) file in the UrbanEngineApi project and look for the `CreateOrMigrateDatabase` method.
 
 ## EF Migrations
 
-Run the following command to create a migration, replace `InitialCreate` with name of a migration you want to use. 
-NOTE: if you are using SQL Lite it only allows one migration and you will have to remove migrations
+1. Open a command prompt
+2. cd to the `src\UrbanEngine.Infrastructure` directory
+3. In the command window type `dotnet ef --help` to ensure you have the dotnet ef tool installed
+4. If EF tools are not installed you'll need to install them using
 
-```console
-dotnet ef migrations add InitialCreate --startup-project Services\UrbanEngineApi --project Infrastructure\Persistence --output-dir Data\Migrations
-```
+   ```powershell
+   dotnet tool install --global dotnet-ef
+   ```
 
-To remove the last migration
+5. Run the following command, change the `<yourmigrationname>` to be a name to indicate what is going into this migration
 
-```console
-dotnet ef migrations remove --startup-project Services\UrbanEngineApi --project Infrastructure\Persistence
-```
+   ```powerhsell
+    dotnet ef migrations add <yourmigrationname> --startup-project ../UrbanEngine.Web/UrbanEngine.Web.csproj --project UrbanEngine.Infrastructure.csproj --output-dir Data/Migrations
+   ```
 
 If working with the local SQL Lite database you'll have to delete the *.db file first as well
 
@@ -119,25 +121,11 @@ A docker compose file exists to help spin up a docker container that runs Postgr
 ### (Step 4) - Generate Migrations
 
 1. This step can come when you are completely done modeling your entity but should happen before you create a pull request.
-2. Open a command prompt
-3. cd to the `src\UrbanEngine.Infrastructure` directory
-4. In the command window type `dotnet ef --help` to ensure you have the dotnet ef tool installed
-5. If EF tools are not installed you'll need to install them using
-
-   ```powershell
-   dotnet tool install --global dotnet-ef
-   ```
-
-6. Run the following command, change the `<yourmigrationname>` to be a name to indicate what is going into this migration
-
-   ```powerhsell
-    dotnet ef migrations add <yourmigrationname> --startup-project ../UrbanEngine.Web/UrbanEngine.Web.csproj --project UrbanEngine.Infrastructure.csproj --output-dir Data/Migrations
-   ```
-
-7. Go to `UrbanEngine.Web` project and right click, go to properties. Click Debug, If it does not already exist add an environment variable `APPLY_MIGRATIONS` and set the value to be `true`
-8. Make sure your database is [running locally](#running-the-dev-database-locally)
-9. Run the UrbanEngine.Web project
-10. Go to `pgAdmin` and ensure your changes are refelected
+2. Follow the steps at [EF Migrations](#ef-migrations)
+3. Go to `UrbanEngine.Web` project and right click, go to properties. Click Debug, If it does not already exist add an environment variable `APPLY_MIGRATIONS` and set the value to be `true`
+4. Make sure your database is [running locally](#running-the-dev-database-locally)
+5. Run the UrbanEngine.Web project
+6. Go to `pgAdmin` and ensure your changes are refelected
 
 Explore other options with `dotnet ef` tools for additional options
 
@@ -150,13 +138,76 @@ Explore other options with `dotnet ef` tools for additional options
 5. Add any properties to the filter class that you would use to search on
 6. Look at other Specification classes for examples
 
-### Next Steps
+### (Step 6) - Create the Manager
 
-Working with Tyler, got to this point
+1. Go to `UrbanEngine.Core`
+2. Go to Managers folder and create a new folder for your manager
+3. Name the new class with the convetion suffix the name with `Manager`
+4. Inherit from the `ManagerBase<TEntity>` base class
+5. Also add an associated interface for this manager and implement that
+6. Your interace should inherit from `IManager<TEntity>`
+7. In the manager class generate the constructor that inherits from base
 
-* Add the Manager class
-* Add the Models
-* Add the Messages
-* Add the Handler
-* Add the Controller
-* Add the Unit Tests
+### (Step 7) - Add the Models (aka DTOs)
+
+1. Go to `UrganEngine.Core`
+2. Under the Models folder create a new folder to store you models
+3. Create a both a list DTO and a detail DTO
+4. Use the convention to suffix with `DetailDTO` and `ListItemDTO`
+5. Enter the necessary properties for each DTO. The ListItemDTO is only a few properties and what you need to see a list of that entity. The detail DTO gives you all the details about the DTO
+6. You can use your associated Entity to help define the properties you need. This is also a good place to do any transformations before sending to UI
+7. Remove any properties from the DTO that you don't want to expose to outside callers
+
+### (Step 8) - Add the Message
+
+1. Go to `UrbanEngine.Core`
+2. Under the Messages folder create a new folder associated with the messages you are creating
+3. Typically you will have 4 messages if implementing CRUD operations for your entity
+4. Examples (rename entity to be your entity)
+   1. DeleteEntityMessage
+   2. GetEntityByIdMessage
+   3. GetEntityMessage
+   4. SaveEntityMessage
+5. Each message will implement the Mediatr `IRequest` interface passing in the expected output to receive when the message is processed
+6. Look at other messages for examples how each of these should be laid out. The idea behind a message is you are defining the inputs to be processed for some associated action
+
+### (Step 9) - Add the Handler
+
+1. Go to `UrbanEngine.Core`
+2. Under the Handlers folder create a new folder associated with the handlers you are creating
+3. Typically you will have a handler per message you need to process. So, if implementing CRUD operations you may have 4 handlers
+4. Examples (rename entity to be your entity)
+   1. DeleteEntityHandler
+   2. GetEntityByIdHandler
+   3. GetEntityHandler
+   4. SaveEntityHandler
+5. Each Handler will implement the Mediatr `IRequestHandler` and specify the type of message your handler is to process and the expected output to return. The output must match the same output specified in your message for `IRequest`
+6. Look at other handlers for examples how each of these should be laid out. The idea behind the handler is you are defining the logic to perform when a certain message is received
+7. Your handler should have the associated manager passed in via dependency injection to this class
+
+### (Step 10) - Update Configuration
+
+1. Go to `UrbanEngine.Web`
+2. Go to `Configuration\AutoMapperProfile`
+3. You will need to add a mapping for each entity to the associated DTO
+4. Go `Startup.cs`, we need to add in Dependency Injection in the `ConfigureServices` method to register your repository and manager
+
+### (Step 11) - Add the Controller
+
+1. Go to `UrbanEngine.Web`
+2. Under the Controllers folder add a new API Controller
+3. Look at other Controllers for examples how this should be implemented
+4. An important note is that you should pass in `IMediator` as dependency and let your controller endpoints receive messages and publish to Mediatr to process
+5. Make sure your controller inherits from `ControllerBase`
+6. Run `UrbanEngine.Web` and hit `swagger` and test your your controller. If everything is wired up correctly you should be able to test out everything end to end
+
+### (Step 12) - Add the Unit Tests
+
+1. TODO
+
+### Upcoming TODO
+
+* Writing Unit Tests
+* Recurring Events
+* Authentication
+* Authorization
