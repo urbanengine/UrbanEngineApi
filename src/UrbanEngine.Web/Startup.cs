@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Reflection;
 using AutoMapper;
@@ -22,6 +22,7 @@ using UrbanEngine.Infrastructure.Data;
 using UrbanEngine.Infrastructure.Data.Repository;
 using UrbanEngine.SharedKernel.Data;
 using UrbanEngine.SharedKernel.Results;
+using UrbanEngine.Core.Handlers.Venues;
 
 namespace UrbanEngine.Web
 {
@@ -67,10 +68,11 @@ namespace UrbanEngine.Web
                 c.IncludeXmlComments(xmlPath);
             });
 
-            // db context 
+            // db context
             services.AddDbContext<UrbanEngineDbContext>(options =>
             {
                 //options.UseSqlite("Data Source=UrbanEngine.db");
+				options.EnableSensitiveDataLogging();
                 options.UseNpgsql("host=localhost;database=postgres_local;user id=postgres_admin;password=Postgres2020!;");
                 options.UseLoggerFactory(GetLoggerFactory());
             });
@@ -89,7 +91,7 @@ namespace UrbanEngine.Web
             services.AddAutoMapper(typeof(Configuration.AutoMapperProfile).Assembly);
 
             // Mediatr
-            services.AddMediatR(typeof(UrbanEngine.Core.Handlers.Venues.GetVenuesHandler).Assembly);
+            services.AddMediatR(typeof(GetVenuesHandler).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -104,21 +106,21 @@ namespace UrbanEngine.Web
             {
                 errorApp.Run(async context =>
                 {
-                    // get diagnostic information about the error 
+                    // get diagnostic information about the error
                     var exceptionHandlerPathFeature =
                         context.Features.Get<IExceptionHandlerPathFeature>();
 
                     // get the exception that was thrown from endpoint
                     var exceptionThrown = exceptionHandlerPathFeature.Error;
 
-                    // return a status code and generic json message 
+                    // return a status code and generic json message
                     context.Response.StatusCode = FailureResult.GetStatusCode(exceptionThrown);
                     context.Response.ContentType = "application/json";
 
                     var json = JsonConvert.SerializeObject(new FailureResult(exceptionThrown));
                     await context.Response.WriteAsync(json);
 
-                    // log the error 
+                    // log the error
                     var logger = errorApp.ApplicationServices.GetService<ILogger<Program>>();
                     logger.LogError(_errorEventId++, exceptionThrown, $"exception caught in UseExceptionHandler middleware, see exception for details");
                 });

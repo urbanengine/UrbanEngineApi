@@ -17,6 +17,10 @@ namespace UrbanEngine.Core.Specifications.CheckIns
         {
             var predicate = PredicateBuilder.New<CheckInEntity>();
 
+            predicate = filter.IsDeleted.HasValue ?
+                predicate.And( p => p.IsDeleted == filter.IsDeleted.Value ) :
+                predicate.And( p => p.IsDeleted != true );
+
             if ( filter.UserId.HasValue ) predicate = predicate.And( o => o.UserId == filter.UserId );
             if ( filter.EventId.HasValue ) predicate = predicate.And( o => o.EventId == filter.EventId );
             if ( filter.CheckedInAt.HasValue ) predicate = predicate.And( o => o.CheckedInAt == filter.CheckedInAt );

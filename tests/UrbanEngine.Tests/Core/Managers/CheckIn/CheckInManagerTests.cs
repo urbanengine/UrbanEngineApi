@@ -28,7 +28,7 @@ namespace UrbanEngine.Tests.Core.Managers.CheckIn
             // Assert
             scope.CheckInRepositoryMock.Verify(x => x.GetByIdAsync(It.Is<object>(v => v == id)), Times.Once);
         }
-        
+
         [TestMethod, TestCategory(TestCategory.Unit)]
         public async Task CheckInManager_When_GetById_Should_Return_ExpectedValue()
         {
@@ -42,7 +42,7 @@ namespace UrbanEngine.Tests.Core.Managers.CheckIn
             // Assert
             Assert.AreEqual(expectedId, result.Id);
         }
-        
+
         [TestMethod, TestCategory(TestCategory.Unit)]
         public async Task CheckInManager_When_IdIsNull_Should_ThrowException()
         {
@@ -58,7 +58,7 @@ namespace UrbanEngine.Tests.Core.Managers.CheckIn
         {
             public static CheckInEntity TestEntity { get; } = new CheckInEntity
             {
-                Id = 1, 
+                Id = 1,
                 CheckedInAt = DateTime.Now,
                 DateCreated = DateTime.Now,
                 UserId = 1,
@@ -74,7 +74,7 @@ namespace UrbanEngine.Tests.Core.Managers.CheckIn
                 CheckInRepositoryMock.Setup(s => s.GetByIdAsync(
                         It.Is<object>(v => (long)v == TestEntity.Id)))
                     .ReturnsAsync(TestEntity);
-               
+
                 InstanceUnderTest = new CheckInManager(
                     CheckInRepositoryMock.Object,
                     LoggerMock.Object);

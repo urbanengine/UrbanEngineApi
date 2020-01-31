@@ -126,7 +126,7 @@ Explore other options with `dotnet ef` tools for additional options
 ### (Step 5) - Creating Specification and Filter
 
 1. Go to `UrbanEngine.Core`
-2. Under Specificatiosn create a new Specification
+2. Under Specifications create a new Specification
 3. Inherit from `BaseSpecification<T>`
 4. Create an interface for filtering, this is passed to the constructor of your Specification class
 5. Add any properties to the filter class that you would use to search on

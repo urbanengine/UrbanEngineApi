@@ -61,7 +61,7 @@ namespace UrbanEngine.Web.Controllers
         }
 
         /// <summary>
-        /// create a new CheckIn
+        /// update existing CheckIn
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>

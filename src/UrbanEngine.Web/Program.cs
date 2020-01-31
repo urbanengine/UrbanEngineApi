@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,7 +26,7 @@ namespace UrbanEngine.Web
                 logger.LogError(ex, $"error trying to call {nameof(CreateOrMigrateDatabase)}");
             }
 
-            logger.LogDebug("Run the application"); 
+            logger.LogDebug("Run the application");
             hostBuilder.Run();
         }
 
@@ -37,7 +37,7 @@ namespace UrbanEngine.Web
                     webBuilder.UseStartup<Startup>();
                 });
 
-        // this will create database if not exists or update it to latest if it does 
+        // this will create database if not exists or update it to latest if it does
         static void CreateOrMigrateDatabase<TContext>(IHost host, ILogger logger) where TContext : DbContext
         {
             var applyMigrations = Environment.GetEnvironmentVariable("APPLY_MIGRATIONS");

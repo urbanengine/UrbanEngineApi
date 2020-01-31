@@ -10,15 +10,15 @@ namespace UrbanEngine.Core.Specifications.Events
     {
         public EventSpecification(IEventFilter filter) : base( filter )
         {
-            ApplyCriteria(GetExpression(filter));            
+            ApplyCriteria(GetExpression(filter));
         }
-         
+
         private Expression<Func<EventEntity, bool>> GetExpression(IEventFilter filter)
         {
             var predicate = PredicateBuilder.New<EventEntity>();
 
-            predicate = filter.IsDeleted.HasValue ? 
-                predicate.And(p => p.IsDeleted == filter.IsDeleted.Value) : 
+            predicate = filter.IsDeleted.HasValue ?
+                predicate.And(p => p.IsDeleted == filter.IsDeleted.Value) :
                 predicate.And(p => p.IsDeleted != true);
 
             if (filter.StartDate.HasValue)

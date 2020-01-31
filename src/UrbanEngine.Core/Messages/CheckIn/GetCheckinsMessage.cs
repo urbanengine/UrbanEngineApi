@@ -13,5 +13,6 @@ namespace UrbanEngine.Core.Messages.CheckIn
         public long? EventId { get; set; }
         public long? UserId { get; set; }
         public DateTimeOffset? CheckedInAt { get; set; }
+		public bool? IsDeleted { get; set; }
     }
 }

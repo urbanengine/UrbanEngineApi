@@ -53,7 +53,7 @@ namespace UrbanEngine.SharedKernel.Specifications
             Take = take;
             EnablePaging = true;
         }
-        
+
         protected virtual void ApplyOrderBy(Expression<Func<TEntity, object>> orderByExpression)
         {
             OrderBy = orderByExpression;
@@ -64,5 +64,4 @@ namespace UrbanEngine.SharedKernel.Specifications
             OrderByDescending = orderByDescendingExpression;
         }
     }
-
 }

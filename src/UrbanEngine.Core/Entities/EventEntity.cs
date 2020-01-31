@@ -7,7 +7,7 @@ namespace UrbanEngine.Core.Entities
 {
     public class EventEntity : EntityBase
     {
-        #region Properties 
+        #region Properties
 
         public string Name { get; private set; } // required
         public string Description { get; private set; } // required
