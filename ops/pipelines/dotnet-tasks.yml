@@ -1,0 +1,69 @@
+# reusable template for dotnet projects
+# build, test, analyze code coverage, and publish
+
+# template parameters
+parameters:
+  buildConfiguration: 'Release'
+  dotnetSdkVersion: '3.1.100'
+  nugetVersionSpec: '4.8.1'
+  vstsFeed: ''
+  coverageReportsFolder: ''
+      
+steps:
+    
+# set dotnet version to use
+- task: UseDotNet@2
+  displayName: 'Use .NET Core SDK ${{ parameters.dotnetSdkVersion }}'
+  inputs:
+    packageType: sdk
+    version: '${{ parameters.dotnetSdkVersion }}'
+
+# install NuGet Tool
+- task: NuGetToolInstaller@0
+  displayName: 'NuGet Tool Install ${{ parameters.nugetVersionSpec }}'
+  inputs:
+    versionSpec: '${{ parameters.nugetVersionSpec }}'
+
+# restore using vsts feed in artifacts
+- task: NuGetCommand@2
+  displayName: 'Restore project dependencies'
+  inputs:
+    command: 'restore'
+    restoreSolution: '**/*.sln'
+    includeNuGetOrg: true
+    feedsToUse: 'select'
+    vstsFeed: '${{ parameters.vstsFeed }}'
+
+# build
+- task: DotNetCoreCLI@2
+  displayName: 'Build the project - ${{ parameters.buildConfiguration }}'
+  inputs:
+    command: 'build'
+    arguments: '--no-restore --configuration ${{ parameters.buildConfiguration }}'
+    projects: '**/*.csproj'
+
+# Run tests and create coverage report
+- task: DotNetCoreCLI@2
+  displayName: 'Run unit tests - ${{ parameters.buildConfiguration }}'
+  inputs:
+    command: 'test'
+    arguments: '--no-build --configuration ${{ parameters.buildConfiguration }} /p:CollectCoverage=true /p:CoverletOutputFormat="cobertura%2copencover" /p:CoverletOutput=${{ parameters.coverageReportsFolder }}'
+    publishTestResults: true
+    projects: '**/*.Tests.csproj'
+
+# publish code coverage reports
+- template: coverage-report.yml
+  parameters:
+    buildConfiguration: ${{ parameters.buildConfiguration }}
+    coverageReportsFolder: ${{ parameters.coverageReportsFolder }}
+
+# publish all artifacts
+- task: DotNetCoreCLI@2
+  displayName: 'Publish Artifacts - ${{ parameters.buildConfiguration }}'
+  inputs:
+    command: publish
+    publishWebProjects: false
+    projects: '**/*.csproj'
+    arguments: '--no-build --configuration ${{ parameters.buildConfiguration }} --output $(Build.ArtifactStagingDirectory)/${{ parameters.BuildConfiguration }}'
+    zipAfterPublish: true
+    modifyOutputPath: true

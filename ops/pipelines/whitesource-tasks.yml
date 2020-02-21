@@ -1,0 +1,21 @@
+trigger: none
+
+schedules:
+- cron: "0 12 * * 0"
+  displayName: Weekly Sunday build
+  branches:
+    include:
+    - master
+    - releases/*
+  always: false
+
+steps:
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: '**/*.csproj'
+    arguments: '--configuration Release'
+
+- task: WhiteSource Bolt@19
+  inputs:
+    advance: true
