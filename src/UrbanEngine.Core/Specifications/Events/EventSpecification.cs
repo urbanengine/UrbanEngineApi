@@ -8,20 +8,17 @@ namespace UrbanEngine.Core.Specifications.Events
 {
     public sealed class EventSpecification : BaseSpecification<EventEntity>
     {
-        public EventSpecification(IEventFilter filter)
+        public EventSpecification(IEventFilter filter) : base( filter )
         {
-            ApplyCriteria(GetExpression(filter)); 
-
-            if(filter.DisablePaging != true)
-                ApplyPaging(filter.GetSkipValue(), filter.GetTakeValue());
+            ApplyCriteria(GetExpression(filter));
         }
-         
+
         private Expression<Func<EventEntity, bool>> GetExpression(IEventFilter filter)
         {
             var predicate = PredicateBuilder.New<EventEntity>();
 
-            predicate = filter.IsDeleted.HasValue ? 
-                predicate.And(p => p.IsDeleted == filter.IsDeleted.Value) : 
+            predicate = filter.IsDeleted.HasValue ?
+                predicate.And(p => p.IsDeleted == filter.IsDeleted.Value) :
                 predicate.And(p => p.IsDeleted != true);
 
             if (filter.StartDate.HasValue)

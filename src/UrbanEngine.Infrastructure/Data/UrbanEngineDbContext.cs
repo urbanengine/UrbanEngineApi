@@ -6,17 +6,17 @@ namespace UrbanEngine.Infrastructure.Data
     {
         public string SchemaName { get; set; } = "ue";
 
-        public UrbanEngineDbContext(DbContextOptions options) 
+        public UrbanEngineDbContext(DbContextOptions options)
             : base(options) { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            base.OnConfiguring(optionsBuilder); 
+            base.OnConfiguring(optionsBuilder);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // set a default schema 
+            // set a default schema
             if(!string.IsNullOrEmpty(SchemaName))
                 modelBuilder.HasDefaultSchema(SchemaName);
 
@@ -26,7 +26,7 @@ namespace UrbanEngine.Infrastructure.Data
             // apply seed data
             ApplySeedData(modelBuilder);
 
-            // call to base to handle any remaining 
+            // call to base to handle any remaining
             base.OnModelCreating(modelBuilder);
         }
 

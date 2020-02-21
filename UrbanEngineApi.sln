@@ -3,15 +3,26 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29519.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrbanEngine.Core", "src\UrbanEngine.Core\UrbanEngine.Core.csproj", "{3F6A4015-4579-4836-984E-0F3DB47AFF5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanEngine.Core", "src\UrbanEngine.Core\UrbanEngine.Core.csproj", "{3F6A4015-4579-4836-984E-0F3DB47AFF5E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrbanEngine.Infrastructure", "src\UrbanEngine.Infrastructure\UrbanEngine.Infrastructure.csproj", "{136DE7D9-6537-488C-9340-519AC976819A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanEngine.Infrastructure", "src\UrbanEngine.Infrastructure\UrbanEngine.Infrastructure.csproj", "{136DE7D9-6537-488C-9340-519AC976819A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrbanEngine.SharedKernel", "src\UrbanEngine.SharedKernel\UrbanEngine.SharedKernel.csproj", "{546D9D9B-E393-4B65-A2E9-E07AA3C24158}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanEngine.SharedKernel", "src\UrbanEngine.SharedKernel\UrbanEngine.SharedKernel.csproj", "{546D9D9B-E393-4B65-A2E9-E07AA3C24158}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrbanEngine.Web", "src\UrbanEngine.Web\UrbanEngine.Web.csproj", "{FC70024A-6B09-4ADD-AB11-5CEBFC42B836}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanEngine.Web", "src\UrbanEngine.Web\UrbanEngine.Web.csproj", "{FC70024A-6B09-4ADD-AB11-5CEBFC42B836}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrbanEngine.Tests", "tests\UrbanEngine.Tests\UrbanEngine.Tests.csproj", "{A721380E-86AD-485E-93A2-05AD2CB7B7CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanEngine.Tests", "tests\UrbanEngine.Tests\UrbanEngine.Tests.csproj", "{A721380E-86AD-485E-93A2-05AD2CB7B7CE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{14A0984C-83C3-4C41-B2ED-CDD0E213AB74}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		azure-pipelines.yml = azure-pipelines.yml
+		docker-compose.yml = docker-compose.yml
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
