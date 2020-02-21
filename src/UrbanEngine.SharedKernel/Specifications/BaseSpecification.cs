@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using UrbanEngine.SharedKernel.Data;
+using UrbanEngine.SharedKernel.Paging;
 
 namespace UrbanEngine.SharedKernel.Specifications
 {
@@ -11,6 +12,12 @@ namespace UrbanEngine.SharedKernel.Specifications
         protected BaseSpecification(Expression<Func<TEntity, bool>> criteria)
         {
             Criteria = criteria;
+        }
+
+        protected BaseSpecification( IPagingParameters pagingParameters )
+        {
+            if ( pagingParameters.DisablePaging != true )
+                ApplyPaging( pagingParameters.GetSkipValue(), pagingParameters.GetTakeValue() );
         }
 
         protected BaseSpecification() { }
@@ -46,7 +53,7 @@ namespace UrbanEngine.SharedKernel.Specifications
             Take = take;
             EnablePaging = true;
         }
-        
+
         protected virtual void ApplyOrderBy(Expression<Func<TEntity, object>> orderByExpression)
         {
             OrderBy = orderByExpression;
@@ -57,5 +64,4 @@ namespace UrbanEngine.SharedKernel.Specifications
             OrderByDescending = orderByDescendingExpression;
         }
     }
-
 }

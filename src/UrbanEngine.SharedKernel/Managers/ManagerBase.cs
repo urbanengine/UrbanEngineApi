@@ -20,6 +20,9 @@ namespace UrbanEngine.SharedKernel.Managers
         
         public async Task<TEntity> GetByIdAsync(object id)
         {
+            if(id == null)
+                throw new ArgumentNullException(nameof(id));
+
             var result = await _repository.GetByIdAsync(id);
             return result;
         }

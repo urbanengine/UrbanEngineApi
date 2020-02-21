@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using UrbanEngine.Core.Entities;
 using UrbanEngine.Core.Enums;
+using UrbanEngine.Core.Models.CheckIn;
 using UrbanEngine.Core.Models.Events;
 using UrbanEngine.Core.Models.Venues;
 
@@ -18,11 +19,17 @@ namespace UrbanEngine.Web.Configuration
             CreateMap<EventEntity, EventDetailDto>()
                 .ReverseMap();
 
+            CreateMap<CheckInEntity, CheckInListItemDto>();
+            CreateMap<CheckInEntity, CheckInDetailDto>()
+                .ReverseMap();
+
             CreateMap<string, RegionType>()
                 .ConvertUsing(s => RegionType.FromName(s, true));
 
             CreateMap<string, EventType>()
                 .ConvertUsing(s => EventType.FromName(s, true));
+
+
         }
     }
 }

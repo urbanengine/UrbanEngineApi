@@ -10,25 +10,26 @@ namespace UrbanEngine.Infrastructure.Data
         void ApplySeedData(ModelBuilder modelBuilder);
     }
 
-    internal class SeedDataGenerator : ISeedDataGenerator
-    {
+    internal class SeedDataGenerator : ISeedDataGenerator {
         #region Singleton Support
 
         private static readonly Lazy<SeedDataGenerator> _instance =
-            new Lazy<SeedDataGenerator>(new SeedDataGenerator());
+            new Lazy<SeedDataGenerator>( new SeedDataGenerator() );
 
         private SeedDataGenerator() { }
 
         public static SeedDataGenerator Instance => _instance.Value;
-         
+
         #endregion
 
-        public void ApplySeedData(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<EventVenueEntity>().HasData(EventVenueSeedData());
+        public void ApplySeedData( ModelBuilder modelBuilder ) {
+            modelBuilder.Entity<EventVenueEntity>().HasData( EventVenueSeedData() );
+            modelBuilder.Entity<EventEntity>().HasData( EventSeedData() );
+            modelBuilder.Entity<CheckInEntity>().HasData( CheckInSeedData() );
         }
 
         #region Seed Data
+
 
         public static EventVenueEntity[] EventVenueSeedData()
         {
@@ -44,7 +45,28 @@ namespace UrbanEngine.Infrastructure.Data
                 }
             };
         }
-        
+
+        public static EventEntity[] EventSeedData() {
+            return new EventEntity[]
+            {
+                new EventEntity(id: 1, name: "show256", eventType: EventType.Workshop, description: null, startDate: DateTime.Now, endDate: DateTime.Now, organizerId: null, venueId: 1 )
+            };
+        }
+
+        public static CheckInEntity[] CheckInSeedData() {
+            return new CheckInEntity[]
+            {
+                new CheckInEntity()
+                {
+                    Id = 1,
+                    DateCreated = DateTime.Now,
+                    CheckedInAt = DateTime.Now,
+                    EventId = 1,
+                    IsDeleted = false 
+                }
+            };
+        }
+
         #endregion
     }
 }

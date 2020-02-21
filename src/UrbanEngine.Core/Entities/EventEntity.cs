@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UrbanEngine.Core.Enums;
 using UrbanEngine.SharedKernel.Data;
 
@@ -6,12 +7,12 @@ namespace UrbanEngine.Core.Entities
 {
     public class EventEntity : EntityBase
     {
-        #region Properties 
+        #region Properties
 
         public string Name { get; private set; } // required
         public string Description { get; private set; } // required
-        public DateTime? StartDate { get; private set; } // required
-        public DateTime? EndDate { get; private set; }
+        public DateTimeOffset? StartDate { get; private set; } // required
+        public DateTimeOffset? EndDate { get; private set; }
         public EventType EventType { get; private set; }
         public string OrganizerId { get; private set; } // required
         public long? VenueId { get; private set; } // required
@@ -35,6 +36,8 @@ namespace UrbanEngine.Core.Entities
 
         public EventVenueEntity Venue { get; private set; }
 
+        public IList<CheckInEntity> CheckIns { get; set; }
+
         #endregion
 
         #region Constructors
@@ -51,8 +54,9 @@ namespace UrbanEngine.Core.Entities
             StartDate = startDate;
         }
 
-        public EventEntity(string name, string description, EventType eventType, DateTime? startDate, DateTime? endDate, string organizerId, long? venueId)
+        public EventEntity(long id, string name, string description, EventType eventType, DateTime? startDate, DateTime? endDate, string organizerId, long? venueId)
         {
+            Id = id;
             Name = name;
             Description = description;
             StartDate = startDate;

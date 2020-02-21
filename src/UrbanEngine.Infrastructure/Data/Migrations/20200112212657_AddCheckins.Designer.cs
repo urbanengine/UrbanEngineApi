@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using UrbanEngine.Infrastructure.Data;
@@ -9,9 +10,10 @@ using UrbanEngine.Infrastructure.Data;
 namespace UrbanEngine.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(UrbanEngineDbContext))]
-    partial class UrbanEngineDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200112212657_AddCheckins")]
+    partial class AddCheckins
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,17 +52,6 @@ namespace UrbanEngine.Infrastructure.Data.Migrations
                     b.HasIndex("EventId");
 
                     b.ToTable("CheckIn");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            CheckedInAt = new DateTimeOffset(new DateTime(2020, 1, 17, 12, 27, 32, 91, DateTimeKind.Unspecified).AddTicks(2432), new TimeSpan(0, -6, 0, 0, 0)),
-                            DateCreated = new DateTime(2020, 1, 17, 12, 27, 32, 91, DateTimeKind.Local).AddTicks(1665),
-                            EventId = 1L,
-                            IsDeleted = false,
-                            UserId = 0L
-                        });
                 });
 
             modelBuilder.Entity("UrbanEngine.Core.Entities.EventEntity", b =>
@@ -78,8 +69,8 @@ namespace UrbanEngine.Infrastructure.Data.Migrations
                         .HasColumnType("character varying(500)")
                         .HasMaxLength(500);
 
-                    b.Property<DateTimeOffset?>("EndDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("EventType")
                         .HasColumnType("integer");
@@ -97,8 +88,8 @@ namespace UrbanEngine.Infrastructure.Data.Migrations
                     b.Property<string>("OrganizerId")
                         .HasColumnType("text");
 
-                    b.Property<DateTimeOffset?>("StartDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long?>("VenueId")
                         .HasColumnType("bigint");
@@ -108,19 +99,6 @@ namespace UrbanEngine.Infrastructure.Data.Migrations
                     b.HasIndex("VenueId");
 
                     b.ToTable("Event");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            DateCreated = new DateTime(2020, 1, 17, 12, 27, 32, 90, DateTimeKind.Local).AddTicks(1720),
-                            EndDate = new DateTimeOffset(new DateTime(2020, 1, 17, 12, 27, 32, 89, DateTimeKind.Unspecified).AddTicks(7316), new TimeSpan(0, -6, 0, 0, 0)),
-                            EventType = 1,
-                            IsDeleted = false,
-                            Name = "show256",
-                            StartDate = new DateTimeOffset(new DateTime(2020, 1, 17, 12, 27, 32, 89, DateTimeKind.Unspecified).AddTicks(7146), new TimeSpan(0, -6, 0, 0, 0)),
-                            VenueId = 1L
-                        });
                 });
 
             modelBuilder.Entity("UrbanEngine.Core.Entities.EventVenueEntity", b =>
@@ -188,7 +166,7 @@ namespace UrbanEngine.Infrastructure.Data.Migrations
                             Address = "3001 9th Avenue Southwest",
                             City = "Huntsville",
                             Country = "United States",
-                            DateCreated = new DateTime(2020, 1, 17, 12, 27, 32, 73, DateTimeKind.Local).AddTicks(1324),
+                            DateCreated = new DateTime(2020, 1, 12, 15, 26, 57, 611, DateTimeKind.Local).AddTicks(1022),
                             IsAvailable = false,
                             IsDeleted = false,
                             Name = "Huntsville West",

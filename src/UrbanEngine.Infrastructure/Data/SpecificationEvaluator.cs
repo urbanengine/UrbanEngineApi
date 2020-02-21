@@ -34,7 +34,7 @@ namespace UrbanEngine.Infrastructure.Data
             {
                 query = query.OrderByDescending(specification.OrderByDescending);
             }
-            
+
             return query;
         }
 
