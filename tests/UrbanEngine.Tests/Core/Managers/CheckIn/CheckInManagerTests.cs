@@ -1,18 +1,16 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using UrbanEngine.Core.Managers.CheckIn;
-using UrbanEngine.Tests.Utils;
-using Moq;
-using UrbanEngine.SharedKernel.Data;
-using UrbanEngine.Core.Entities;
-using Microsoft.Extensions.Logging;
+﻿using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using UrbanEngine.Core.Entities;
+using UrbanEngine.Core.Managers.CheckIn;
+using UrbanEngine.SharedKernel.Data;
+using UrbanEngine.Tests.Utils;
 
 namespace UrbanEngine.Tests.Core.Managers.CheckIn
 {
-    [TestClass]
+	[TestClass]
     public class CheckInManagerTests
     {
         [TestMethod, TestCategory(TestCategory.Unit)]

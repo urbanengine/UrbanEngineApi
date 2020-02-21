@@ -202,7 +202,6 @@ Explore other options with `dotnet ef` tools for additional options
 ### Upcoming TODO
 
 * Writing Unit Tests
-* Minor bug with List All to fix (see CheckIn)
 * Recurring Events
 * Authentication
 * Authorization
