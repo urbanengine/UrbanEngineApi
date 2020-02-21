@@ -197,11 +197,20 @@ Explore other options with `dotnet ef` tools for additional options
 
 ### (Step 12) - Add the Unit Tests
 
-1. TODO
+1. Go to `UrbanEngine.Tests`
+2. Under the appropriate folder create a new Tests class.
+3. Look at existing examples for how this should be implemented.
+4. Create in your test class a private class called DefaultScope that inherits from `TestScope<T>` where T is the class you want to write the test for
+5. In the constructor of the DefaultScope mock any dependencies that your instance needs. For unit tests, all external dependencies should be mocked.
+6. Create test methods and decorate them with this attribute `[TestMethod, TestCategory(TestCategory.Unit)]`
+7. Make sure a test has only one assertion and is testing one thing. Create multiple tests for different assertions.
+8. Follow the Arrange/Act/Assert pattern for writing your tests.
+9. Inside your test, create an instance of DefaultScope and use the InstanceUnderTest for testing your unit.
+10. Use TestExplorer to execute your tests.
 
 ### Upcoming TODO
 
-* Writing Unit Tests
+* Write additional Unit Tests
 * Recurring Events
 * Authentication
 * Authorization
