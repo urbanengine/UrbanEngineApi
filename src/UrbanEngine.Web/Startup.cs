@@ -23,6 +23,7 @@ using UrbanEngine.Infrastructure.Data.Repository;
 using UrbanEngine.SharedKernel.Data;
 using UrbanEngine.SharedKernel.Results;
 using UrbanEngine.Core.Handlers.Venues;
+using UrbanEngine.Core.Managers.Rooms;
 
 namespace UrbanEngine.Web
 {
@@ -81,11 +82,13 @@ namespace UrbanEngine.Web
             services.AddScoped<IAsyncRepository<EventEntity>, EventRepository>();
             services.AddScoped<IAsyncRepository<EventVenueEntity>, EventVenueRepository>();
             services.AddScoped<IAsyncRepository<CheckInEntity>, CheckInRepository>();
+            services.AddScoped<IAsyncRepository<RoomEntity>, RoomRepository>();
 
             // managers
             services.AddScoped<IEventManager, EventManager>();
             services.AddScoped<IEventVenueManager, EventVenueManager>();
             services.AddScoped<ICheckInManager, CheckInManager>();
+            services.AddScoped<IRoomManager, RoomManager>();
 
             // AutoMapper
             services.AddAutoMapper(typeof(Configuration.AutoMapperProfile).Assembly);

@@ -27,14 +27,14 @@ namespace UrbanEngine.Core.Specifications.Events
             if (filter.EndDate.HasValue)
                 predicate = predicate.And(p => p.EndDate <= filter.EndDate);
 
-            if (filter.VenueId.HasValue)
-                predicate = predicate.And(p => p.VenueId == filter.VenueId);
-
             if (!string.IsNullOrEmpty(filter.OrganizerId))
                 predicate = predicate.And(p => p.OrganizerId == filter.OrganizerId);
 
             if (filter.EventType != null)
                 predicate = predicate.And(p => p.EventType == filter.EventType);
+
+			if(filter.RoomId.HasValue)
+				predicate = predicate.And(p => p.RoomId == filter.RoomId);
 
             return predicate;
         }

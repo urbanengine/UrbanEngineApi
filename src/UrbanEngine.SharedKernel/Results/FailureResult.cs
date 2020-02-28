@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using UrbanEngine.SharedKernel.Attributes;
 
 namespace UrbanEngine.SharedKernel.Results
 {
@@ -25,7 +26,10 @@ namespace UrbanEngine.SharedKernel.Results
         {
             if (ex == null)
                 return "An error occurred";
-            if (ex is ArgumentException || ex is ArgumentNullException)
+
+			if(IsCustomException(ex))
+				return ex.Message;
+            else if (ex is ArgumentException || ex is ArgumentNullException)
                 return "Invalid arguments were specified, please check your request and try again";
             else if (ex is NotImplementedException)
                 return "The requested operation is not supported at this time";
@@ -44,5 +48,11 @@ namespace UrbanEngine.SharedKernel.Results
 
             return (int)httpStatusCode;
         }
+
+		public static bool IsCustomException(Exception ex)
+		{
+			var isCustomAttribute = Attribute.GetCustomAttribute(ex.GetType(), typeof(CustomExceptionAttribute));
+			return isCustomAttribute != null;
+		}
     }
 }

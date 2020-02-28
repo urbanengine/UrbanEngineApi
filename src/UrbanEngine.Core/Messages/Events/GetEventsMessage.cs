@@ -17,22 +17,17 @@ namespace UrbanEngine.Core.Messages.Events
         /// <summary>
         /// start date of the event
         /// </summary>
-        public DateTime? StartDate { get; set; }
+        public DateTimeOffset? StartDate { get; set; }
 
         /// <summary>
         /// end date of the event
         /// </summary>
-        public DateTime? EndDate { get; set; }
+        public DateTimeOffset? EndDate { get; set; }
 
         /// <summary>
         /// event type
         /// </summary>
         public EventType EventType { get; set; }
-
-        /// <summary>
-        /// venue id
-        /// </summary>
-        public long? VenueId { get; set; }
 
         /// <summary>
         /// organizer id
@@ -43,5 +38,10 @@ namespace UrbanEngine.Core.Messages.Events
         /// whether to include deleted events in the results
         /// </summary>
         public bool? IsDeleted { get; set; }
-    }
+
+		/// <summary>
+		/// whether to filter by a specific room
+		/// </summary>
+		public long? RoomId { get; set; }
+	}
 }
