@@ -15,7 +15,7 @@ namespace UrbanEngine.Core.Entities
         public DateTimeOffset? EndDate { get; private set; }
         public EventType EventType { get; private set; }
         public string OrganizerId { get; private set; } // required
-        public long? VenueId { get; private set; } // required
+		public long? RoomId { get; private set; } // required
 
         public TimeSpan? Duration
         {
@@ -34,9 +34,9 @@ namespace UrbanEngine.Core.Entities
 
         #region Navigation Properties
 
-        public EventVenueEntity Venue { get; private set; }
-
         public IList<CheckInEntity> CheckIns { get; set; }
+
+		public RoomEntity Room { get; set; }
 
         #endregion
 
@@ -47,24 +47,29 @@ namespace UrbanEngine.Core.Entities
 
         }
 
-        public EventEntity(long id, string name, DateTime startDate)
+        public EventEntity(long id, string name, DateTimeOffset startDate)
         {
             Id = id;
             Name = name;
             StartDate = startDate;
         }
 
-        public EventEntity(long id, string name, string description, EventType eventType, DateTime? startDate, DateTime? endDate, string organizerId, long? venueId)
+        public EventEntity(string name, string description, EventType eventType, DateTimeOffset? startDate, DateTimeOffset? endDate, string organizerId, long? roomId)
         {
-            Id = id;
             Name = name;
             Description = description;
             StartDate = startDate;
             EndDate = endDate;
             EventType = eventType;
             OrganizerId = organizerId;
-            VenueId = venueId;
+			RoomId = roomId;
         }
+
+		public EventEntity(long id, string name, string description, EventType eventType, DateTimeOffset? startDate, DateTimeOffset? endDate, string organizerId, long? roomId)
+			: this(name, description, eventType, startDate, endDate, organizerId, roomId)
+        {
+			Id = id;
+		}
 
         #endregion
     }

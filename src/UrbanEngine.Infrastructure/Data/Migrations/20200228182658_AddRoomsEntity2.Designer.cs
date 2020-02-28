@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using UrbanEngine.Infrastructure.Data;
@@ -9,15 +10,16 @@ using UrbanEngine.Infrastructure.Data;
 namespace UrbanEngine.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(UrbanEngineDbContext))]
-    partial class UrbanEngineDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200228182658_AddRoomsEntity2")]
+    partial class AddRoomsEntity2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("ue")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
-                .HasAnnotation("ProductVersion", "3.1.2")
+                .HasAnnotation("ProductVersion", "3.1.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             modelBuilder.Entity("UrbanEngine.Core.Entities.CheckInEntity", b =>
@@ -30,9 +32,9 @@ namespace UrbanEngine.Infrastructure.Data.Migrations
                     b.Property<DateTimeOffset>("CheckedInAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTimeOffset?>("DateCreated")
+                    b.Property<DateTime?>("DateCreated")
                         .IsRequired()
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long?>("EventId")
                         .HasColumnType("bigint");
@@ -55,8 +57,8 @@ namespace UrbanEngine.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1L,
-                            CheckedInAt = new DateTimeOffset(new DateTime(2020, 2, 28, 14, 4, 34, 410, DateTimeKind.Unspecified).AddTicks(6734), new TimeSpan(0, -5, 0, 0, 0)),
-                            DateCreated = new DateTimeOffset(new DateTime(2020, 2, 28, 14, 4, 34, 410, DateTimeKind.Unspecified).AddTicks(6036), new TimeSpan(0, -5, 0, 0, 0)),
+                            CheckedInAt = new DateTimeOffset(new DateTime(2020, 2, 28, 13, 26, 57, 432, DateTimeKind.Unspecified).AddTicks(991), new TimeSpan(0, -5, 0, 0, 0)),
+                            DateCreated = new DateTime(2020, 2, 28, 13, 26, 57, 432, DateTimeKind.Local).AddTicks(315),
                             EventId = 1L,
                             IsDeleted = false,
                             UserId = 0L
@@ -70,9 +72,9 @@ namespace UrbanEngine.Infrastructure.Data.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<DateTimeOffset?>("DateCreated")
+                    b.Property<DateTime?>("DateCreated")
                         .IsRequired()
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Description")
                         .HasColumnType("character varying(500)")
@@ -118,35 +120,35 @@ namespace UrbanEngine.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1L,
-                            DateCreated = new DateTimeOffset(new DateTime(2020, 2, 28, 14, 4, 34, 409, DateTimeKind.Unspecified).AddTicks(7633), new TimeSpan(0, -5, 0, 0, 0)),
-                            EndDate = new DateTimeOffset(new DateTime(2020, 2, 28, 14, 4, 34, 409, DateTimeKind.Unspecified).AddTicks(5302), new TimeSpan(0, -5, 0, 0, 0)),
+                            DateCreated = new DateTime(2020, 2, 28, 13, 26, 57, 431, DateTimeKind.Local).AddTicks(1674),
+                            EndDate = new DateTimeOffset(new DateTime(2020, 2, 28, 13, 26, 57, 430, DateTimeKind.Unspecified).AddTicks(7528), new TimeSpan(0, -5, 0, 0, 0)),
                             EventType = 1,
                             IsDeleted = false,
                             Name = "show256",
                             RoomId = 4L,
-                            StartDate = new DateTimeOffset(new DateTime(2020, 2, 28, 14, 4, 34, 409, DateTimeKind.Unspecified).AddTicks(5216), new TimeSpan(0, -5, 0, 0, 0))
+                            StartDate = new DateTimeOffset(new DateTime(2020, 2, 28, 13, 26, 57, 430, DateTimeKind.Unspecified).AddTicks(7404), new TimeSpan(0, -5, 0, 0, 0))
                         },
                         new
                         {
                             Id = 2L,
-                            DateCreated = new DateTimeOffset(new DateTime(2020, 2, 28, 14, 4, 34, 410, DateTimeKind.Unspecified).AddTicks(3083), new TimeSpan(0, -5, 0, 0, 0)),
-                            EndDate = new DateTimeOffset(new DateTime(2020, 2, 28, 14, 4, 34, 410, DateTimeKind.Unspecified).AddTicks(3045), new TimeSpan(0, -5, 0, 0, 0)),
+                            DateCreated = new DateTime(2020, 2, 28, 13, 26, 57, 431, DateTimeKind.Local).AddTicks(6694),
+                            EndDate = new DateTimeOffset(new DateTime(2020, 2, 28, 13, 26, 57, 431, DateTimeKind.Unspecified).AddTicks(6658), new TimeSpan(0, -5, 0, 0, 0)),
                             EventType = 1,
                             IsDeleted = false,
                             Name = "Designer's Corner",
                             RoomId = 2L,
-                            StartDate = new DateTimeOffset(new DateTime(2020, 2, 28, 14, 4, 34, 410, DateTimeKind.Unspecified).AddTicks(3004), new TimeSpan(0, -5, 0, 0, 0))
+                            StartDate = new DateTimeOffset(new DateTime(2020, 2, 28, 13, 26, 57, 431, DateTimeKind.Unspecified).AddTicks(6642), new TimeSpan(0, -5, 0, 0, 0))
                         },
                         new
                         {
                             Id = 3L,
-                            DateCreated = new DateTimeOffset(new DateTime(2020, 2, 28, 14, 4, 34, 410, DateTimeKind.Unspecified).AddTicks(3165), new TimeSpan(0, -5, 0, 0, 0)),
-                            EndDate = new DateTimeOffset(new DateTime(2020, 2, 28, 14, 4, 34, 410, DateTimeKind.Unspecified).AddTicks(3160), new TimeSpan(0, -5, 0, 0, 0)),
+                            DateCreated = new DateTime(2020, 2, 28, 13, 26, 57, 431, DateTimeKind.Local).AddTicks(6788),
+                            EndDate = new DateTimeOffset(new DateTime(2020, 2, 28, 13, 26, 57, 431, DateTimeKind.Unspecified).AddTicks(6785), new TimeSpan(0, -5, 0, 0, 0)),
                             EventType = 1,
                             IsDeleted = false,
                             Name = "Huntsville AI",
                             RoomId = 5L,
-                            StartDate = new DateTimeOffset(new DateTime(2020, 2, 28, 14, 4, 34, 410, DateTimeKind.Unspecified).AddTicks(3155), new TimeSpan(0, -5, 0, 0, 0))
+                            StartDate = new DateTimeOffset(new DateTime(2020, 2, 28, 13, 26, 57, 431, DateTimeKind.Unspecified).AddTicks(6782), new TimeSpan(0, -5, 0, 0, 0))
                         });
                 });
 
@@ -173,9 +175,9 @@ namespace UrbanEngine.Infrastructure.Data.Migrations
                         .HasColumnType("character varying(75)")
                         .HasMaxLength(75);
 
-                    b.Property<DateTimeOffset?>("DateCreated")
+                    b.Property<DateTime?>("DateCreated")
                         .IsRequired()
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<bool>("IsAvailable")
                         .HasColumnType("boolean");
@@ -215,7 +217,7 @@ namespace UrbanEngine.Infrastructure.Data.Migrations
                             Address = "3001 9th Avenue Southwest",
                             City = "Huntsville",
                             Country = "United States",
-                            DateCreated = new DateTimeOffset(new DateTime(2020, 2, 28, 14, 4, 34, 399, DateTimeKind.Unspecified).AddTicks(9789), new TimeSpan(0, -5, 0, 0, 0)),
+                            DateCreated = new DateTime(2020, 2, 28, 13, 26, 57, 422, DateTimeKind.Local).AddTicks(4092),
                             IsAvailable = false,
                             IsDeleted = false,
                             Name = "Huntsville West",
@@ -235,9 +237,9 @@ namespace UrbanEngine.Infrastructure.Data.Migrations
                     b.Property<int?>("Capacity")
                         .HasColumnType("integer");
 
-                    b.Property<DateTimeOffset?>("DateCreated")
+                    b.Property<DateTime?>("DateCreated")
                         .IsRequired()
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Description")
                         .HasColumnType("character varying(500)")
@@ -273,7 +275,7 @@ namespace UrbanEngine.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1L,
-                            DateCreated = new DateTimeOffset(new DateTime(2020, 2, 28, 14, 4, 34, 411, DateTimeKind.Unspecified).AddTicks(4005), new TimeSpan(0, -5, 0, 0, 0)),
+                            DateCreated = new DateTime(2020, 2, 28, 13, 26, 57, 432, DateTimeKind.Local).AddTicks(7515),
                             Description = "Cafe Conference Room",
                             HasTVOrProjector = true,
                             IsDeleted = false,
@@ -283,7 +285,7 @@ namespace UrbanEngine.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 2L,
-                            DateCreated = new DateTimeOffset(new DateTime(2020, 2, 28, 14, 4, 34, 411, DateTimeKind.Unspecified).AddTicks(9216), new TimeSpan(0, -5, 0, 0, 0)),
+                            DateCreated = new DateTime(2020, 2, 28, 13, 26, 57, 433, DateTimeKind.Local).AddTicks(2161),
                             Description = "Front Conference Room",
                             HasTVOrProjector = true,
                             IsDeleted = false,
@@ -293,7 +295,7 @@ namespace UrbanEngine.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 3L,
-                            DateCreated = new DateTimeOffset(new DateTime(2020, 2, 28, 14, 4, 34, 411, DateTimeKind.Unspecified).AddTicks(9312), new TimeSpan(0, -5, 0, 0, 0)),
+                            DateCreated = new DateTime(2020, 2, 28, 13, 26, 57, 433, DateTimeKind.Local).AddTicks(2229),
                             Description = "Corner Conference Room",
                             HasTVOrProjector = true,
                             IsDeleted = false,
@@ -303,7 +305,7 @@ namespace UrbanEngine.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 4L,
-                            DateCreated = new DateTimeOffset(new DateTime(2020, 2, 28, 14, 4, 34, 411, DateTimeKind.Unspecified).AddTicks(9319), new TimeSpan(0, -5, 0, 0, 0)),
+                            DateCreated = new DateTime(2020, 2, 28, 13, 26, 57, 433, DateTimeKind.Local).AddTicks(2233),
                             Description = "Library",
                             HasTVOrProjector = false,
                             IsDeleted = false,
@@ -313,7 +315,7 @@ namespace UrbanEngine.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 5L,
-                            DateCreated = new DateTimeOffset(new DateTime(2020, 2, 28, 14, 4, 34, 411, DateTimeKind.Unspecified).AddTicks(9325), new TimeSpan(0, -5, 0, 0, 0)),
+                            DateCreated = new DateTime(2020, 2, 28, 13, 26, 57, 433, DateTimeKind.Local).AddTicks(2236),
                             Description = "Training Room",
                             HasTVOrProjector = true,
                             IsDeleted = false,

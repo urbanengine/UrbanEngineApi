@@ -32,6 +32,8 @@ namespace UrbanEngine.Core.Entities
 
         public IList<EventEntity> Events { get; private set; }
 
+		public IList<RoomEntity> Rooms { get; private set; }
+
         #endregion
 
         #region Constructors

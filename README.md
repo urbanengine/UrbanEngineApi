@@ -1,6 +1,6 @@
 # Urban Engine API
 
-[![Build Status](https://dev.azure.com/urbanengine/Urban%20Engine/_apis/build/status/urban-engine-api?branchName=master)](https://dev.azure.com/urbanengine/Urban%20Engine/_build/latest?definitionId=2&branchName=master)
+[![Build Status](https://dev.azure.com/urbanengine/Urban%20Engine/_apis/build/status/UrbanEngineApi?branchName=master)](https://dev.azure.com/urbanengine/Urban%20Engine/_build/latest?definitionId=6&branchName=master)
 
 ## DEV Notes
 

@@ -57,8 +57,8 @@ namespace UrbanEngine.Tests.Core.Managers.CheckIn
             public static CheckInEntity TestEntity { get; } = new CheckInEntity
             {
                 Id = 1,
-                CheckedInAt = DateTime.Now,
-                DateCreated = DateTime.Now,
+                CheckedInAt = DateTimeOffset.Now,
+                DateCreated = DateTimeOffset.Now,
                 UserId = 1,
                 EventId = 1,
                 IsDeleted = false

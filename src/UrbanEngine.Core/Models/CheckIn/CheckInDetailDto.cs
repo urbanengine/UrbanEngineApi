@@ -7,7 +7,7 @@ namespace UrbanEngine.Core.Models.CheckIn {
         #region Properties
         public long Id { get; set; }
         public bool IsDeleted { get; set; }
-        public DateTime? DateCreated { get; set; }
+        public DateTimeOffset? DateCreated { get; set; }
         public DateTimeOffset CheckedInAt { get; set; }
         public long UserId { get; set; }
         public long? EventId { get; set; }

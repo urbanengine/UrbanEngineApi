@@ -9,19 +9,15 @@ namespace UrbanEngine.Core.Specifications.Events
         /// <summary>
         /// start date of event
         /// </summary>
-        DateTime? StartDate { get; }
+        DateTimeOffset? StartDate { get; }
         /// <summary>
         /// end date of event
         /// </summary>
-        DateTime? EndDate { get; }
+        DateTimeOffset? EndDate { get; }
         /// <summary>
         /// event type
         /// </summary>
         EventType EventType { get; }
-        /// <summary>
-        /// whether to filter to a specific venue
-        /// </summary>
-        long? VenueId { get; }
         /// <summary>
         /// whether to filter to a specific organizer
         /// </summary>
@@ -30,5 +26,9 @@ namespace UrbanEngine.Core.Specifications.Events
         /// whether to include deleted events in the results
         /// </summary>
         bool? IsDeleted { get; }
+		/// <summary>
+		/// whether to filter to a specific room
+		/// </summary>
+		long? RoomId { get; }
     }
 }
