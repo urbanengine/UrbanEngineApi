@@ -1,0 +1,28 @@
+parameters:
+  buildConfiguration: 'Release'
+  nupkgMajorVersion: '1'
+  nupkgMinorVersion: '0'
+  nupkgPatchVersion: '0'
+  vstsFeed: ''
+
+steps:
+
+- task: DotNetCoreCLI@2
+  displayName: 'Pack the project - ${{ parameters.buildConfiguration }}'
+  inputs:
+    command: 'pack'
+    projects: '**/*.csproj'
+    arguments: '--no-build --configuration ${{ parameters.buildConfiguration }}'
+    versioningScheme: byPrereleaseNumber
+    majorVersion: '${{ parameters.nupkgMajorVersion }}'
+    minorVersion: '${{ parameters.nupkgMinorVersion }}'
+    patchVersion: '${{ parameters.nupkgPatchVersion }}'
+   
+- task: NuGetCommand@2
+  displayName: 'Publish NuGet package'
+  inputs:
+    command: push
+    publishVstsFeed: '${{ parameters.vstsFeed }}'
+    allowPackageConflicts: true
+  condition: succeeded()
+  

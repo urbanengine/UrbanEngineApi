@@ -1,25 +1,81 @@
-# ASP.NET Core
-# Build and test ASP.NET Core projects targeting .NET Core.
-# Add steps that run tests, create a NuGet package, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+# urban-engine-api azure-pipeline
 
+# triggers
 trigger:
-- master
+  branches:
+    include:
+    - 'master'
+  paths:
+    exclude:
+    - docs/*
 
-pr: 
-- master
+# specific path
+pr:
+  branches:
+    include:
+    - master
+    - releases/*
+  paths:
+    exclude:
+    - docs/*
 
+# pool
 pool:
   vmImage: 'ubuntu-latest'
 
+# variables
 variables:
   buildConfiguration: 'Release'
+  dotnetSdkVersion: '3.1.x'
+  nugetVersionSpec: '5.4.0'
+  vstsFeedToUse: ''
+  nupkgMajorVersion: '1'
+  nupkgMinorVersion: '0'
+  nupkgPatchVersion: '0'
+  disable.coverage.autogenerate: 'true'
+  sonarCloudOrganization: ''
+  sonarCloudProjectName: ''
+  sonarCloudProjectKey: ''
+  coverageReportsFolder: '$(Build.SourcesDirectory)/TestResults/Coverage/'
 
+# steps
 steps:
-- task: UseDotNet@2
-  displayName: ".NET Core 3.1.x"
-  inputs:
-    packageType: 'sdk'
-    version: '3.1.x'
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
+
+# prepare sonarcloud scan
+# - template: ops/pipelines/sonar-scan.yml
+#   parameters:
+#     action: 'prepare'
+#     sonarOrganization: '$(SONAR_ORGANIZATION)'
+#     sonarProjectKey: '$(SONAR_PROJECT_KEY)'
+#     sonarProjectName: '$(SONAR_PROJECT_NAME)'
+#     sonarConnectionName: '$(SONAR_CONNECTION_NAME)'
+#     reportPaths: '$(coverageReportsFolder)/coverage.opencover.xml'
+#     exclusions: '**/wwwroot/lib/**/*'
+
+# build, test, publish dotnet projects
+- template: ops/pipelines/dotnet-tasks.yml
+  parameters:
+    buildConfiguration: $(buildConfiguration)
+    dotnetSdkVersion: $(dotnetSdkVersion)
+    nugetVersionSpec: $(nugetVersionSpec)
+    # vstsFeed: $(vstsFeedToUse)
+    coverageReportsFolder: $(coverageReportsFolder)
+
+# publish artifacts to nuget feed
+# - template: ops/pipelines/artifacts-tasks.yml
+#   parameters:
+#     buildConfiguration: $(buildConfiguration)
+#     vstsFeed: $(vstsFeedToUse)
+#     nupkgMajorVersion: $(nupkgMajorVersion)
+#     nupkgMinorVersion: $(nupkgMinorVersion)
+#     nupkgPatchVersion: $(nupkgPatchVersion)
+
+# perform sonarcloud analysis and publish
+# - template: ops/pipelines/sonar-scan.yml
+#   parameters:
+#     action: 'analyzeAndPublish'
+
+# publish build artifacts
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifacts: drop'
+  condition: succeeded()

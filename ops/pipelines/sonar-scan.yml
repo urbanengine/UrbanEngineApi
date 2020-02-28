@@ -1,0 +1,65 @@
+parameters:
+  action: ''
+  sonarOrganization: ''
+  sonarProjectKey: ''
+  sonarProjectName: ''
+  sonarConnectionName: ''
+  reportPaths: ''
+  exclusions: ''
+  targetBranch: 'master'
+  buildReason: 'PullRequest'
+  dotnetSdkVersion: '2.0.0'
+    
+steps:
+
+# set dotnet version required by sonar scan
+- ${{ if eq(parameters.action, 'prepare') }}:
+  - task: UseDotNet@2
+    displayName: 'Use .NET Core SDK ${{ parameters.dotnetSdkVersion }}'
+    inputs:
+      packageType: sdk
+      version: '${{ parameters.dotnetSdkVersion }}'
+
+- ${{ if eq(parameters.action, 'prepare') }}:
+  - task: SonarCloudPrepare@1
+    displayName: 'Prepare SonarCloud analysis'
+    condition: succeeded()
+    # condition: |
+    #   and
+    #   (
+    #     succeeded(),
+    #     eq(variables['Build.Reason'], '${{ parameters.buildReason }}'),
+    #     eq(variables['System.PullRequest.TargetBranch'], '${{ parameters.targetBranch }}')
+    #   )
+    inputs:
+      SonarCloud: '${{ parameters.sonarConnectionName }}'
+      organization: '${{ parameters.sonarOrganization }}'
+      projectKey: '${{ parameters.sonarProjectKey }}'
+      projectName: '${{ parameters.sonarProjectName }}'
+      projectVersion: '$(Build.BuildNumber)'
+      extraProperties: |
+        sonar.cs.opencover.reportPaths=${{ parameters.reportPaths }}
+        sonar.exclusions=${{ parameters.exclusions }}
+
+- ${{ if eq(parameters.action, 'analyzeAndPublish') }}:
+  - task: SonarCloudAnalyze@1
+    displayName: 'Run SonarCloud code analysis'
+    condition: succeeded()
+    # condition: |
+    #   and
+    #   (
+    #     succeeded(),
+    #     eq(variables['Build.Reason'], '${{ parameters.buildReason }}'),
+    #     eq(variables['System.PullRequest.TargetBranch'], '${{ parameters.targetBranch }}')
+    #   )
+
+  - task: SonarCloudPublish@1
+    displayName: 'Publish SonarCloud quality gate results'
+    condition: succeeded()
+    # condition: |
+    #   and
+    #   (
+    #     succeeded(),
+    #     eq(variables['Build.Reason'], '${{ parameters.buildReason }}'),
+    #     eq(variables['System.PullRequest.TargetBranch'], '${{ parameters.targetBranch }}')
+    #   )
