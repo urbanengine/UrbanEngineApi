@@ -18,7 +18,7 @@ namespace UrbanEngine.SharedKernel.Managers
             _logger = logger;
         }
         
-        public async Task<TEntity> GetByIdAsync(object id)
+        public virtual async Task<TEntity> GetByIdAsync(object id)
         {
             if(id == null)
                 throw new ArgumentNullException(nameof(id));
@@ -27,19 +27,19 @@ namespace UrbanEngine.SharedKernel.Managers
             return result;
         }
 
-        public async Task<IEnumerable<TEntity>> GetAsync(ISpecification<TEntity> specification)
+        public virtual async Task<IEnumerable<TEntity>> GetAsync(ISpecification<TEntity> specification)
         {
             var result = await _repository.ListAsync(specification);
             return result;
         }
 
-        public async Task<TEntity> CreateAsync(TEntity entity)
+        public virtual async Task<TEntity> CreateAsync(TEntity entity)
         {
             var result = await _repository.CreateAsync(entity);
             return result;
         }
         
-        public async Task<TEntity> UpdateAsync(TEntity entity)
+        public virtual async Task<TEntity> UpdateAsync(TEntity entity)
         {
             var result = await _repository.UpdateAsync(entity);
             if(result <= 0)
@@ -49,7 +49,7 @@ namespace UrbanEngine.SharedKernel.Managers
             return await GetByIdAsync(entity.Id);
         }
 
-        public async Task<bool> DeleteAsync(object id, bool softDelete)
+        public virtual async Task<bool> DeleteAsync(object id, bool softDelete)
         {
             var entity = await GetByIdAsync(id);
 
