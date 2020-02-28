@@ -36,6 +36,9 @@ namespace UrbanEngine.Core.Specifications.Events
             if (filter.EventType != null)
                 predicate = predicate.And(p => p.EventType == filter.EventType);
 
+			if(filter.RoomId.HasValue)
+				predicate = predicate.And(p => p.RoomId == filter.RoomId);
+
             return predicate;
         }
     }

@@ -12,5 +12,6 @@ namespace UrbanEngine.Core.Models.Events
         public string Type { get; set; }
         public string OrganizerId { get; private set; } = "1"; // TODO: need to remove hard coded value
         public long? VenueId { get; set; }
+		public long? RoomId { get; set; }
     }
 }

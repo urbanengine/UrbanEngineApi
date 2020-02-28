@@ -15,8 +15,4 @@
     <ProjectReference Include="..\UrbanEngine.SharedKernel\UrbanEngine.SharedKernel.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Exceptions\" />
-  </ItemGroup>
-
 </Project>

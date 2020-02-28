@@ -30,5 +30,9 @@ namespace UrbanEngine.Core.Specifications.Events
         /// whether to include deleted events in the results
         /// </summary>
         bool? IsDeleted { get; }
+		/// <summary>
+		/// whether to filter to a specific room
+		/// </summary>
+		long? RoomId { get; }
     }
 }
