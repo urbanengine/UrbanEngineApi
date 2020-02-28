@@ -5,7 +5,7 @@ namespace UrbanEngine.Infrastructure.Data.Repository
 {
 	public class RoomRepository : EfRepository<RoomEntity>
 	{
-		public RoomRepository(DbContext dbContext) 
+		public RoomRepository(UrbanEngineDbContext dbContext) 
 			: base(dbContext) { }
 	}
 }
