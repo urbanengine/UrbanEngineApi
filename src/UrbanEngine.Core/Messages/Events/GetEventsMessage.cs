@@ -17,12 +17,12 @@ namespace UrbanEngine.Core.Messages.Events
         /// <summary>
         /// start date of the event
         /// </summary>
-        public DateTime? StartDate { get; set; }
+        public DateTimeOffset? StartDate { get; set; }
 
         /// <summary>
         /// end date of the event
         /// </summary>
-        public DateTime? EndDate { get; set; }
+        public DateTimeOffset? EndDate { get; set; }
 
         /// <summary>
         /// event type

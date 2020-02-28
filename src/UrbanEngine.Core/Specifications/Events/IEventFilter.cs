@@ -9,11 +9,11 @@ namespace UrbanEngine.Core.Specifications.Events
         /// <summary>
         /// start date of event
         /// </summary>
-        DateTime? StartDate { get; }
+        DateTimeOffset? StartDate { get; }
         /// <summary>
         /// end date of event
         /// </summary>
-        DateTime? EndDate { get; }
+        DateTimeOffset? EndDate { get; }
         /// <summary>
         /// event type
         /// </summary>

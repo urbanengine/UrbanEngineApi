@@ -8,7 +8,7 @@ namespace UrbanEngine.SharedKernel.Data
 
         bool IsDeleted { get; set; }
 
-        DateTime? DateCreated { get; }
+        DateTimeOffset? DateCreated { get; }
     }
 
     /// <summary>
@@ -30,7 +30,7 @@ namespace UrbanEngine.SharedKernel.Data
         /// <summary>
         /// date item was created in the database
         /// </summary>
-        public DateTime? DateCreated { get; set; } = DateTime.Now;
+        public DateTimeOffset? DateCreated { get; set; } = DateTime.Now;
 
         protected EntityBase() { }
     }

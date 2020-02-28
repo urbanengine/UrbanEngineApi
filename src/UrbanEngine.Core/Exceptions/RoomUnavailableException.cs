@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Text;
+using UrbanEngine.SharedKernel.Attributes;
 
 namespace UrbanEngine.Core.Exceptions
 {
+	[CustomException]
 	public class RoomUnavailableException : Exception
 	{
 		private readonly DateTimeOffset? _startDateTime;

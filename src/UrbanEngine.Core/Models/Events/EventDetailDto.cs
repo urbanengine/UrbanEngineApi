@@ -9,7 +9,7 @@ namespace UrbanEngine.Core.Models.Events
         public string Description { get; set; }
         public DateTimeOffset? StartDate { get; set; }
         public DateTimeOffset? EndDate { get; set; }
-        public string Type { get; set; }
+        public string EventType { get; set; }
         public string OrganizerId { get; private set; } = "1"; // TODO: need to remove hard coded value
 		public long? RoomId { get; set; }
     }

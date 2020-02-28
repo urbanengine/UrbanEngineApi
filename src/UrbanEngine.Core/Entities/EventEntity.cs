@@ -47,14 +47,14 @@ namespace UrbanEngine.Core.Entities
 
         }
 
-        public EventEntity(long id, string name, DateTime startDate)
+        public EventEntity(long id, string name, DateTimeOffset startDate)
         {
             Id = id;
             Name = name;
             StartDate = startDate;
         }
 
-        public EventEntity(string name, string description, EventType eventType, DateTime? startDate, DateTime? endDate, string organizerId, long? roomId)
+        public EventEntity(string name, string description, EventType eventType, DateTimeOffset? startDate, DateTimeOffset? endDate, string organizerId, long? roomId)
         {
             Name = name;
             Description = description;
@@ -65,7 +65,7 @@ namespace UrbanEngine.Core.Entities
 			RoomId = roomId;
         }
 
-		public EventEntity(long id, string name, string description, EventType eventType, DateTime? startDate, DateTime? endDate, string organizerId, long? roomId)
+		public EventEntity(long id, string name, string description, EventType eventType, DateTimeOffset? startDate, DateTimeOffset? endDate, string organizerId, long? roomId)
 			: this(name, description, eventType, startDate, endDate, organizerId, roomId)
         {
 			Id = id;
