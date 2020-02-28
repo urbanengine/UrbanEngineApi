@@ -10,6 +10,8 @@ namespace UrbanEngine.Web.Controllers
     /// <summary>
     /// manage and query information about rooms
     /// </summary>
+    [Route("api/[controller]")]
+    [ApiController]
 	public class RoomsController : Controller
     {
         private readonly IMediator _mediator;
