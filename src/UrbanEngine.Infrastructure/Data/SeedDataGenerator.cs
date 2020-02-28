@@ -23,13 +23,13 @@ namespace UrbanEngine.Infrastructure.Data
         #endregion
 
         public void ApplySeedData( ModelBuilder modelBuilder ) {
-            modelBuilder.Entity<EventVenueEntity>().HasData( EventVenueSeedData() );
-            modelBuilder.Entity<EventEntity>().HasData( EventSeedData() );
-            modelBuilder.Entity<CheckInEntity>().HasData( CheckInSeedData() );
+            modelBuilder.Entity<EventVenueEntity>().HasData(EventVenueSeedData());
+            modelBuilder.Entity<EventEntity>().HasData(EventSeedData());
+            modelBuilder.Entity<CheckInEntity>().HasData(CheckInSeedData());
+			modelBuilder.Entity<RoomEntity>().HasData(RoomSeedData());
         }
 
         #region Seed Data
-
 
         public static EventVenueEntity[] EventVenueSeedData()
         {
@@ -49,7 +49,9 @@ namespace UrbanEngine.Infrastructure.Data
         public static EventEntity[] EventSeedData() {
             return new EventEntity[]
             {
-                new EventEntity(id: 1, name: "show256", eventType: EventType.Workshop, description: null, startDate: DateTime.Now, endDate: DateTime.Now, organizerId: null, venueId: 1 )
+                new EventEntity(id: 1, name: "show256", eventType: EventType.Workshop, description: null, startDate: DateTime.Now, endDate: DateTime.Now, organizerId: null, venueId: 1, roomId: 4 ),
+                new EventEntity(id: 2, name: "Designer's Corner", eventType: EventType.Workshop, description: null, startDate: DateTime.Now, endDate: DateTime.Now, organizerId: null, venueId: 1, roomId: 2 ),
+                new EventEntity(id: 3, name: "Huntsville AI", eventType: EventType.Workshop, description: null, startDate: DateTime.Now, endDate: DateTime.Now, organizerId: null, venueId: 1, roomId: 5 )
             };
         }
 
@@ -66,6 +68,18 @@ namespace UrbanEngine.Infrastructure.Data
                 }
             };
         }
+
+		public static RoomEntity[] RoomSeedData()
+		{
+			return new RoomEntity[]
+			{
+				new RoomEntity(1, "Cafe Conference Room", "Cafe Conference Room", null, null, 1, true),
+				new RoomEntity(2, "Front Conference Room", "Front Conference Room", null, null, 1, true),
+				new RoomEntity(3, "Corner Conference Room", "Corner Conference Room", null, null, 1, true),
+				new RoomEntity(4, "Library", "Library", null, null, 1, false),
+				new RoomEntity(5, "Training Room", "Training Room", null, null, 1, true)
+			};
+		}
 
         #endregion
     }
