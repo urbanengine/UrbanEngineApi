@@ -18,13 +18,13 @@ namespace UrbanEngine.Tests.Core.Managers.CheckIn
         {
             // Arrange
             var scope = new DefaultScope();
-            object id = 1;
+            long id = 1;
 
             // Act
             await scope.InstanceUnderTest.GetByIdAsync(id);
 
             // Assert
-            scope.CheckInRepositoryMock.Verify(x => x.GetByIdAsync(It.Is<object>(v => v == id)), Times.Once);
+            scope.CheckInRepositoryMock.Verify(x => x.GetByIdAsync(It.Is<long>(v => v == id)), Times.Once);
         }
 
         [TestMethod, TestCategory(TestCategory.Unit)]
