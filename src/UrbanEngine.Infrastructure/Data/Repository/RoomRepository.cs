@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using UrbanEngine.Core.Entities;
+﻿using UrbanEngine.Core.Entities;
 
 namespace UrbanEngine.Infrastructure.Data.Repository
 {

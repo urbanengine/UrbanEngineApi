@@ -9,12 +9,12 @@ namespace UrbanEngine.SharedKernel.Managers
 {
     public abstract class ManagerBase<TEntity> : IManager<TEntity> where TEntity : IEntity
     {
-        private readonly IAsyncRepository<TEntity> _repository;
+        protected readonly IAsyncRepository<TEntity> Repository;
         private readonly ILogger _logger;
 
         public ManagerBase(IAsyncRepository<TEntity> repository, ILogger<ManagerBase<TEntity>> logger)
         {
-            _repository = repository;
+            Repository = repository;
             _logger = logger;
         }
         
@@ -23,25 +23,25 @@ namespace UrbanEngine.SharedKernel.Managers
             if(id == null)
                 throw new ArgumentNullException(nameof(id));
 
-            var result = await _repository.GetByIdAsync(id);
+            var result = await Repository.GetByIdAsync(id);
             return result;
         }
 
         public virtual async Task<IEnumerable<TEntity>> GetAsync(ISpecification<TEntity> specification)
         {
-            var result = await _repository.ListAsync(specification);
+            var result = await Repository.ListAsync(specification);
             return result;
         }
 
         public virtual async Task<TEntity> CreateAsync(TEntity entity)
         {
-            var result = await _repository.CreateAsync(entity);
+            var result = await Repository.CreateAsync(entity);
             return result;
         }
         
         public virtual async Task<TEntity> UpdateAsync(TEntity entity)
         {
-            var result = await _repository.UpdateAsync(entity);
+            var result = await Repository.UpdateAsync(entity);
             if(result <= 0)
             {
                 throw new Exception("failed to save");
@@ -56,12 +56,12 @@ namespace UrbanEngine.SharedKernel.Managers
             int result;
             if(!softDelete)
             {
-                result = await _repository.DeleteAsync(entity);           
+                result = await Repository.DeleteAsync(entity);           
             }
             else
             {
                 entity.IsDeleted = true;
-                result = await _repository.UpdateAsync(entity);
+                result = await Repository.UpdateAsync(entity);
             }
             return result > 0;
         }
