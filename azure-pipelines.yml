@@ -27,7 +27,7 @@ pool:
 variables:
   buildConfiguration: 'Release'
   dotnetSdkVersion: '3.1.x'
-  nugetVersionSpec: '4.8.1'
+  nugetVersionSpec: '4.7.1'
   vstsFeedToUse: ''
   nupkgMajorVersion: '1'
   nupkgMinorVersion: '0'
