@@ -27,9 +27,6 @@ namespace UrbanEngine.Core.Specifications.Events
             if (filter.EndDate.HasValue)
                 predicate = predicate.And(p => p.EndDate <= filter.EndDate);
 
-            if (filter.VenueId.HasValue)
-                predicate = predicate.And(p => p.Room.VenueId == filter.VenueId);
-
             if (!string.IsNullOrEmpty(filter.OrganizerId))
                 predicate = predicate.And(p => p.OrganizerId == filter.OrganizerId);
 

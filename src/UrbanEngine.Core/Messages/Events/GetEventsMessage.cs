@@ -30,11 +30,6 @@ namespace UrbanEngine.Core.Messages.Events
         public EventType EventType { get; set; }
 
         /// <summary>
-        /// venue id
-        /// </summary>
-        public long? VenueId { get; set; }
-
-        /// <summary>
         /// organizer id
         /// </summary>
         public string OrganizerId { get; set; }

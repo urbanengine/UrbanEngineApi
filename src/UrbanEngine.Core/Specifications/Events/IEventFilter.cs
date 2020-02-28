@@ -19,10 +19,6 @@ namespace UrbanEngine.Core.Specifications.Events
         /// </summary>
         EventType EventType { get; }
         /// <summary>
-        /// whether to filter to a specific venue
-        /// </summary>
-        long? VenueId { get; }
-        /// <summary>
         /// whether to filter to a specific organizer
         /// </summary>
         string OrganizerId { get; }
