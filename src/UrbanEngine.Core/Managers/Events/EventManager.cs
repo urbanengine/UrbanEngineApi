@@ -36,7 +36,7 @@ namespace UrbanEngine.Core.Managers.Events
 		{ 
 			var specification = new EventByRoomSpecification(roomId, startDateTime, endDateTime);
 			var result = await Repository.AnyAsync(specification);
-			return result;
+			return !result; // if no results room should be free
 		}
 	}
 }
