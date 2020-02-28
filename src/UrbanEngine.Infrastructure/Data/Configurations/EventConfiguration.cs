@@ -23,7 +23,6 @@ namespace UrbanEngine.Infrastructure.Data.Configurations
             builder.Property(e => e.EndDate).IsRequired(false);
             builder.Property(e => e.StartDate).IsRequired(false);
             builder.Property(e => e.OrganizerId).IsRequired(false);
-            builder.Property(e => e.VenueId).IsRequired(false);
 			builder.Property(e => e.RoomId).IsRequired(false);
 
             builder.Ignore(e => e.Duration);
@@ -34,10 +33,6 @@ namespace UrbanEngine.Infrastructure.Data.Configurations
                     p => EventType.FromValue(p))
                 .IsRequired();
             
-            builder.HasOne(e => e.Venue)
-                .WithMany(e => e.Events)
-                .HasForeignKey(e => e.VenueId);
-
 			builder.HasOne(e => e.Room)
 				.WithMany(e => e.Events)
 				.HasForeignKey(e => e.RoomId);

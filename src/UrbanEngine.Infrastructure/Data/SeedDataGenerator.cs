@@ -49,9 +49,9 @@ namespace UrbanEngine.Infrastructure.Data
         public static EventEntity[] EventSeedData() {
             return new EventEntity[]
             {
-                new EventEntity(id: 1, name: "show256", eventType: EventType.Workshop, description: null, startDate: DateTime.Now, endDate: DateTime.Now, organizerId: null, venueId: 1, roomId: 4 ),
-                new EventEntity(id: 2, name: "Designer's Corner", eventType: EventType.Workshop, description: null, startDate: DateTime.Now, endDate: DateTime.Now, organizerId: null, venueId: 1, roomId: 2 ),
-                new EventEntity(id: 3, name: "Huntsville AI", eventType: EventType.Workshop, description: null, startDate: DateTime.Now, endDate: DateTime.Now, organizerId: null, venueId: 1, roomId: 5 )
+                new EventEntity(id: 1, name: "show256", eventType: EventType.Workshop, description: null, startDate: DateTime.Now, endDate: DateTime.Now, organizerId: null, roomId: 4 ),
+                new EventEntity(id: 2, name: "Designer's Corner", eventType: EventType.Workshop, description: null, startDate: DateTime.Now, endDate: DateTime.Now, organizerId: null, roomId: 2 ),
+                new EventEntity(id: 3, name: "Huntsville AI", eventType: EventType.Workshop, description: null, startDate: DateTime.Now, endDate: DateTime.Now, organizerId: null, roomId: 5 )
             };
         }
 
