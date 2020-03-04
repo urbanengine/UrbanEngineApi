@@ -1,4 +1,4 @@
-﻿namespace UrbanEngine.Tests.Utils
+﻿namespace UrbanEngine.UnitTests.Utils
 {
     public abstract class TestScope<T> : ITestScope<T> where T : class
     {

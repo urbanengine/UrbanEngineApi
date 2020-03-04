@@ -1,4 +1,4 @@
-﻿namespace UrbanEngine.Tests.Utils
+﻿namespace UrbanEngine.UnitTests.Utils
 {
     public class TestCategory
     {

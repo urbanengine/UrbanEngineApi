@@ -6,9 +6,9 @@ using Moq;
 using UrbanEngine.Core.Entities;
 using UrbanEngine.Core.Managers.CheckIn;
 using UrbanEngine.SharedKernel.Data;
-using UrbanEngine.Tests.Utils;
+using UrbanEngine.UnitTests.Utils;
 
-namespace UrbanEngine.Tests.Core.Managers.CheckIn
+namespace UrbanEngine.UnitTests.Core.Managers.CheckIn
 {
 	[TestClass]
     public class CheckInManagerTests

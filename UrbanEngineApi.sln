@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanEngine.SharedKernel", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanEngine.Web", "src\UrbanEngine.Web\UrbanEngine.Web.csproj", "{FC70024A-6B09-4ADD-AB11-5CEBFC42B836}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanEngine.Tests", "tests\UrbanEngine.Tests\UrbanEngine.Tests.csproj", "{A721380E-86AD-485E-93A2-05AD2CB7B7CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanEngine.UnitTests", "tests\UrbanEngine.Tests\UrbanEngine.UnitTests.csproj", "{A721380E-86AD-485E-93A2-05AD2CB7B7CE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{14A0984C-83C3-4C41-B2ED-CDD0E213AB74}"
 	ProjectSection(SolutionItems) = preProject
@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrbanEngine.IntegrationTests", "UrbanEngine.IntegrationTests\UrbanEngine.IntegrationTests.csproj", "{B79D4F9D-880F-4BC0-AD4C-DDDCD2F9371D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +52,10 @@ Global
 		{A721380E-86AD-485E-93A2-05AD2CB7B7CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A721380E-86AD-485E-93A2-05AD2CB7B7CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A721380E-86AD-485E-93A2-05AD2CB7B7CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B79D4F9D-880F-4BC0-AD4C-DDDCD2F9371D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B79D4F9D-880F-4BC0-AD4C-DDDCD2F9371D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B79D4F9D-880F-4BC0-AD4C-DDDCD2F9371D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B79D4F9D-880F-4BC0-AD4C-DDDCD2F9371D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
