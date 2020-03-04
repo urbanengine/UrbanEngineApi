@@ -67,7 +67,7 @@ namespace UrbanEngine.Web.Controllers
         }
 
         /// <summary>
-        /// create a new event
+        /// update an existing event
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
