@@ -15,12 +15,17 @@ namespace UrbanEngine.Infrastructure.Data.Configurations
 				.IsRequired()
 				.HasMaxLength(100);
 
-			builder.Property(e => e.Bio)
+			builder.Property(e => e.FirstName )
 				.IsRequired(false)
-				.HasMaxLength(2000);
+				.HasMaxLength(50);
 
-			builder.Property(e => e.CompanyId)
-				.IsRequired(false);
+			builder.Property(e => e.LastName )
+				.IsRequired(false)
+				.HasMaxLength( 50 );
+
+			builder.Property( e => e.Email )
+				.IsRequired( false )
+				.HasMaxLength( 100 );
 
 			builder.Property(e => e.CountryOrRegion)
 				.HasMaxLength(100)

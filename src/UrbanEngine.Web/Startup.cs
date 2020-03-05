@@ -23,26 +23,58 @@ using UrbanEngine.Infrastructure.Data.Repository;
 using UrbanEngine.SharedKernel.Data;
 using UrbanEngine.SharedKernel.Results;
 using UrbanEngine.Core.Handlers.Venues;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace UrbanEngine.Web
 {
-    public class Startup
+	/// <summary>
+	/// This class configures services and the app's request pipeline.
+	/// </summary>
+	public class Startup
     {
         static int _errorEventId = 1;
 
-        public Startup(IConfiguration configuration)
+		/// <summary>
+		/// Constructor method for the Startup class
+		/// </summary>
+		/// <param name="configuration"></param>
+		public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+		/// <summary>
+		/// Property representing the applications configuration
+		/// </summary>
+		public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+		/// <summary>
+		/// This method gets called by the runtime. Use this method to add services to the container.
+		/// </summary>
+		/// <param name="services"></param>
+		public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
 
-            services.AddSwaggerGen(c =>
+			#region Authentication
+
+			services.AddAuthentication( options =>
+			{
+				options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+				options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+			} )
+			 .AddJwtBearer( options =>
+			 {
+				 options.Audience = Configuration[ "Auth0:ApiIdentifier" ];
+				 options.Authority = $"https://{Configuration[ "Auth0:Domain" ]}/";
+			 } );
+
+			#endregion
+
+			#region Swagger
+
+			services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
@@ -68,8 +100,12 @@ namespace UrbanEngine.Web
                 c.IncludeXmlComments(xmlPath);
             });
 
-            // db context
-            services.AddDbContext<UrbanEngineDbContext>(options =>
+			#endregion
+
+			#region Database Provider Setup
+
+			// db context
+			services.AddDbContext<UrbanEngineDbContext>(options =>
             {
                 //options.UseSqlite("Data Source=UrbanEngine.db");
 				options.EnableSensitiveDataLogging();
@@ -77,8 +113,12 @@ namespace UrbanEngine.Web
                 options.UseLoggerFactory(GetLoggerFactory());
             });
 
-            // repositories
-            services.AddScoped<IAsyncRepository<EventEntity>, EventRepository>();
+			#endregion
+
+			#region Dependency Injection
+
+			// repositories
+			services.AddScoped<IAsyncRepository<EventEntity>, EventRepository>();
             services.AddScoped<IAsyncRepository<EventVenueEntity>, EventVenueRepository>();
             services.AddScoped<IAsyncRepository<CheckInEntity>, CheckInRepository>();
 
@@ -92,10 +132,16 @@ namespace UrbanEngine.Web
 
             // Mediatr
             services.AddMediatR(typeof(GetVenuesHandler).Assembly);
-        }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+			#endregion
+		}
+
+		/// <summary>
+		/// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+		/// </summary>
+		/// <param name="app"></param>
+		/// <param name="env"></param>
+		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -126,7 +172,9 @@ namespace UrbanEngine.Web
                 });
             });
 
-            app.UseSwagger();
+			app.UseAuthentication();
+
+			app.UseSwagger();
 
             app.UseSwaggerUI(c =>
             {

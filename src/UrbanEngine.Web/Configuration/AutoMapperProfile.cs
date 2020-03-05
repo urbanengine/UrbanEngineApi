@@ -8,8 +8,14 @@ using UrbanEngine.Core.Models.Venues;
 
 namespace UrbanEngine.Web.Configuration
 {
+	/// <summary>
+	/// This class maps entities to their respective DTO's and vice versa
+	/// </summary>
     public class AutoMapperProfile : Profile
     {
+		/// <summary>
+		/// Constructor for the AutoMapperProfile class
+		/// </summary>
         public AutoMapperProfile()
         {
             CreateMap<EventVenueEntity, EventVenueListItemDto>();

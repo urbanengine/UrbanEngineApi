@@ -12,7 +12,7 @@ namespace UrbanEngine.Web.Controllers
 	public class AboutController : ControllerBase
 	{
 		/// <summary>
-		/// Retrieves version of the service 
+		/// Retrieves version of the service
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
@@ -31,7 +31,7 @@ namespace UrbanEngine.Web.Controllers
 			return Ok( info );
 		}
 
-		// TODO: we can move these out into a helper class to be reused across other services 
+		// TODO: we can move these out into a helper class to be reused across other services
 		private string GetAssemblyVersion()
 		{
 			var assemblyName = Assembly.GetCallingAssembly().GetName();

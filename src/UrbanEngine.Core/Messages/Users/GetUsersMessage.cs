@@ -9,7 +9,10 @@ namespace UrbanEngine.Core.Messages.Users
 {
 	public class GetUsersMessage : PagingParameters, IRequest<QueryResult<IEnumerable<UserListItemDto>>>, IUserFilter
 	{
-		public long? CompanyId { get; set; }
+		public string AuthZeroId { get; set; }
+		public string FirstName { get; set; }
+		public string LastName { get; set; }
+		public string Email { get; set; }
 		public string CountryOrRegion { get; set; }
 		public string PostalCode { get; set; }
 		public bool? IsDeleted { get; set; }

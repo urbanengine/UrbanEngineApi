@@ -7,7 +7,10 @@ namespace UrbanEngine.Core.Specifications.Users
 {
 	public interface IUserFilter : IPagingParameters
 	{
-		long? CompanyId { get; }
+		string AuthZeroId { get; set; }
+		string FirstName { get; set; }
+		string LastName { get; set; }
+		string Email { get; set; }
 		string CountryOrRegion { get; }
 		string PostalCode { get; }
 		bool? IsDeleted { get; }

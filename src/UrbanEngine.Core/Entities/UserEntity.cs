@@ -7,17 +7,17 @@ namespace UrbanEngine.Core.Entities
 		#region Properties
 
 		/// <summary>
-		/// identifier associated with Auth0 account 
+		/// identifier associated with Auth0 account
 		/// </summary>
 		public string AuthZeroId { get; set; }
 
 		/// <summary>
-		/// first name of the user
+		/// given name (first name) of the user
 		/// </summary>
 		public string FirstName { get; set; }
 
 		/// <summary>
-		/// last name of the user
+		/// family name (last name) of the user
 		/// </summary>
 		public string LastName { get; set; }
 
@@ -27,17 +27,12 @@ namespace UrbanEngine.Core.Entities
 		public string Email { get; set; }
 
 		/// <summary>
-		/// id that identifies company that the user works for or is associated with  
-		/// </summary>
-		public long? CompanyId { get; set; }
-
-		/// <summary>
-		/// country or region 
+		/// country or region
 		/// </summary>
 		public string CountryOrRegion { get; set; }
 
 		/// <summary>
-		/// postal code 
+		/// postal code
 		/// </summary>
 		public string PostalCode { get; set; }
 

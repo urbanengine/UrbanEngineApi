@@ -8,9 +8,16 @@ using UrbanEngine.Infrastructure.Data;
 
 namespace UrbanEngine.Web
 {
-    public class Program
+	/// <summary>
+	/// Core class that is started with the application
+	/// </summary>
+	public class Program
     {
-        public static void Main(string[] args)
+		/// <summary>
+		/// Method that is called to start the application
+		/// </summary>
+		/// <param name="args"></param>
+		public static void Main(string[] args)
         {
             var hostBuilder = CreateHostBuilder(args).Build();
 
@@ -30,7 +37,12 @@ namespace UrbanEngine.Web
             hostBuilder.Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
+		/// <summary>
+		/// Method that is called to create and configure a builder object
+		/// </summary>
+		/// <param name="args"></param>
+		/// <returns></returns>
+		public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

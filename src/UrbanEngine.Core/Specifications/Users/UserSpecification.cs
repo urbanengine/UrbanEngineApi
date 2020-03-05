@@ -21,8 +21,17 @@ namespace UrbanEngine.Core.Specifications.Users
 				predicate.And(p => p.IsDeleted == filter.IsDeleted.Value) :
 				predicate.And(p => p.IsDeleted != true);
 
-			if(filter.CompanyId.HasValue)
-				predicate = predicate.And(p => p.CompanyId == filter.CompanyId);
+			if(!string.IsNullOrEmpty( filter.AuthZeroId ))
+				predicate = predicate.And( p => p.AuthZeroId == filter.AuthZeroId );
+
+			if(!string.IsNullOrEmpty( filter.FirstName ))
+				predicate = predicate.And( p => p.FirstName == filter.FirstName );
+
+			if(!string.IsNullOrEmpty( filter.LastName ))
+				predicate = predicate.And( p => p.LastName == filter.LastName );
+
+			if(!string.IsNullOrEmpty( filter.Email ))
+				predicate = predicate.And( p => p.Email == filter.Email );
 
 			if(!string.IsNullOrEmpty(filter.CountryOrRegion))
 				predicate = predicate.And(p => p.CountryOrRegion == filter.CountryOrRegion);
