@@ -3,6 +3,7 @@ using UrbanEngine.Core.Entities;
 using UrbanEngine.Core.Enums;
 using UrbanEngine.Core.Models.CheckIn;
 using UrbanEngine.Core.Models.Events;
+using UrbanEngine.Core.Models.Rooms;
 using UrbanEngine.Core.Models.Users;
 using UrbanEngine.Core.Models.Venues;
 
@@ -40,7 +41,9 @@ namespace UrbanEngine.Web.Configuration
             CreateMap<string, EventType>()
                 .ConvertUsing(s => EventType.FromName(s, true));
 
-
+            CreateMap<RoomEntity, RoomListItemDto>();
+            CreateMap<RoomEntity, RoomDetailDto>()
+                .ReverseMap();
         }
     }
 }

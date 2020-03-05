@@ -7,6 +7,5 @@
         public string Description { get; set; }
         public string StartDate { get; set; }
         public string Duration { get; set; }
-        public string VenueName { get; set; }
     }
 }

@@ -18,13 +18,13 @@ namespace UrbanEngine.UnitTests.Core.Managers.CheckIn
         {
             // Arrange
             var scope = new DefaultScope();
-            object id = 1;
+            long id = 1;
 
             // Act
             await scope.InstanceUnderTest.GetByIdAsync(id);
 
             // Assert
-            scope.CheckInRepositoryMock.Verify(x => x.GetByIdAsync(It.Is<object>(v => v == id)), Times.Once);
+            scope.CheckInRepositoryMock.Verify(x => x.GetByIdAsync(It.Is<long>(v => v == id)), Times.Once);
         }
 
         [TestMethod, TestCategory(TestCategory.Unit)]
@@ -57,8 +57,8 @@ namespace UrbanEngine.UnitTests.Core.Managers.CheckIn
             public static CheckInEntity TestEntity { get; } = new CheckInEntity
             {
                 Id = 1,
-                CheckedInAt = DateTime.Now,
-                DateCreated = DateTime.Now,
+                CheckedInAt = DateTimeOffset.Now,
+                DateCreated = DateTimeOffset.Now,
                 UserId = 1,
                 EventId = 1,
                 IsDeleted = false
