@@ -1,6 +1,7 @@
 # Urban Engine API
 
 [![Build Status](https://dev.azure.com/urbanengine/Urban%20Engine/_apis/build/status/UrbanEngineApi?branchName=master)](https://dev.azure.com/urbanengine/Urban%20Engine/_build/latest?definitionId=6&branchName=master)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## DEV Notes
 
