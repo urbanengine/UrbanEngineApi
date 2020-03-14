@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using UrbanEngine.Infrastructure.Data;
+using Microsoft.Extensions.Configuration;
 
 namespace UrbanEngine.Web
 {
@@ -32,6 +33,19 @@ namespace UrbanEngine.Web
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+				.ConfigureAppConfiguration((context, config) => {
+					var builtConfig = config.Build();
+				
+					if (context.HostingEnvironment.IsProduction())
+					{
+						config.AddAzureKeyVault($"https://{builtConfig["KeyVaultName"]}.vault.azure.net/");
+					}
+					else
+					{
+						config.AddUserSecrets<Startup>();
+					}
+					
+				})
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
