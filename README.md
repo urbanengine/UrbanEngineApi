@@ -7,7 +7,7 @@
 
 This section outlines information relating to configuring or deploying the UrbanEngineApi application.
 
-## Provisioning Resources in Azure
+### Provisioning Resources in Azure
 
 For provisioning resources in Azure the following script is available if running locally:
 
@@ -33,11 +33,9 @@ From the root folder of this repository run the following command in PowerShell:
 
 You may be prompted to specify certain values such as the database password.
 
-### Storing secrets in Productions
+### Storing secrets in Production
 
-In production `Azure KeyVault` will be used to store secrets. The `set-secrets-prod.ps1` script can be used to set the values in the KeyVault. Be sure to only run this when ready as this will affect production.
-
-There is a script located in [scripts/set-secrets-prod.ps1](scripts/set-secrets-prod.ps1) that will set the configuration values in KeyVault in production.
+In production we will be using `Azure KeyVault` to store secrets. The `set-secrets-prod.ps1` script can be used to set the configuration values in the KeyVault. This script will affect production; therefore, please be sure to only run this when ready.
 
 From the root folder of this repository run the following command in PowerShell:
 
@@ -45,7 +43,7 @@ From the root folder of this repository run the following command in PowerShell:
 & ./scripts/set-secrets-prod.ps1
 ```
 
-Also NOTE: In the [appsettings.json](src/UrbanEngine.Web/appsettings.json) the setting `KeyVaultName` indicates the name of the KeyVault to use. Make sure this settings is correct when deploying to production.
+Also NOTE: In the [appsettings.json](src/UrbanEngine.Web/appsettings.json) the setting `KeyVaultName` indicates the name of the KeyVault to use. Again, please make sure this settings is correct before deploying to production.
 
 ### Updating Configuration Values
 
