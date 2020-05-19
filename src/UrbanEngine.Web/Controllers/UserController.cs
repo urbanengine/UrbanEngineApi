@@ -12,7 +12,7 @@ namespace UrbanEngine.Web.Controllers
 	/// <summary>
 	/// Returns information about users
 	/// </summary>
-	[Route("api/[controller")]
+	[Route("api/[controller]")]
 	[ApiController]
 	public class UserController : ControllerBase
 	{

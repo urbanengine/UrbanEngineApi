@@ -1,0 +1,302 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>UrbanEngine.Web</name>
+    </assembly>
+    <members>
+        <member name="T:UrbanEngine.Web.Configuration.AutoMapperProfile">
+            <summary>
+            This class maps entities to their respective DTO's and vice versa
+            </summary>
+        </member>
+        <member name="M:UrbanEngine.Web.Configuration.AutoMapperProfile.#ctor">
+            <summary>
+            Constructor for the AutoMapperProfile class
+            </summary>
+        </member>
+        <member name="T:UrbanEngine.Web.Controllers.AboutController">
+            <summary>
+            Identifies information about the service
+            </summary>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.AboutController.GetVersion">
+            <summary>
+            Retrieves version of the service
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:UrbanEngine.Web.Controllers.CheckInsController">
+            <summary>
+            manage and query information about CheckIns
+            </summary>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.CheckInsController.#ctor(MediatR.IMediator)">
+            <summary>
+            ctor
+            </summary>
+            <param name="mediator"></param>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.CheckInsController.GetCheckInByIdAsync(System.Int64)">
+            <summary>
+            get CheckIn for specified id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.CheckInsController.GetCheckInsAsync(UrbanEngine.Core.Messages.CheckIn.GetCheckInsMessage)">
+            <summary>
+            retrieves a list of CheckIns based on specified filter
+            </summary>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.CheckInsController.CreateCheckInAsync(UrbanEngine.Core.Models.CheckIn.CheckInDetailDto)">
+            <summary>
+            create a new CheckIn
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.CheckInsController.UpdateCheckInAsync(UrbanEngine.Core.Models.CheckIn.CheckInDetailDto)">
+            <summary>
+            update existing CheckIn
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.CheckInsController.DeleteCheckInAsync(UrbanEngine.Core.Messages.CheckIn.DeleteCheckInMessage)">
+            <summary>
+            delete a CheckIn
+            </summary>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="T:UrbanEngine.Web.Controllers.EventsController">
+            <summary>
+            manage and query information about events
+            </summary>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.EventsController.#ctor(MediatR.IMediator)">
+            <summary>
+            ctor
+            </summary>
+            <param name="mediator"></param>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.EventsController.GetEventByIdAsync(System.Int64)">
+            <summary>
+            get event for specified id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.EventsController.GetEventsAsync(UrbanEngine.Core.Messages.Events.GetEventsMessage)">
+            <summary>
+            retrieves a list of events based on specified filter
+            </summary>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.EventsController.CreateEventAsync(UrbanEngine.Core.Models.Events.EventDetailDto)">
+            <summary>
+            create a new event
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.EventsController.UpdateEventAsync(UrbanEngine.Core.Models.Events.EventDetailDto)">
+            <summary>
+            update an existing event
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.EventsController.DeleteEventAsync(UrbanEngine.Core.Messages.Events.DeleteEventMessage)">
+            <summary>
+            delete a Event
+            </summary>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="T:UrbanEngine.Web.Controllers.EventVenuesController">
+            <summary>
+            manage and query information about event venues
+            </summary>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.EventVenuesController.#ctor(MediatR.IMediator)">
+            <summary>
+            ctor
+            </summary>
+            <param name="mediator"></param>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.EventVenuesController.GetVenueByIdAsync(System.Int64)">
+            <summary>
+            get event venue for specified id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.EventVenuesController.GetVenuesAsync(UrbanEngine.Core.Messages.Venues.GetVenuesMessage)">
+            <summary>
+            retrieves a list of event venues based on specified filter
+            </summary>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.EventVenuesController.CreateVenueAsync(UrbanEngine.Core.Models.Venues.EventVenueDetailDto)">
+            <summary>
+            create a new event venue
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.EventVenuesController.UpdateVenueAsync(UrbanEngine.Core.Models.Venues.EventVenueDetailDto)">
+            <summary>
+            create a new event venue
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.EventVenuesController.DeleteVenueAsync(UrbanEngine.Core.Messages.Venues.DeleteVenueMessage)">
+            <summary>
+            delete a venue
+            </summary>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="T:UrbanEngine.Web.Controllers.RoomsController">
+            <summary>
+            manage and query information about rooms
+            </summary>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.RoomsController.#ctor(MediatR.IMediator)">
+            <summary>
+            ctor
+            </summary>
+            <param name="mediator"></param>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.RoomsController.GetRoomByIdAsync(System.Int64)">
+            <summary>
+            get Room for specified id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.RoomsController.GetRoomsAsync(UrbanEngine.Core.Messages.Rooms.GetRoomsMessage)">
+            <summary>
+            retrieves a list of Rooms based on specified filter
+            </summary>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.RoomsController.CreateRoomAsync(UrbanEngine.Core.Models.Rooms.RoomDetailDto)">
+            <summary>
+            create a new Room
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.RoomsController.UpdateRoomAsync(UrbanEngine.Core.Models.Rooms.RoomDetailDto)">
+            <summary>
+            create a new Room
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.RoomsController.DeleteRoomAsync(UrbanEngine.Core.Messages.Rooms.DeleteRoomMessage)">
+            <summary>
+            delete a Room
+            </summary>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="T:UrbanEngine.Web.Controllers.UserController">
+            <summary>
+            Returns information about users
+            </summary>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.UserController.#ctor(MediatR.IMediator)">
+            <summary>
+            Constructor for the UserController
+            </summary>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.UserController.GetUserById(System.Int64)">
+            <summary>
+            retrieve a user by their id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.UserController.GetUsersAsync(UrbanEngine.Core.Messages.Users.GetUsersMessage)">
+            <summary>
+            retrieves a list of users based on specified filter
+            </summary>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.UserController.CreateUserAsync(UrbanEngine.Core.Models.Users.UserDetailDto)">
+            <summary>
+            add a new user to the system
+            </summary>
+            <param name="data"></param>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.UserController.UpdateUserAsync(UrbanEngine.Core.Models.Users.UserDetailDto)">
+            <summary>
+            update an existing user in the system
+            </summary>
+            <param name="data"></param>
+        </member>
+        <member name="M:UrbanEngine.Web.Controllers.UserController.DeleteUserAsync(UrbanEngine.Core.Messages.Events.DeleteEventMessage)">
+            <summary>
+            remove a user from the system by id
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="T:UrbanEngine.Web.Program">
+            <summary>
+            Core class that is started with the application
+            </summary>
+        </member>
+        <member name="M:UrbanEngine.Web.Program.Main(System.String[])">
+            <summary>
+            Method that is called to start the application
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:UrbanEngine.Web.Program.CreateHostBuilder(System.String[])">
+            <summary>
+            Method that is called to create and configure a builder object
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:UrbanEngine.Web.Startup">
+            <summary>
+            This class configures services and the app's request pipeline.
+            </summary>
+        </member>
+        <member name="M:UrbanEngine.Web.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Constructor method for the Startup class
+            </summary>
+            <param name="configuration"></param>
+        </member>
+        <member name="P:UrbanEngine.Web.Startup.Configuration">
+            <summary>
+            Property representing the applications configuration
+            </summary>
+        </member>
+        <member name="M:UrbanEngine.Web.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            This method gets called by the runtime. Use this method to add services to the container.
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:UrbanEngine.Web.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+        </member>
+    </members>
+</doc>

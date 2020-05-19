@@ -11,7 +11,8 @@ using UrbanEngine.IntegrationTests.Utils;
 namespace UrbanEngine.IntegrationTests.Controllers
 {
 	[TestClass]
-    public class AboutTests {
+    public class AboutTests
+	{
 		private IConfiguration _configuration;
 		private readonly HttpClientHelper _helper;
 
@@ -47,10 +48,10 @@ namespace UrbanEngine.IntegrationTests.Controllers
 		}
 
 		/// <summary>
-		/// Verifies that the API returns a 401 Unauthorized if no access token is provided in the request
+		/// Verifies the response being returned when getting the token is not null
 		/// </summary>
 		[TestMethod]
-		public async Task TestGetToken()
+		public async Task TestGetToken_IsNotNull()
 		{
 			// Arrange
 			var client = new HttpClient();
@@ -73,6 +74,34 @@ namespace UrbanEngine.IntegrationTests.Controllers
 
 			// Assert
 			Assert.IsNotNull( deserializedResponse.AccessToken );
+		}
+
+		/// <summary>
+		/// Verifies the token in the repsonse is a Bearer token
+		/// </summary>
+		[TestMethod]
+		public async Task VerifyTokenType_IsBearer()
+		{
+			// Arrange
+			var client = new HttpClient();
+			var json = new Auth0Request()
+			{
+				Audience = _configuration[ "Auth0:Audience" ],
+				Authority = _configuration[ "Auth0:Authority" ],
+				ClientId = _configuration[ "Auth0:ClientId" ],
+				ClientSecret = _configuration[ "Auth0:ClientSecret" ],
+				GrantType = _configuration[ "Auth0:GrantType" ]
+			};
+
+			var payload = json.ToJson();
+			var content = new StringContent( payload, Encoding.UTF8, "application/json" );
+			var url = $"{json.Authority}/oauth/token";
+
+			// Act
+			var response = await client.PostAsync( url, content );
+			var deserializedResponse = await response.Content.ReadAsAsync<Auth0Response>();
+
+			// Assert
 			Assert.AreEqual( "Bearer", deserializedResponse.TokenType );
 		}
 
@@ -108,7 +137,7 @@ namespace UrbanEngine.IntegrationTests.Controllers
 				Authority = _configuration[ "Auth0:Authority" ],
 				ClientId = _configuration[ "Auth0:ClientId" ],
 				ClientSecret = _configuration[ "Auth0:ClientSecret" ],
-				GrantType = "client_credentials"
+				GrantType = _configuration[ "Auth0:GrantType" ]
 			};
 
 			var payload = json.ToJson();
