@@ -1,6 +1,55 @@
 # Urban Engine API
 
 [![Build Status](https://dev.azure.com/urbanengine/Urban%20Engine/_apis/build/status/UrbanEngineApi?branchName=master)](https://dev.azure.com/urbanengine/Urban%20Engine/_build/latest?definitionId=6&branchName=master)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+## Configuration and Deployment
+
+This section outlines information relating to configuring or deploying the UrbanEngineApi application.
+
+## Provisioning Resources in Azure
+
+For provisioning resources in Azure the following script is available if running locally:
+
+From the root directory run the following command in PowerShell:
+
+```console
+& ./scripts/UrbanEngineApi-deploy-azure.ps1
+```
+
+**NOTE:** You will need Azure PowerShell installed if you want to run this script. Documentation on this is available at [Install Azure PowerShell](https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-3.6.1).
+
+## Accessing Configuration Secrets
+
+### Storing secrets in Development environment
+
+In your local development environment most configuration settings will be managed via `UserSecrets` in a local `secrets.json` file. The `Microsoft.Extensions.Configuration.UserSecrets` NuGet package enables this for us. There is a script located in [scripts/set-secrets-local.ps1](scripts/set-secrets-local.ps1) that will set this up in your local development environment.
+
+From the root folder of this repository run the following command in PowerShell:
+
+```console
+& ./scripts/set-secrets-local.ps1
+```
+
+You may be prompted to specify certain values such as the database password.
+
+### Storing secrets in Productions
+
+In production `Azure KeyVault` will be used to store secrets. The `set-secrets-prod.ps1` script can be used to set the values in the KeyVault. Be sure to only run this when ready as this will affect production.
+
+There is a script located in [scripts/set-secrets-prod.ps1](scripts/set-secrets-prod.ps1) that will set the configuration values in KeyVault in production.
+
+From the root folder of this repository run the following command in PowerShell:
+
+```console
+& ./scripts/set-secrets-prod.ps1
+```
+
+Also NOTE: In the [appsettings.json](src/UrbanEngine.Web/appsettings.json) the setting `KeyVaultName` indicates the name of the KeyVault to use. Make sure this settings is correct when deploying to production.
+
+### Updating Configuration Values
+
+Be sure to update the `set-secrets-local.ps1` and `set-secrets-prod.ps1` scripts with any additional settings you add to the project. You can store any configuration values as secrets, they do not necessarily have to be just secrets.
 
 ## DEV Notes
 

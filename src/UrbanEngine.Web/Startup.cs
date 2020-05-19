@@ -108,9 +108,13 @@ namespace UrbanEngine.Web
 			// db context
 			services.AddDbContext<UrbanEngineDbContext>(options =>
             {
+				var dbConnString = Configuration.GetValue<string>("UrbanEngine:Database");
+				if(string.IsNullOrWhiteSpace(dbConnString))
+					throw new InvalidOperationException("Unable to find configuration value for database connection string.");
+
                 //options.UseSqlite("Data Source=UrbanEngine.db");
 				options.EnableSensitiveDataLogging();
-                options.UseNpgsql("host=localhost;database=postgres_local;user id=postgres_admin;password=Postgres2020!;");
+                options.UseNpgsql(dbConnString);
                 options.UseLoggerFactory(GetLoggerFactory());
             });
 
