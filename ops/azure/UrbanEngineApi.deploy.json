@@ -1,0 +1,68 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "tenant": {
+            "type": "string"
+        },
+		"defaultTags": {
+			"type": "object"
+		},
+        "keyVaultName": {
+            "type": "string"
+        },
+        "keyVaultSku": {
+            "type": "string"
+        },
+        "keyVaultAccessPolicies": {
+            "type": "array",
+			"defaultValue": []
+        },
+        "keyVaultNetworkAcls": {
+            "type": "object",
+			"defaultValue": {
+                "defaultAction": "allow",
+                "bypass": "AzureServices",
+                "ipRules": [],
+                "virtualNetworkRules": []
+			}
+        }
+    },
+    "variables": {
+		"rgLocation": "[resourceGroup().location]",
+		"keyVaultSettings": {
+			"enabledForDeployment": false,
+			"enabledForTemplateDeployment": false,
+			"enabledForDiskEncryption": false,
+			"enableRbacAuthorization": false,
+			"enableSoftDelete": true,
+			"softDeleteRetentionInDays": 90
+		}
+	},
+    "resources": [
+        {
+            "apiVersion": "2018-02-14",
+            "name": "[parameters('keyVaultName')]",
+            "location": "[variables('rgLocation')]",
+            "type": "Microsoft.KeyVault/vaults",
+            "properties": {
+                "enabledForDeployment": "[variables('keyVaultSettings').enabledForDeployment]",
+                "enabledForTemplateDeployment": "[variables('keyVaultSettings').enabledForTemplateDeployment]",
+                "enabledForDiskEncryption": "[variables('keyVaultSettings').enabledForDiskEncryption]",
+                "enableRbacAuthorization": "[variables('keyVaultSettings').enableRbacAuthorization]",
+                "accessPolicies": "[parameters('keyVaultAccessPolicies')]",
+                "tenantId": "[parameters('tenant')]",
+                "sku": {
+                    "name": "[parameters('keyVaultSku')]",
+                    "family": "A"
+                },
+                "enableSoftDelete": "[variables('keyVaultSettings').enableSoftDelete]",
+                "softDeleteRetentionInDays": "[variables('keyVaultSettings').softDeleteRetentionInDays]",
+                "networkAcls": "[parameters('keyVaultNetworkAcls')]"
+            },
+            "tags": "[parameters('defaultTags')]",
+            "dependsOn": []
+        }
+    ],
+    "outputs": {}
+}
