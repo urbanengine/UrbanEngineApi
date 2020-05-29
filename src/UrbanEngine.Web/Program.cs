@@ -9,8 +9,15 @@ using Microsoft.Extensions.Configuration;
 
 namespace UrbanEngine.Web
 {
+	/// <summary>
+	/// program
+	/// </summary>
     public class Program
     {
+		/// <summary>
+		/// main
+		/// </summary>
+		/// <param name="args"></param>
         public static void Main(string[] args)
         {
             var hostBuilder = CreateHostBuilder(args).Build();
@@ -31,6 +38,11 @@ namespace UrbanEngine.Web
             hostBuilder.Run();
         }
 
+		/// <summary>
+		/// create host builder
+		/// </summary>
+		/// <param name="args"></param>
+		/// <returns></returns>
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
 				.ConfigureAppConfiguration((context, config) => {
