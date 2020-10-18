@@ -58,6 +58,12 @@ namespace UrbanEngine.Infrastructure.Data.Repository
             return result;
         }
 
+		public IQueryable<TEntity> Query(ISpecification<TEntity> specification)
+		{
+			var queryable = ApplySpecification(specification);
+			return queryable;
+		}
+
         public async Task<TEntity> CreateAsync(TEntity entity) 
         {
             _dbContext.Add(entity);
