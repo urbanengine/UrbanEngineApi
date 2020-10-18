@@ -12,6 +12,7 @@ namespace UrbanEngine.Web.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
+	[ApiVersion("1.0")]
     public class EventVenuesController : ControllerBase
     {
         private readonly IMediator _mediator;

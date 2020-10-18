@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using UrbanEngine.SharedKernel.Specifications;
 
@@ -19,5 +22,7 @@ namespace UrbanEngine.SharedKernel.Data
         Task<TEntity> FirstOrDefaultAsync(ISpecification<TEntity> specification);
         Task<TEntity> SingleOrDefaultAsync(ISpecification<TEntity> specification);
         Task<IReadOnlyList<TEntity>> ListAsync(ISpecification<TEntity> specification);
+		IQueryable<TEntity> Query(ISpecification<TEntity> specification);
+		IQueryable<TEntity> Query(Expression<Func<TEntity, bool>> predicate = null);
     }
 }

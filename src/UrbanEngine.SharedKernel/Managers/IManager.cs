@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using UrbanEngine.SharedKernel.Data;
 using UrbanEngine.SharedKernel.Specifications;
@@ -16,5 +19,8 @@ namespace UrbanEngine.SharedKernel.Managers
         Task<TEntity> CreateAsync(TEntity entity);
         Task<TEntity> UpdateAsync(TEntity entity);
         Task<bool> DeleteAsync(object id, bool softDelete);
+
+		IQueryable<TEntity> Query(ISpecification<TEntity> specification);
+		IQueryable<TEntity> Query(Expression<Func<TEntity, bool>> predicate = null);
     }
 }

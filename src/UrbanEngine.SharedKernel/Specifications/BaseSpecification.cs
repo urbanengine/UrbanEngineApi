@@ -14,10 +14,10 @@ namespace UrbanEngine.SharedKernel.Specifications
             Criteria = criteria;
         }
 
-        protected BaseSpecification( IPagingParameters pagingParameters )
+        protected BaseSpecification( object parameters )
         {
-            if ( pagingParameters.DisablePaging != true )
-                ApplyPaging( pagingParameters.GetSkipValue(), pagingParameters.GetTakeValue() );
+			if( parameters is IPagingParameters pagingParameters && pagingParameters.DisablePaging != true ) 
+				ApplyPaging( pagingParameters.GetSkipValue(), pagingParameters.GetTakeValue() ); 
         }
 
         protected BaseSpecification() { }

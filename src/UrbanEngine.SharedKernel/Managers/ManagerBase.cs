@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using UrbanEngine.SharedKernel.Data;
 using UrbanEngine.SharedKernel.Specifications;
@@ -30,6 +32,18 @@ namespace UrbanEngine.SharedKernel.Managers
         public virtual async Task<IEnumerable<TEntity>> GetAsync(ISpecification<TEntity> specification)
         {
             var result = await Repository.ListAsync(specification);
+            return result;
+        }
+
+        public virtual IQueryable<TEntity> Query(ISpecification<TEntity> specification)
+        {
+            var result = Repository.Query(specification);
+            return result;
+        }
+
+        public virtual IQueryable<TEntity> Query(Expression<Func<TEntity, bool>> predicate = null)
+        {
+            var result = Repository.Query(predicate);
             return result;
         }
 

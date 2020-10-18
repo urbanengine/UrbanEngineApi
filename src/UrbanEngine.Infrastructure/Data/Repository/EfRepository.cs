@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using UrbanEngine.Infrastructure.Data.Extensions;
 using UrbanEngine.SharedKernel.Data;
@@ -62,6 +64,15 @@ namespace UrbanEngine.Infrastructure.Data.Repository
 		{
 			var queryable = ApplySpecification(specification);
 			return queryable;
+		}
+
+		public IQueryable<TEntity> Query(Expression<Func<TEntity, bool>> predicate = null)
+		{
+			var query = _dbContext.Set<TEntity>().AsQueryable();
+
+			return predicate != null
+				? query.Where(predicate)
+				: query;
 		}
 
         public async Task<TEntity> CreateAsync(TEntity entity) 

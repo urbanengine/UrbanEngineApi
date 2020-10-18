@@ -24,6 +24,14 @@ using UrbanEngine.SharedKernel.Data;
 using UrbanEngine.SharedKernel.Results;
 using UrbanEngine.Core.Handlers.Venues;
 using UrbanEngine.Core.Managers.Rooms;
+using Microsoft.AspNet.OData.Extensions;
+using Microsoft.AspNet.OData.Builder;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using Microsoft.AspNet.OData.Formatter;
+using Microsoft.Net.Http.Headers;
+using System.Linq;
+using Microsoft.OData.Edm;
 
 namespace UrbanEngine.Web
 {
@@ -54,34 +62,15 @@ namespace UrbanEngine.Web
 		/// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+			//services.AddApiVersioning(options =>
+			//{
+			//	options.DefaultApiVersion = new ApiVersion(1, 0);
+			//	options.AssumeDefaultVersionWhenUnspecified = true;
+			//});
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Title = "Urban Engine API",
-                    Version = "v1",
-                    Description = "Urban Engine API",
-                    // TermsOfService = new Uri(""),
-                    Contact = new OpenApiContact
-                    {
-                        Name = "Tyler Hughes",
-                        Email = "tyler@urbanengine.org"
-                    },
-                    License = new OpenApiLicense
-                    {
-                        Name = "Apache 2.0",
-                        Url = new Uri("https://www.apache.org/licenses/LICENSE-2.0.html")
-                    }
-                });
-
-                // Set the comments path for the Swagger JSON and UI.
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                c.IncludeXmlComments(xmlPath);
-            });
-
+			services.AddOData();//.EnableApiVersioning();
+			services.AddControllers();
+			
             // db context
             services.AddDbContext<UrbanEngineDbContext>(options =>
             {
@@ -112,19 +101,55 @@ namespace UrbanEngine.Web
 
             // Mediatr
             services.AddMediatR(typeof(GetVenuesHandler).Assembly);
+			
+			// Swagger Config
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Urban Engine API",
+                    Version = "v1",
+                    Description = "Urban Engine API",
+                    // TermsOfService = new Uri(""),
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Tyler Hughes",
+                        Email = "tyler@urbanengine.org"
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "Apache 2.0",
+                        Url = new Uri("https://www.apache.org/licenses/LICENSE-2.0.html")
+                    }
+                });
+
+				// Set the comments path for the Swagger JSON and UI.
+				var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+				var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+				c.IncludeXmlComments(xmlPath);
+			});
+
+			// output formatters
+            SetOutputFormatters(services);
+
         }
 
-        /// <summary>
+		/// <summary>
 		/// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		/// </summary>
 		/// <param name="app"></param>
 		/// <param name="env"></param>
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+		/// <param name="modelBuilder"></param>
+		public void Configure(IApplicationBuilder app, IWebHostEnvironment env) //, VersionedODataModelBuilder modelBuilder)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+			else
+			{
+				app.UseHsts();
+			}
 
             app.UseExceptionHandler(errorApp =>
             {
@@ -150,24 +175,37 @@ namespace UrbanEngine.Web
                 });
             });
 
+            app.UseHttpsRedirection();
+            app.UseRouting();
+            app.UseAuthorization();
+
+			app.UseEndpoints(endpoints =>
+			{
+				endpoints.MapControllers();
+                endpoints.EnableDependencyInjection();
+                endpoints.Select().Filter().Expand().MaxTop(100);
+                endpoints.MapODataRoute("odata", "odata", GetEdmModel());
+			});
+			
             app.UseSwagger();
 
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Urban Engine API v1");
             });
-
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
         }
+
+		private IEdmModel GetEdmModel()
+		{
+			var builder = new ODataConventionModelBuilder();
+            
+			builder.EntitySet<CheckInEntity>("CheckInEntity");
+			builder.EntitySet<EventEntity>("EventEntity");
+			builder.EntitySet<EventVenueEntity>("EventVenueEntity");
+			builder.EntitySet<RoomEntity>("RoomEntity");
+
+            return builder.GetEdmModel();
+		}
 
         private ILoggerFactory GetLoggerFactory()
         {
@@ -178,6 +216,20 @@ namespace UrbanEngine.Web
                                      LogLevel.Information));
             return serviceCollection.BuildServiceProvider()
                     .GetService<ILoggerFactory>();
+        }
+		private static void SetOutputFormatters(IServiceCollection services)
+        {
+            services.AddMvcCore(options =>
+            {
+                IEnumerable<ODataOutputFormatter> outputFormatters =
+                    options.OutputFormatters.OfType<ODataOutputFormatter>()
+                        .Where(foramtter => foramtter.SupportedMediaTypes.Count == 0);
+
+                foreach (var outputFormatter in outputFormatters)
+                {
+                    outputFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/odata"));
+                }
+            });
         }
     }
 }

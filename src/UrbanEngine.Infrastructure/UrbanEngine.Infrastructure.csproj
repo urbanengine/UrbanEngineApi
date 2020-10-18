@@ -5,7 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Config\" />
+    <Compile Remove="Data\Config\**" />
+    <EmbeddedResource Remove="Data\Config\**" />
+    <EntityDeploy Remove="Data\Config\**" />
+    <None Remove="Data\Config\**" />
   </ItemGroup>
 
   <ItemGroup>
