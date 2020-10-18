@@ -5,8 +5,13 @@ namespace UrbanEngine.Core.Specifications.Venues
     /// <summary>
     /// filters and paginates event venue search results
     /// </summary>
-    public interface IEventVenueFilter : IPagingParameters
+    public interface IEventVenueFilter
     {
+		/// <summary>
+		/// filter to a specific event venue
+		/// </summary>
+		long? EventVenueId { get; }
+
         /// <summary>
         /// region venue is located in
         /// </summary>

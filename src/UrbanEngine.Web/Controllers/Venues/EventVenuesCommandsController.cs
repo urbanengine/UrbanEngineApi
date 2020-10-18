@@ -5,49 +5,25 @@ using UrbanEngine.Core.Enums;
 using UrbanEngine.Core.Messages.Venues;
 using UrbanEngine.Core.Models.Venues;
 
-namespace UrbanEngine.Web.Controllers
+namespace UrbanEngine.Web.Controllers.Venues
 {
     /// <summary>
-    /// manage and query information about event venues
+    /// manage information about event venues
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
 	[ApiVersion("1.0")]
-    public class EventVenuesController : ControllerBase
-    {
-        private readonly IMediator _mediator;
+	public class EventVenuesCommandsController : ControllerBase
+	{
+		private readonly IMediator _mediator;
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="mediator"></param>
-        public EventVenuesController(IMediator mediator)
+        public EventVenuesCommandsController(IMediator mediator)
         {
             _mediator = mediator;
-        }
-
-        /// <summary>
-        /// get event venue for specified id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetVenueByIdAsync(long id)
-        {
-            var result = await _mediator.Send(new GetVenueByIdMessage { Id = id });
-            return Ok(result);
-        }
-
-        /// <summary>
-        /// retrieves a list of event venues based on specified filter
-        /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<IActionResult> GetVenuesAsync([FromQuery]GetVenuesMessage message)
-        {
-            var result = await _mediator.Send(message);
-            return Ok(result);
         }
 
         /// <summary>
@@ -95,5 +71,5 @@ namespace UrbanEngine.Web.Controllers
             var result = await _mediator.Send(message);
             return Ok(result);
         }
-    }
+	}
 }

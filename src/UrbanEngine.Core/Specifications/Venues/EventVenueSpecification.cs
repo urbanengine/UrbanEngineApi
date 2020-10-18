@@ -22,6 +22,9 @@ namespace UrbanEngine.Core.Specifications.Venues
                 predicate.And(p => p.IsDeleted == filter.IsDeleted.Value) : 
                 predicate.And(p => p.IsDeleted != true);
 
+			if(filter.EventVenueId.HasValue)
+				predicate = predicate.And(p => p.Id == filter.EventVenueId);
+
             if (!string.IsNullOrEmpty(filter.City))
                 predicate = predicate.And(p => p.City.ToLower().Trim() == filter.City.ToLower().Trim());
 

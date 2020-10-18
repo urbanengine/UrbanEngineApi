@@ -12,7 +12,7 @@ namespace UrbanEngine.Web.Controllers.CheckIn
 	/// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    //[ApiVersion("1.0")]
+    [ApiVersion("1.0")]
     public class CheckInCommandsController : ControllerBase
     {
         private readonly IMediator _mediator;

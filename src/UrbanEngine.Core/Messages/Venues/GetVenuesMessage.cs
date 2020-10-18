@@ -39,6 +39,11 @@ namespace UrbanEngine.Core.Messages.Venues
         /// </summary>
         public bool? IsDeleted { get; set; }
 
-        #endregion
-    }
+		/// <summary>
+		/// filter by a specific event venue id
+		/// </summary>
+		public long? EventVenueId { get; set; }
+
+		#endregion
+	}
 }
