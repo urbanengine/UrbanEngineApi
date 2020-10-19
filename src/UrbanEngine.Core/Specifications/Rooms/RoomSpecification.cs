@@ -21,6 +21,9 @@ namespace UrbanEngine.Core.Specifications.Rooms
                 predicate.And(p => p.IsDeleted == filter.IsDeleted.Value) :
                 predicate.And(p => p.IsDeleted != true);
 
+			if(filter.RoomId.HasValue)
+				predicate = predicate.And(p => p.Id == filter.RoomId);
+
 			if(filter.MinCapacity.HasValue)
 				predicate = predicate.And(p => p.Capacity >= filter.MinCapacity);
 

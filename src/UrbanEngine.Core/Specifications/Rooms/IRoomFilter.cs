@@ -2,8 +2,9 @@
 
 namespace UrbanEngine.Core.Specifications.Rooms
 {
-	public interface IRoomFilter : IPagingParameters
+	public interface IRoomFilter
 	{
+		long? RoomId { get; }
 		string Name { get; }
 		int? MinCapacity { get; }
 		long? VenueId { get; }

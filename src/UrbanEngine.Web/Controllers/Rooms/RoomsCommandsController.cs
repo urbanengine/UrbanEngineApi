@@ -5,50 +5,27 @@ using UrbanEngine.Core.Enums;
 using UrbanEngine.Core.Messages.Rooms;
 using UrbanEngine.Core.Models.Rooms;
 
-namespace UrbanEngine.Web.Controllers
+namespace UrbanEngine.Web.Controllers.Rooms
 {
     /// <summary>
     /// manage and query information about rooms
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-	public class RoomsController : Controller
-    {
+	[ApiVersion("1.0")]
+	public class RoomsCommandsController : ControllerBase
+	{
         private readonly IMediator _mediator;
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="mediator"></param>
-        public RoomsController(IMediator mediator)
+        public RoomsCommandsController(IMediator mediator)
         {
             _mediator = mediator;
         }
-
-        /// <summary>
-        /// get Room for specified id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetRoomByIdAsync(long id)
-        {
-            var result = await _mediator.Send(new GetRoomByIdMessage { Id = id });
-            return Ok(result);
-        }
-
-        /// <summary>
-        /// retrieves a list of Rooms based on specified filter
-        /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<IActionResult> GetRoomsAsync([FromQuery]GetRoomsMessage message)
-        {
-            var result = await _mediator.Send(message);
-            return Ok(result);
-        }
-
+		
         /// <summary>
         /// create a new Room
         /// </summary>
@@ -94,5 +71,5 @@ namespace UrbanEngine.Web.Controllers
             var result = await _mediator.Send(message);
             return Ok(result);
         }
-    }
+	}
 }
