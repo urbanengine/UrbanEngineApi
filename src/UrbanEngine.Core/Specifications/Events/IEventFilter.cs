@@ -1,11 +1,14 @@
 ﻿using System;
 using UrbanEngine.Core.Enums;
-using UrbanEngine.SharedKernel.Paging;
 
 namespace UrbanEngine.Core.Specifications.Events
 {
-    public interface IEventFilter : IPagingParameters
+    public interface IEventFilter
     {
+		/// <summary>
+		/// used to filter to a specific event
+		/// </summary>
+		long? EventId { get; }
         /// <summary>
         /// start date of event
         /// </summary>

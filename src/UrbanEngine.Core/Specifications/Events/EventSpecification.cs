@@ -21,6 +21,9 @@ namespace UrbanEngine.Core.Specifications.Events
                 predicate.And(p => p.IsDeleted == filter.IsDeleted.Value) :
                 predicate.And(p => p.IsDeleted != true);
 
+			if(filter.EventId.HasValue)
+				predicate = predicate.And(p => p.Id == filter.EventId);
+
             if (filter.StartDate.HasValue)
                 predicate = predicate.And(p => p.StartDate >= filter.StartDate);
 

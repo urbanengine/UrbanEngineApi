@@ -5,50 +5,27 @@ using UrbanEngine.Core.Enums;
 using UrbanEngine.Core.Messages.Events;
 using UrbanEngine.Core.Models.Events;
 
-namespace UrbanEngine.Web.Controllers
+namespace UrbanEngine.Web.Controllers.Events
 {
-    /// <summary>
-    /// manage and query information about events
+	/// <summary>
+    /// manage information about events
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class EventsController : ControllerBase
-    {
+	[ApiVersion("1.0")]
+	public class EventsCommandsController : ControllerBase
+	{
         private readonly IMediator _mediator;
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="mediator"></param>
-        public EventsController(IMediator mediator)
+        public EventsCommandsController(IMediator mediator)
         {
             _mediator = mediator;
         }
-
-        /// <summary>
-        /// get event for specified id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetEventByIdAsync(long id)
-        {
-            var result = await _mediator.Send(new GetEventByIdMessage { Id = id });
-            return Ok(result);
-        }
-
-        /// <summary>
-        /// retrieves a list of events based on specified filter
-        /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<IActionResult> GetEventsAsync([FromQuery]GetEventsMessage message)
-        {
-            var result = await _mediator.Send(message);
-            return Ok(result);
-        }
-
+		
         /// <summary>
         /// create a new event
         /// </summary>
@@ -94,5 +71,5 @@ namespace UrbanEngine.Web.Controllers
             var result = await _mediator.Send(message);
             return Ok(result);
         }
-    }
+	}
 }

@@ -43,5 +43,10 @@ namespace UrbanEngine.Core.Messages.Events
 		/// whether to filter by a specific room
 		/// </summary>
 		public long? RoomId { get; set; }
+
+		/// <summary>
+		/// filter to a specific event id
+		/// </summary>
+		public long? EventId { get; set; }
 	}
 }
