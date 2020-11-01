@@ -4,15 +4,10 @@ using System.Reflection;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using UrbanEngine.Core.Entities;
 using UrbanEngine.Core.Managers.CheckIn;
 using UrbanEngine.Core.Managers.Events;
@@ -20,7 +15,6 @@ using UrbanEngine.Core.Managers.Venues;
 using UrbanEngine.Infrastructure.Data;
 using UrbanEngine.Infrastructure.Data.Repository;
 using UrbanEngine.SharedKernel.Data;
-using UrbanEngine.SharedKernel.Results;
 using UrbanEngine.Core.Handlers.Venues;
 using UrbanEngine.Core.Managers.Rooms;
 using Microsoft.AspNet.OData.Extensions;
@@ -30,6 +24,7 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using Microsoft.AspNetCore.Http;
 
 namespace UrbanEngine.Web
 {
@@ -38,13 +33,11 @@ namespace UrbanEngine.Web
 	/// </summary>
 	public class Startup
     {
-        static int _errorEventId = 1;
-
 		/// <summary>
 		/// startup
 		/// </summary>
 		/// <param name="configuration"></param>
-        public Startup(IConfiguration configuration)
+		public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
@@ -157,6 +150,20 @@ namespace UrbanEngine.Web
             return serviceCollection.BuildServiceProvider()
                     .GetService<ILoggerFactory>();
         }
+
+		static string GetCorrelationId(HttpRequest request)
+		{
+			var headerKey = "";
+
+			if(request.Headers.ContainsKey("traceparent"))
+				headerKey = "traceparent";
+			else if(request.Headers.ContainsKey("X-Correlation-ID"))
+				headerKey = "X-Correlation-ID";
+
+			return !string.IsNullOrEmpty(headerKey) 
+				? request.Headers[headerKey].ToString()
+				: Guid.NewGuid().ToString();
+		}
 
 		static string XmlCommentsFilePath
         {

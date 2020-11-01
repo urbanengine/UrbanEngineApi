@@ -11,7 +11,7 @@ namespace UrbanEngine.Web.Configuration
 		/// <inheritdoc /> 
 		public void Apply(ODataModelBuilder builder, ApiVersion apiVersion, string routePrefix)
 		{
-			builder.Function( "GetSalesTaxRate" ).Returns<double>().Parameter<int>( "PostalCode" );
+			// builder.Function( "Ping" ).Returns<string>().Parameter<string>( "Input" );
 		}
 	}
 }

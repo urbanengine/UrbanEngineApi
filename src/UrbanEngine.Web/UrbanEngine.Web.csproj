@@ -8,6 +8,10 @@
 		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(MSBuildThisFileName).xml</DocumentationFile>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Configuration\OdataModelConfiguration.cs" />
+  </ItemGroup>
+
   <!--<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\Debug\netcoreapp3.1\UrbanEngine.Web.xml</DocumentationFile>
     <NoWarn>1701;1702;</NoWarn>
@@ -51,5 +55,10 @@
     <ProjectReference Include="..\UrbanEngine.Core\UrbanEngine.Core.csproj" />
     <ProjectReference Include="..\UrbanEngine.Infrastructure\UrbanEngine.Infrastructure.csproj" />
     <ProjectReference Include="..\UrbanEngine.SharedKernel\UrbanEngine.SharedKernel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="V3\" />
+    <Folder Include="V2\" />
   </ItemGroup>
 </Project>

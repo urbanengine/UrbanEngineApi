@@ -11,14 +11,13 @@
     [ApiVersionNeutral]
     public class FunctionsController : ODataController
     {
-        /// <summary>
-        /// Gets the sales tax for a postal code.
-        /// </summary>
-        /// <param name="postalCode">The postal code to get the sales tax for.</param>
-        /// <returns>The sales tax rate for the postal code.</returns>
-        [HttpGet]
-        [ProducesResponseType( typeof( double ), Status200OK )]
-        [ODataRoute( "GetSalesTaxRate(PostalCode={postalCode})" )]
-        public IActionResult GetSalesTaxRate( int postalCode ) => Ok( 5.6 );
+  //      /// <summary>
+  //      /// Ping test for calling applications
+  //      /// </summary>
+  //      /// <returns>Message echo back with Hello prepended</returns>
+  //      [HttpGet]
+  //      [ProducesResponseType( typeof( string ), Status200OK )]
+  //      [ODataRoute( "Ping(Input={input})" )]
+		//public IActionResult Ping(string input) => Ok($"Hello {input}");
     }
 }

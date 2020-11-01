@@ -8,7 +8,7 @@ namespace UrbanEngine.Core.Entities
     {
         #region Properties
 
-        public string Name { get; private set; } // required
+        public string Name { get; set; } // required
 
         public string Address { get; set; }
 
