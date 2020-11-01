@@ -9,13 +9,10 @@ namespace UrbanEngine.Web.Configuration
 	/// </summary>
 	public sealed class OdataModelConfiguration : IModelConfiguration 
 	{
-		/// <summary>
-		/// apply configuration
-		/// </summary>
-		/// <param name="builder"></param>
-		/// <param name="apiVersion"></param>
-		public void Apply(ODataModelBuilder builder, ApiVersion apiVersion)
+		public void Apply(ODataModelBuilder builder, ApiVersion apiVersion, string routePrefix)
 		{
+			// if(apiVersion < ApiVersions.V1) { }
+
 			builder.EntitySet<CheckInEntity>("CheckInEntity");
 			builder.EntitySet<EventEntity>("EventEntity");
 			builder.EntitySet<EventVenueEntity>("EventVenueEntity");

@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using UrbanEngine.Infrastructure.Data;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore;
 
 namespace UrbanEngine.Web
 {
@@ -20,14 +21,14 @@ namespace UrbanEngine.Web
 		/// <param name="args"></param>
         public static void Main(string[] args)
         {
-            var hostBuilder = CreateHostBuilder(args).Build();
+            var webHostBuilder = CreateWebHostBuilder(args).Build();
 
-            var logger = hostBuilder.Services.GetRequiredService<ILogger<Program>>();
+            var logger = webHostBuilder.Services.GetRequiredService<ILogger<Program>>();
 
             try
             {
                 logger.LogInformation("Seed Database");
-                CreateOrMigrateDatabase<UrbanEngineDbContext>(hostBuilder, logger);
+                CreateOrMigrateDatabase<UrbanEngineDbContext>(webHostBuilder, logger);
             }
             catch (Exception ex)
             {
@@ -35,7 +36,7 @@ namespace UrbanEngine.Web
             }
 
             logger.LogDebug("Run the application");
-            hostBuilder.Run();
+            webHostBuilder.Run();
         }
 
 		/// <summary>
@@ -43,28 +44,24 @@ namespace UrbanEngine.Web
 		/// </summary>
 		/// <param name="args"></param>
 		/// <returns></returns>
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-				.ConfigureAppConfiguration((context, config) => {
-					var builtConfig = config.Build();
-				
-					if (context.HostingEnvironment.IsProduction())
-					{
-						config.AddAzureKeyVault($"https://{builtConfig["KeyVaultName"]}.vault.azure.net/");
-					}
-					else
-					{
-						config.AddUserSecrets<Startup>();
-					}
-					
-				})
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+				   .ConfigureAppConfiguration((context, config) =>
+				   {
+					   var builtConfig = config.Build();
+					   if (context.HostingEnvironment.IsProduction())
+					   {
+						   config.AddAzureKeyVault($"https://{builtConfig["KeyVaultName"]}.vault.azure.net/");
+					   }
+					   else
+					   {
+						   config.AddUserSecrets<Startup>();
+					   }
+				   })
+				   .UseStartup<Startup>();
 
         // this will create database if not exists or update it to latest if it does
-        static void CreateOrMigrateDatabase<TContext>(IHost host, ILogger logger) where TContext : DbContext
+        static void CreateOrMigrateDatabase<TContext>(IWebHost host, ILogger logger) where TContext : DbContext
         {
             var applyMigrations = Environment.GetEnvironmentVariable("APPLY_MIGRATIONS");
             if (applyMigrations != null && applyMigrations.Trim().ToLower() == "true")
@@ -72,7 +69,7 @@ namespace UrbanEngine.Web
                 using var scope = host.Services.CreateScope();
                 using var context = scope.ServiceProvider.GetService<TContext>();
                 logger.LogInformation("attempting to apply migrations");
-                context.Database.Migrate();
+                context?.Database?.Migrate();
                 logger.LogInformation("migrations applied");
             }
             else

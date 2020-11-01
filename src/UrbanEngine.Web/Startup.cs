@@ -12,7 +12,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using UrbanEngine.Core.Entities;
 using UrbanEngine.Core.Managers.CheckIn;
@@ -26,19 +25,18 @@ using UrbanEngine.Core.Handlers.Venues;
 using UrbanEngine.Core.Managers.Rooms;
 using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNet.OData.Builder;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using Microsoft.AspNet.OData.Formatter;
-using Microsoft.Net.Http.Headers;
 using System.Linq;
-using Microsoft.OData.Edm;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.Extensions.PlatformAbstractions;
+using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace UrbanEngine.Web
 {
 	/// <summary>
 	/// startup
 	/// </summary>
-    public class Startup
+	public class Startup
     {
         static int _errorEventId = 1;
 
@@ -62,15 +60,31 @@ namespace UrbanEngine.Web
 		/// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-			//services.AddApiVersioning(options =>
-			//{
-			//	options.DefaultApiVersion = new ApiVersion(1, 0);
-			//	options.AssumeDefaultVersionWhenUnspecified = true;
-			//});
-
-			services.AddOData();//.EnableApiVersioning();
 			services.AddControllers();
-			
+            services.AddApiVersioning( options => options.ReportApiVersions = true );
+            services.AddOData().EnableApiVersioning();
+            services.AddODataApiExplorer(
+                options =>
+                {
+                    // add the versioned api explorer, which also adds IApiVersionDescriptionProvider service
+                    // note: the specified format code will format the version as "'v'major[.minor][-status]"
+                    options.GroupNameFormat = "'v'VVV";
+
+                    // note: this option is only necessary when versioning by url segment. the SubstitutionFormat
+                    // can also be used to control the format of the API version in route templates
+                    options.SubstituteApiVersionInUrl = true;
+                } ); 
+            services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+            services.AddSwaggerGen(
+                options =>
+                {
+                    // add a custom operation filter which sets default values
+                    options.OperationFilter<SwaggerDefaultValues>();
+
+                    // integrate xml comments
+                    options.IncludeXmlComments( XmlCommentsFilePath );
+                } );
+
             // db context
             services.AddDbContext<UrbanEngineDbContext>(options =>
             {
@@ -101,111 +115,37 @@ namespace UrbanEngine.Web
 
             // Mediatr
             services.AddMediatR(typeof(GetVenuesHandler).Assembly);
-			
-			// Swagger Config
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Title = "Urban Engine API",
-                    Version = "v1",
-                    Description = "Urban Engine API",
-                    // TermsOfService = new Uri(""),
-                    Contact = new OpenApiContact
-                    {
-                        Name = "Tyler Hughes",
-                        Email = "tyler@urbanengine.org"
-                    },
-                    License = new OpenApiLicense
-                    {
-                        Name = "Apache 2.0",
-                        Url = new Uri("https://www.apache.org/licenses/LICENSE-2.0.html")
-                    }
-                });
-
-				// Set the comments path for the Swagger JSON and UI.
-				var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-				var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-				c.IncludeXmlComments(xmlPath);
-			});
-
-			// output formatters
-            SetOutputFormatters(services);
-
         }
 
 		/// <summary>
 		/// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		/// </summary>
 		/// <param name="app"></param>
-		/// <param name="env"></param>
 		/// <param name="modelBuilder"></param>
-		public void Configure(IApplicationBuilder app, IWebHostEnvironment env) //, VersionedODataModelBuilder modelBuilder)
+		/// <param name="provider"></param>
+		public void Configure(IApplicationBuilder app, VersionedODataModelBuilder modelBuilder, IApiVersionDescriptionProvider provider )
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-			else
-			{
-				app.UseHsts();
-			}
-
-            app.UseExceptionHandler(errorApp =>
-            {
-                errorApp.Run(async context =>
-                {
-                    // get diagnostic information about the error
-                    var exceptionHandlerPathFeature =
-                        context.Features.Get<IExceptionHandlerPathFeature>();
-
-                    // get the exception that was thrown from endpoint
-                    var exceptionThrown = exceptionHandlerPathFeature.Error;
-
-                    // return a status code and generic json message
-                    context.Response.StatusCode = FailureResult.GetStatusCode(exceptionThrown);
-                    context.Response.ContentType = "application/json";
-
-                    var json = JsonConvert.SerializeObject(new FailureResult(exceptionThrown));
-                    await context.Response.WriteAsync(json);
-
-                    // log the error
-                    var logger = errorApp.ApplicationServices.GetService<ILogger<Program>>();
-                    logger.LogError(_errorEventId++, exceptionThrown, $"exception caught in UseExceptionHandler middleware, see exception for details");
-                });
-            });
-
-            app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
+			app.UseHttpsRedirection();
 
 			app.UseEndpoints(endpoints =>
 			{
-				endpoints.MapControllers();
-                endpoints.EnableDependencyInjection();
-                endpoints.Select().Filter().Expand().MaxTop(100);
-                endpoints.MapODataRoute("odata", "odata", GetEdmModel());
+                endpoints.Count();
+                endpoints.MapVersionedODataRoute( "odata", "api", modelBuilder );
 			});
-			
-            app.UseSwagger();
 
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Urban Engine API v1");
-            });
+			app.UseSwagger();
+            app.UseSwaggerUI(
+                options =>
+                {
+                    // build a swagger endpoint for each discovered API version
+                    foreach ( var description in provider.ApiVersionDescriptions )
+                    {
+                        options.SwaggerEndpoint( $"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant() );
+                    }
+                } );
         }
-
-		private IEdmModel GetEdmModel()
-		{
-			var builder = new ODataConventionModelBuilder();
-            
-			builder.EntitySet<CheckInEntity>("CheckInEntity");
-			builder.EntitySet<EventEntity>("EventEntity");
-			builder.EntitySet<EventVenueEntity>("EventVenueEntity");
-			builder.EntitySet<RoomEntity>("RoomEntity");
-
-            return builder.GetEdmModel();
-		}
 
         private ILoggerFactory GetLoggerFactory()
         {
@@ -217,19 +157,15 @@ namespace UrbanEngine.Web
             return serviceCollection.BuildServiceProvider()
                     .GetService<ILoggerFactory>();
         }
-		private static void SetOutputFormatters(IServiceCollection services)
-        {
-            services.AddMvcCore(options =>
-            {
-                IEnumerable<ODataOutputFormatter> outputFormatters =
-                    options.OutputFormatters.OfType<ODataOutputFormatter>()
-                        .Where(foramtter => foramtter.SupportedMediaTypes.Count == 0);
 
-                foreach (var outputFormatter in outputFormatters)
-                {
-                    outputFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/odata"));
-                }
-            });
+		static string XmlCommentsFilePath
+        {
+            get
+            {
+                var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+                var fileName = typeof( Startup ).GetTypeInfo().Assembly.GetName().Name + ".xml";
+                return Path.Combine( basePath, fileName );
+            }
         }
     }
 }
