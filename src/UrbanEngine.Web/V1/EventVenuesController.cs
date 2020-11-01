@@ -32,10 +32,10 @@
 		}
 
 		/// <summary>
-		/// Gets a single Event Venue
+		/// Gets a single event venue for specified id
 		/// </summary>
-		/// <param name="id">The requested Event Venue identifier</param>
-		/// <returns>The requested Event Venue</returns>
+		/// <param name="id">The requested event venue identifier</param>
+		/// <returns>The requested event venue</returns>
 		[ODataRoute( "{id}" )]
         [Produces( "application/json" )]
         [ProducesResponseType( typeof( EventVenueEntity ), Status200OK )]
@@ -48,9 +48,9 @@
 		}
 
 		/// <summary>
-		/// Gets a collection of Event Venues that meet that specified criteria
+		/// Gets a collection of event venues that meet that specified criteria
 		/// </summary>
-		/// <returns>Event Venues that match the request</returns>
+		/// <returns>event venues that match the request</returns>
 		[HttpGet]
 		[ODataRoute]
         [Produces( "application/json" )]
@@ -109,9 +109,9 @@
 		}
 
 		/// <summary>
-		/// Performs a soft delete of an existing entity
+		/// Performs a soft delete of an existing event venue
 		/// </summary>
-		/// <param name="id"></param>
+		/// <param name="id">id of venue to mark as deleted</param>
 		/// <returns></returns>
 		[ODataRoute( "{id}" )]
 		[ProducesResponseType( Status204NoContent )]
@@ -124,6 +124,24 @@
 			});
 
 			return NoContent();
+		}
+		
+		/// <summary>
+		/// retrieve all rooms for a secified evenue
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		[HttpGet]
+		[ODataRoute( "{id}/Rooms" )]
+		[Produces( "application/json" )]
+		[ProducesResponseType( typeof(ODataValue<IEnumerable<RoomEntity>>), Status200OK )]
+		[ProducesResponseType( Status404NotFound )]
+		[EnableQuery( AllowedQueryOptions = Select )]
+		public async Task<IActionResult> GetRooms( long id )
+		{
+            var result = await _mediator.Send(new QueryVenuesMessage { EventVenueId = id });
+            var rooms = result.Select(s => s.Rooms);
+			return Ok(rooms);
 		}
 	}
 }

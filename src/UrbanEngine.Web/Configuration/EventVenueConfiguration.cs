@@ -13,13 +13,24 @@
 		public void Apply(ODataModelBuilder builder, ApiVersion apiVersion, string routePrefix)
 		{
 			// register the entity that is used by the odata controller
-			var eventVenue = builder
-				.EntitySet<EventVenueEntity>("EventVenues")
-				.EntityType
-				.HasKey(o => o.Id);
+			var eventVenues = builder
+				.EntitySet<EventVenueEntity>("EventVenues");
 
-			// indicate which properties allowed to select by
-			eventVenue.Select().Page().Count().Filter().OrderBy();
+			var roomsEntityType = builder
+				.EntitySet<RoomEntity>("Rooms");
+
+			// key
+			eventVenues.EntityType.HasKey(p => p.Id);
+			
+			// indicate which odata actions are allowed
+			eventVenues.EntityType.Select().Page().Count().Filter().OrderBy();
+
+			// indicate anything to not expose to odata endpoints publicly
+			eventVenues.EntityType.Ignore(p => p.Events);
+			eventVenues.EntityType.Ignore(p => p.Rooms);
+
+			//roomsEntityType.Ignore(p => p.Events);
+			//roomsEntityType.Ignore(p => p.Venue);
 
 			// if version specific stuff you can check the version
 			// if(apiVersion > ApiVersions.V1) { }
