@@ -3,6 +3,9 @@
 [![Build Status](https://dev.azure.com/urbanengine/Urban%20Engine/_apis/build/status/UrbanEngineApi?branchName=master)](https://dev.azure.com/urbanengine/Urban%20Engine/_build/latest?definitionId=6&branchName=master)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
+# Code Status
+Due to the pandemic Urban Engine is no longer holding CoWorking Night on a weekly basis. CoWorking Night is now held once a month and all scheduling is done via Google Calendar; therefore, this project is no longer needed. However, this code will be publicly archived for reference in the event any devs want to see how we planning to to handle this use case.
+
 ## Configuration and Deployment
 
 This section outlines information relating to configuring or deploying the UrbanEngineApi application.
